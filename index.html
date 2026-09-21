@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Minh Quân</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    background: #05040b;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Arial, sans-serif;
+}
+
+/* HEADER */
+.header {
+    padding: 28px 22px 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.header p {
+    margin: 6px 0 0;
+    color: #77788a;
+    font-size: 14px;
+}
+
+/* TOP BUTTONS */
+.top-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 0 18px 30px;
+}
+
+.top-button {
+    height: 76px;
+    border: 1px solid #242331;
+    border-radius: 20px;
+    background: #0b0a13;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #aaaabd;
+    font-size: 11px;
+    text-align: center;
+}
+
+.top-icon {
+    font-size: 23px;
+    margin-bottom: 6px;
+}
+
+/* SECTION */
+.section-title {
+    margin: 0 22px 15px;
+    color: #adb4c8;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+/* PANEL */
+.panel {
+    margin: 0 18px;
+    background: #0b0a13;
+    border: 1px solid #282735;
+    border-radius: 26px;
+    overflow: hidden;
+}
+
+/* ITEM */
+.feature {
+    min-height: 112px;
+    padding: 20px 18px 20px 62px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #20202b;
+}
+
+.feature:last-child {
+    border-bottom: none;
+}
+
+/* PURPLE LINE */
+.feature::before {
+    content: "";
+    position: absolute;
+    left: 30px;
+    top: 25px;
+    width: 6px;
+    height: 62px;
+    border-radius: 8px;
+    background: #bf55ff;
+    box-shadow: 0 0 14px rgba(191,85,255,.65);
+}
+
+/* TEXT */
+.info {
+    flex: 1;
+    min-width: 0;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: 750;
+    margin-bottom: 7px;
+}
+
+.desc {
+    color: #8d8e9f;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* RIGHT */
+.right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 10px;
+}
+
+.status {
+    padding: 9px 16px;
+    border-radius: 22px;
+    background: #063d35;
+    color: #5effd1;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #3de5ad;
+    box-shadow: 0 0 14px #3de5ad;
+}
+
+/* RECENT */
+.recent-title {
+    margin: 38px 22px 16px;
+    color: #adb4c8;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.recent {
+    margin: 0 18px 40px;
+    padding: 17px;
+    border: 1px solid #242331;
+    border-radius: 20px;
+    background: #0b0a13;
+    display: flex;
+    align-items: center;
+}
+
+.recent-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #063d35;
+    color: #55ffd0;
+    font-size: 21px;
+    margin-right: 14px;
+}
+
+.recent-name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.recent-time {
+    margin-top: 5px;
+    color: #77788a;
+    font-size: 13px;
+}
+
+/* MOBILE */
+@media (max-width: 500px) {
+
+    .top-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature {
+        padding-left: 55px;
+    }
+
+    .feature::before {
+        left: 24px;
+    }
+
+    .name {
+        font-size: 17px;
+    }
+
+    .desc {
+        font-size: 13px;
+    }
+
+    .right {
+        gap: 8px;
+    }
+
+    .status {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .dot {
+        width: 11px;
+        height: 11px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>Minh Quân</h1>
+    <p>Premium Control Panel</p>
+</div>
+
+<!-- TOP BUTTONS -->
+<div class="top-buttons">
+
+    <div class="top-button">
+        <div class="top-icon">⚙️</div>
+        Điều khiển
+    </div>
+
+    <div class="top-button">
+        <div class="top-icon">♛</div>
+        Bản quyền
+    </div>
+
+    <div class="top-button">
+        <div class="top-icon">🔊</div>
+        Âm thanh
+    </div>
+
+    <div class="top-button">
+        <div class="top-icon">↻</div>
+        Đồng bộ
+    </div>
+
+</div>
+
+<!-- ACTIVE -->
+<div class="section-title">
+    ĐANG BẬT · 8
+</div>
+
+<div class="panel">
+
+    <div class="feature">
+        <div class="info">
+            <div class="name">Phantom Lock</div>
+            <div class="desc">Advanced system profile</div>
+        </div>
+        <div class="right">
+            <span class="status">ON</span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="info">
+            <div class="name">Stability Core</div>
+            <div class="desc">Smooth and stable mode</div>
+        </div>
+        <div class="right">
+            <span class="status">ON</span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="info">
+            <div class="name">Precision Hold</div>
+            <div class="desc">Precision control profile</div>
+        </div>
+        <div class="right">
+            <span class="status">ON</span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="info">
+            <div class="name">LockDown X</div>
+            <div class="desc">Maximum stability mode</div>
+        </div>
+        <div class="right">
+            <span class="status">ON</span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="info">
+            <div class="name">Hyper Touch</div>
+            <div class="desc">Fast response profile</div>
+        </div>
+        <div class="right">
+            <span class="status">ON</span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="info">
+            <div class="name">Screen Flow</div>
+            <div class="desc">Smooth display mode</div>
+        </div>
+        <div class="right">
+            <span class="status">ON</span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="info">
+            <div class="name">Neon Core</div>
+            <div class="desc">Enhanced interface mode</div>
+        </div>
+        <div class="right">
+            <span class="status">ON</span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="info">
+            <div class="name">Omega System</div>
+            <div class="desc">Premium system profile</div>
+        </div>
+        <div class="right">
+            <span class="status">ON</span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+</div>
+
+<!-- RECENT -->
+<div class="recent-title">
+    HOẠT ĐỘNG GẦN ĐÂY
+</div>
+
+<div class="recent">
+
+    <div class="recent-icon">✓</div>
+
+    <div>
+        <div class="recent-name">
+            Omega System
+        </div>
+
+        <div class="recent-time">
+            Vừa hoạt động · 2 phút trước
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

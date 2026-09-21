@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minh Quân</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    background:#05040b;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+/* ===== LOGIN ===== */
+
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+}
+
+.login{
+    width:100%;
+    max-width:390px;
+    padding:30px 24px;
+    background:#0c0b14;
+    border:1px solid #292735;
+    border-radius:28px;
+}
+
+.login h1{
+    margin:0;
+    text-align:center;
+    font-size:30px;
+}
+
+.login p{
+    margin:8px 0 28px;
+    text-align:center;
+    color:#858597;
+}
+
+input{
+    width:100%;
+    height:54px;
+    padding:0 16px;
+    border-radius:15px;
+    border:1px solid #343242;
+    outline:none;
+    background:#05040b;
+    color:#fff;
+    font-size:16px;
+}
+
+input:focus{
+    border-color:#bd4cff;
+}
+
+.loginBtn{
+    width:100%;
+    height:54px;
+    margin-top:14px;
+    border:0;
+    border-radius:15px;
+    background:#a946e8;
+    color:#fff;
+    font-size:16px;
+    font-weight:800;
+}
+
+#error{
+    min-height:20px;
+    margin-top:12px;
+    text-align:center;
+    color:#ff667d;
+    font-size:13px;
+}
+
+/* ===== APP ===== */
+
+#app{
+    display:none;
+    padding-bottom:40px;
+}
+
+.header{
+    padding:38px 22px 25px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:800;
+}
+
+.sub{
+    margin-top:6px;
+    color:#858597;
+    font-size:15px;
+}
+
+/* MENU */
+
+.menu{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    padding:0 18px 30px;
+}
+
+.menuItem{
+    height:105px;
+    border:1px solid #292735;
+    border-radius:23px;
+    background:#0c0b14;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:#aaaabd;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+/* TITLE */
+
+.title{
+    margin:0 22px 15px;
+    color:#bfc5d8;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:4px;
+}
+
+/* FEATURES */
+
+.list{
+    margin:0 18px;
+    background:#0c0b14;
+    border:1px solid #292735;
+    border-radius:27px;
+    overflow:hidden;
+}
+
+.item{
+    min-height:115px;
+    position:relative;
+    padding:20px 18px 20px 62px;
+    display:flex;
+    align-items:center;
+    border-bottom:1px solid #22212d;
+}
+
+.item:last-child{
+    border-bottom:0;
+}
+
+/* purple line */
+
+.item:before{
+    content:"";
+    position:absolute;
+    left:29px;
+    top:27px;
+    width:6px;
+    height:61px;
+    border-radius:10px;
+    background:#bd4cff;
+    box-shadow:0 0 15px rgba(189,76,255,.7);
+    transition:.2s;
+}
+
+.item.off:before{
+    background:#4a4955;
+    box-shadow:none;
+}
+
+.info{
+    flex:1;
+}
+
+.name{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.desc{
+    color:#9293a5;
+    font-size:14px;
+}
+
+/* SWITCH */
+
+.switch{
+    width:62px;
+    height:35px;
+    margin-left:10px;
+    border-radius:30px;
+    background:#073f36;
+    position:relative;
+    flex-shrink:0;
+    transition:.2s;
+}
+
+.switch:after{
+    content:"";
+    position:absolute;
+    width:27px;
+    height:27px;
+    top:4px;
+    right:4px;
+    border-radius:50%;
+    background:#5dffd2;
+    box-shadow:0 0 12px #42e6ad;
+    transition:.2s;
+}
+
+.item.off .switch{
+    background:#292833;
+}
+
+.item.off .switch:after{
+    right:31px;
+    background:#777783;
+    box-shadow:none;
+}
+
+/* RECENT */
+
+.recentTitle{
+    margin:38px 22px 15px;
+    color:#bfc5d8;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:4px;
+}
+
+.recent{
+    margin:0 18px;
+    padding:17px;
+    background:#0c0b14;
+    border:1px solid #292735;
+    border-radius:20px;
+}
+
+#activity{
+    color:#999aac;
+    font-size:14px;
+    line-height:1.8;
+}
+
+.logout{
+    width:calc(100% - 36px);
+    height:50px;
+    margin:25px 18px 0;
+    border:1px solid #302e3d;
+    border-radius:15px;
+    background:#0c0b14;
+    color:#aaaabd;
+    font-weight:700;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+    .name{
+        font-size:17px;
+    }
+
+    .desc{
+        font-size:13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginPage">
+
+    <div class="login">
+
+        <h1>MINH QUÂN</h1>
+
+        <p>Nhập Key để tiếp tục</p>
+
+        <input
+            id="key"
+            type="password"
+            placeholder="Nhập Key..."
+            autocomplete="off"
+        >
+
+        <button
+            class="loginBtn"
+            onclick="login()"
+        >
+            ĐĂNG NHẬP
+        </button>
+
+        <div id="error"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= APP ================= -->
+
+<div id="app">
+
+    <div class="header">
+
+        <div class="logo">
+            Minh Quân
+        </div>
+
+        <div class="sub">
+            Premium Control Panel
+        </div>
+
+    </div>
+
+
+    <!-- MENU -->
+
+    <div class="menu">
+
+        <div class="menuItem">
+            <div class="icon">⚙️</div>
+            Điều khiển
+        </div>
+
+        <div class="menuItem">
+            <div class="icon">♛</div>
+            Bản quyền
+        </div>
+
+        <div class="menuItem">
+            <div class="icon">🔊</div>
+            Âm thanh
+        </div>
+
+        <div class="menuItem">
+            <div class="icon">↻</div>
+            Đồng bộ
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="title">
+        ĐANG BẬT · <span id="count">8</span>
+    </div>
+
+
+    <div class="list">
+
+        <div class="item" onclick="toggle(this,'Phantom Lock')">
+            <div class="info">
+                <div class="name">PHANTOM LOCK</div>
+                <div class="desc">Advanced system profile</div>
+            </div>
+            <div class="switch"></div>
+        </div>
+
+
+        <div class="item" onclick="toggle(this,'Stability Core')">
+            <div class="info">
+                <div class="name">STABILITY CORE</div>
+                <div class="desc">Smooth and stable mode</div>
+            </div>
+            <div class="switch"></div>
+        </div>
+
+
+        <div class="item" onclick="toggle(this,'Precision Hold')">
+            <div class="info">
+                <div class="name">PRECISION HOLD</div>
+                <div class="desc">Precision control profile</div>
+            </div>
+            <div class="switch"></div>
+        </div>
+
+
+        <div class="item" onclick="toggle(this,'LockDown X')">
+            <div class="info">
+                <div class="name">LOCKDOWN X</div>
+                <div class="desc">Maximum stability mode</div>
+            </div>
+            <div class="switch"></div>
+        </div>
+
+
+        <div class="item" onclick="toggle(this,'Hyper Touch')">
+            <div class="info">
+                <div class="name">HYPER TOUCH</div>
+                <div class="desc">Fast response profile</div>
+            </div>
+            <div class="switch"></div>
+        </div>
+
+
+        <div class="item" onclick="toggle(this,'Screen Flow')">
+            <div class="info">
+                <div class="name">SCREEN FLOW</div>
+                <div class="desc">Smooth display mode</div>
+            </div>
+            <div class="switch"></div>
+        </div>
+
+
+        <div class="item" onclick="toggle(this,'Neon Core')">
+            <div class="info">
+                <div class="name">NEON CORE</div>
+                <div class="desc">Enhanced interface mode</div>
+            </div>
+            <div class="switch"></div>
+        </div>
+
+
+        <div class="item" onclick="toggle(this,'Omega System')">
+            <div class="info">
+                <div class="name">OMEGA SYSTEM</div>
+                <div class="desc">Premium system profile</div>
+            </div>
+            <div class="switch"></div>
+        </div>
+
+    </div>
+
+
+    <!-- ACTIVITY -->
+
+    <div class="recentTitle">
+        HOẠT ĐỘNG GẦN ĐÂY
+    </div>
+
+    <div class="recent">
+        <div id="activity">
+            Chưa có hoạt động.
+        </div>
+    </div>
+
+
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+        ĐĂNG XUẤT
+    </button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   KEY
+========================= */
+
+const VALID_KEY = "MINHQUAN-2026";
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function login(){
+
+    const input =
+        document.getElementById("key");
+
+    const error =
+        document.getElementById("error");
+
+    if(input.value.trim() === VALID_KEY){
+
+        localStorage.setItem(
+            "minhquan_login",
+            "true"
+        );
+
+        document.getElementById(
+            "loginPage"
+        ).style.display = "none";
+
+        document.getElementById(
+            "app"
+        ).style.display = "block";
+
+        error.textContent = "";
+
+    }else{
+
+        error.textContent =
+            "Key không chính xác.";
+
+    }
+}
+
+
+/* Enter */
+
+document
+.getElementById("key")
+.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        login();
+    }
+
+});
+
+
+/* =========================
+   TOGGLE
+========================= */
+
+function toggle(element,name){
+
+    element.classList.toggle("off");
+
+    const isOff =
+        element.classList.contains("off");
+
+    const state =
+        isOff ? "OFF" : "ON";
+
+    /* lưu trạng thái */
+
+    const states =
+        JSON.parse(
+            localStorage.getItem(
+                "minhquan_states"
+            ) || "{}"
+        );
+
+    states[name] = state;
+
+    localStorage.setItem(
+        "minhquan_states",
+        JSON.stringify(states)
+    );
+
+
+    /* hoạt động gần đây */
+
+    document.getElementById(
+        "activity"
+    ).innerHTML =
+        "<b>" + name + "</b> → " +
+        state +
+        "<br>" +
+        "<span style='color:#77788b'>" +
+        "Vừa thay đổi" +
+        "</span>";
+
+
+    updateCount();
+}
+
+
+/* =========================
+   COUNT
+========================= */
+
+function updateCount(){
+
+    const items =
+        document.querySelectorAll(".item");
+
+    let count = 0;
+
+    items.forEach(function(item){
+
+        if(!item.classList.contains("off")){
+            count++;
+        }
+
+    });
+
+    document.getElementById(
+        "count"
+    ).textContent = count;
+}
+
+
+/* =========================
+   LOAD STATES
+========================= */
+
+function loadStates(){
+
+    const states =
+        JSON.parse(
+            localStorage.getItem(
+                "minhquan_states"
+            ) || "{}"
+        );
+
+    const items =
+        document.querySelectorAll(".item");
+
+    items.forEach(function(item){
+
+        const name =
+            item.querySelector(
+                ".name"
+            ).textContent
+             .trim()
+             .toLowerCase();
+
+        Object.keys(states).forEach(function(key){
+
+            if(
+                key.toLowerCase() === name &&
+                states[key] === "OFF"
+            ){
+                item.classList.add("off");
+            }
+
+        });
+
+    });
+
+    updateCount();
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "minhquan_login"
+    );
+
+    document.getElementById(
+        "app"
+    ).style.display = "none";
+
+    document.getElementById(
+        "loginPage"
+    ).style.display = "flex";
+
+    document.getElementById(
+        "key"
+    ).value = "";
+
+}
+
+
+/* =========================
+   AUTO LOGIN
+========================= */
+
+if(
+    localStorage.getItem(
+        "minhquan_login"
+    ) === "true"
+){
+
+    document.getElementById(
+        "loginPage"
+    ).style.display = "none";
+
+    document.getElementById(
+        "app"
+    ).style.display = "block";
+
+}
+
+
+/* LOAD */
+
+loadStates();
+
+</script>
+
+</body>
+</html>

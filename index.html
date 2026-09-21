@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Minh Quân - Premium Panel</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    min-height:100%;
+    background:#05040b;
+}
+
+body{
+    min-height:100vh;
+    background:#05040b;
+    color:#ffffff;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+/* =========================
+   LOGIN / LOCK
+========================= */
+
+#loginPage{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.loginCard{
+    width:100%;
+    max-width:390px;
+
+    padding:30px 24px;
+
+    background:#0d0c15;
+
+    border:1px solid #2c2a39;
+    border-radius:28px;
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.55);
+}
+
+.lockIcon{
+    text-align:center;
+    font-size:52px;
+    margin-bottom:10px;
+}
+
+.loginTitle{
+    text-align:center;
+
+    font-size:29px;
+    font-weight:900;
+}
+
+.loginSubtitle{
+    margin-top:8px;
+    margin-bottom:26px;
+
+    text-align:center;
+
+    color:#858597;
+    font-size:14px;
+}
+
+.keyInput{
+    width:100%;
+    height:55px;
+
+    padding:0 16px;
+
+    border:1px solid #393646;
+    border-radius:15px;
+
+    outline:none;
+
+    background:#05040b;
+    color:#ffffff;
+
+    font-size:16px;
+}
+
+.keyInput:focus{
+    border-color:#b94cff;
+
+    box-shadow:
+        0 0 15px rgba(185,76,255,.20);
+}
+
+.loginButton{
+    width:100%;
+    height:55px;
+
+    margin-top:14px;
+
+    border:0;
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #963ce0,
+            #c650ff
+        );
+
+    color:#ffffff;
+
+    font-size:16px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.loginButton:active{
+    transform:scale(.98);
+}
+
+#error{
+    height:20px;
+
+    margin-top:12px;
+
+    text-align:center;
+
+    color:#ff637b;
+
+    font-size:13px;
+}
+
+
+/* =========================
+   MAIN APP
+========================= */
+
+#app{
+    display:none;
+
+    min-height:100vh;
+
+    padding-bottom:40px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    padding:
+        40px
+        22px
+        26px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:900;
+}
+
+.subtitle{
+    margin-top:6px;
+
+    color:#858597;
+
+    font-size:15px;
+}
+
+
+/* =========================
+   TOP MENU
+========================= */
+
+.topMenu{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:12px;
+
+    padding:
+        0
+        18px
+        30px;
+}
+
+.menuButton{
+    height:110px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#0d0c15;
+
+    border:1px solid #2b2938;
+
+    border-radius:24px;
+
+    color:#aaaabd;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
+.menuButton:active{
+    transform:scale(.97);
+}
+
+.menuIcon{
+    font-size:35px;
+
+    margin-bottom:8px;
+}
+
+.menuText{
+    font-size:15px;
+}
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.sectionTitle{
+    margin:
+        0
+        22px
+        15px;
+
+    color:#c2c7da;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    letter-spacing:3px;
+}
+
+
+/* =========================
+   FEATURES LIST
+========================= */
+
+.features{
+    margin:
+        0
+        18px;
+
+    overflow:hidden;
+
+    background:#0d0c15;
+
+    border:
+        1px solid
+        #2b2938;
+
+    border-radius:27px;
+}
+
+
+/* =========================
+   FEATURE
+========================= */
+
+.feature{
+    position:relative;
+
+    min-height:112px;
+
+    padding:
+        20px
+        18px
+        20px
+        62px;
+
+    display:flex;
+
+    align-items:center;
+
+    border-bottom:
+        1px solid
+        #23212e;
+
+    cursor:pointer;
+}
+
+.feature:last-child{
+    border-bottom:0;
+}
+
+
+/* Purple indicator */
+
+.feature::before{
+    content:"";
+
+    position:absolute;
+
+    left:29px;
+    top:25px;
+
+    width:6px;
+    height:62px;
+
+    border-radius:10px;
+
+    background:#bd4cff;
+
+    box-shadow:
+        0 0 15px
+        rgba(189,76,255,.75);
+
+    transition:.2s;
+}
+
+.feature.off::before{
+    background:#4b4a56;
+
+    box-shadow:none;
+}
+
+
+/* Feature info */
+
+.featureInfo{
+    flex:1;
+
+    min-width:0;
+}
+
+.featureName{
+    margin-bottom:7px;
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.featureDescription{
+    color:#9091a3;
+
+    font-size:13px;
+}
+
+
+/* =========================
+   SWITCH
+========================= */
+
+.switch{
+    position:relative;
+
+    width:62px;
+    height:34px;
+
+    margin-left:10px;
+
+    flex-shrink:0;
+
+    border-radius:30px;
+
+    background:#073f36;
+
+    transition:.2s;
+}
+
+.switch::after{
+    content:"";
+
+    position:absolute;
+
+    top:4px;
+    right:4px;
+
+    width:26px;
+    height:26px;
+
+    border-radius:50%;
+
+    background:#5dffd2;
+
+    box-shadow:
+        0 0 13px
+        rgba(66,230,173,.8);
+
+    transition:.2s;
+}
+
+.feature.off .switch{
+    background:#292833;
+}
+
+.feature.off .switch::after{
+    right:32px;
+
+    background:#777783;
+
+    box-shadow:none;
+}
+
+
+/* =========================
+   FREE FIRE BOX
+========================= */
+
+.gameBox{
+    margin:
+        26px
+        18px
+        0;
+
+    padding:22px;
+
+    background:#0d0c15;
+
+    border:
+        1px solid
+        #2b2938;
+
+    border-radius:23px;
+}
+
+.gameTitle{
+    font-size:19px;
+
+    font-weight:900;
+}
+
+.gameDescription{
+    margin-top:7px;
+
+    color:#858697;
+
+    font-size:13px;
+
+    line-height:1.5;
+}
+
+.gameButton{
+    width:100%;
+
+    height:53px;
+
+    margin-top:18px;
+
+    border:0;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #963ce0,
+            #c650ff
+        );
+
+    color:#ffffff;
+
+    font-size:16px;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   ACTIVITY
+========================= */
+
+.activityTitle{
+    margin:
+        36px
+        22px
+        15px;
+
+    color:#c2c7da;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    letter-spacing:3px;
+}
+
+.activityBox{
+    margin:
+        0
+        18px;
+
+    padding:18px;
+
+    background:#0d0c15;
+
+    border:
+        1px solid
+        #2b2938;
+
+    border-radius:20px;
+
+    color:#999aac;
+
+    font-size:14px;
+
+    line-height:1.7;
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+.logoutButton{
+    width:
+        calc(100% - 36px);
+
+    height:50px;
+
+    margin:
+        25px
+        18px
+        0;
+
+    border:
+        1px solid
+        #302e3d;
+
+    border-radius:15px;
+
+    background:#0d0c15;
+
+    color:#aaaabd;
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:500px){
+
+    .header{
+        padding-top:35px;
+    }
+
+    .feature{
+        padding-left:55px;
+    }
+
+    .feature::before{
+        left:24px;
+    }
+
+    .featureName{
+        font-size:17px;
+    }
+
+    .featureDescription{
+        font-size:12px;
+    }
+
+    .switch{
+        width:56px;
+        height:32px;
+    }
+
+    .switch::after{
+        width:24px;
+        height:24px;
+    }
+
+    .feature.off .switch::after{
+        right:28px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     KHÓA MẬT MÃ
+===================================================== -->
+
+<div id="loginPage">
+
+    <div class="loginCard">
+
+        <div class="lockIcon">
+            🔐
+        </div>
+
+        <div class="loginTitle">
+            KHÓA MẬT MÃ
+        </div>
+
+        <div class="loginSubtitle">
+            Nhập Key để truy cập hệ thống
+        </div>
+
+        <input
+            id="keyInput"
+            class="keyInput"
+            type="password"
+            placeholder="Nhập Key..."
+            autocomplete="off"
+        >
+
+        <button
+            class="loginButton"
+            onclick="login()">
+
+            🔓 MỞ KHÓA
+
+        </button>
+
+        <div id="error"></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<div id="app">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="logo">
+            Minh Quân
+        </div>
+
+        <div class="subtitle">
+            Premium Control Panel
+        </div>
+
+    </div>
+
+
+
+    <!-- TOP MENU -->
+
+    <div class="topMenu">
+
+
+        <!-- ĐIỀU KHIỂN -->
+
+        <div class="menuButton">
+
+            <div class="menuIcon">
+                ⚙️
+            </div>
+
+            <div class="menuText">
+                Điều khiển
+            </div>
+
+        </div>
+
+
+
+        <!-- BẢN QUYỀN -->
+
+        <div
+            class="menuButton"
+            onclick="openZalo()">
+
+            <div class="menuIcon">
+                👑
+            </div>
+
+            <div class="menuText">
+                Bản quyền
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- PREMIUM TITLE -->
+
+    <div class="sectionTitle">
+
+        ⚡ PREMIUM FEATURES ·
+        <span id="count">8</span>
+
+    </div>
+
+
+
+    <!-- FEATURES -->
+
+    <div class="features">
+
+
+        <!-- 1 -->
+
+        <div
+            class="feature"
+            onclick="toggleFeature(
+                this,
+                'HEADLOCK'
+            )">
+
+            <div class="featureInfo">
+
+                <div class="featureName">
+                    HEADLOCK
+                </div>
+
+                <div class="featureDescription">
+                    Precision control profile
+                </div>
+
+            </div>
+
+            <div class="switch"></div>
+
+        </div>
+
+
+
+        <!-- 2 -->
+
+        <div
+            class="feature"
+            onclick="toggleFeature(
+                this,
+                'AIMLOCK'
+            )">
+
+            <div class="featureInfo">
+
+                <div class="featureName">
+                    AIMLOCK
+                </div>
+
+                <div class="featureDescription">
+                    Advanced aim profile
+                </div>
+
+            </div>
+
+            <div class="switch"></div>
+
+        </div>
+
+
+
+        <!-- 3 -->
+
+        <div
+            class="feature"
+            onclick="toggleFeature(
+                this,
+                'AIM STABILITY'
+            )">
+
+            <div class="featureInfo">
+
+                <div class="featureName">
+                    AIM STABILITY
+                </div>
+
+                <div class="featureDescription">
+                    Smooth control profile
+                </div>
+
+            </div>
+
+            <div class="switch"></div>
+
+        </div>
+
+
+
+        <!-- 4 -->
+
+        <div
+            class="feature"
+            onclick="toggleFeature(
+                this,
+                'PRECISION LOCK'
+            )">
+
+            <div class="featureInfo">
+
+                <div class="featureName">
+                    PRECISION LOCK
+                </div>
+
+                <div class="featureDescription">
+                    Precision profile
+                </div>
+
+            </div>
+
+            <div class="switch"></div>
+
+        </div>
+
+
+
+        <!-- 5 -->
+
+        <div
+            class="feature"
+            onclick="toggleFeature(
+                this,
+                'RECOIL CONTROL'
+            )">
+
+            <div class="featureInfo">
+
+                <div class="featureName">
+                    RECOIL CONTROL
+                </div>
+
+                <div class="featureDescription">
+                    Control simulation
+                </div>
+
+            </div>
+
+            <div class="switch"></div>
+
+        </div>
+
+
+
+        <!-- 6 -->
+
+        <div
+            class="feature"
+            onclick="toggleFeature(
+                this,
+                'SENSITIVITY BOOST'
+            )">
+
+            <div class="featureInfo">
+
+                <div class="featureName">
+                    SENSITIVITY BOOST
+                </div>
+
+                <div class="featureDescription">
+                    Touch response profile
+                </div>
+
+            </div>
+
+            <div class="switch"></div>
+
+        </div>
+
+
+
+        <!-- 7 -->
+
+        <div
+            class="feature"
+            onclick="toggleFeature(
+                this,
+                'PHANTOM MODE'
+            )">
+
+            <div class="featureInfo">
+
+                <div class="featureName">
+                    PHANTOM MODE
+                </div>
+
+                <div class="featureDescription">
+                    Advanced system mode
+                </div>
+
+            </div>
+
+            <div class="switch"></div>
+
+        </div>
+
+
+
+        <!-- 8 -->
+
+        <div
+            class="feature"
+            onclick="toggleFeature(
+                this,
+                'OMEGA LOCK'
+            )">
+
+            <div class="featureInfo">
+
+                <div class="featureName">
+                    OMEGA LOCK
+                </div>
+
+                <div class="featureDescription">
+                    Ultimate interface profile
+                </div>
+
+            </div>
+
+            <div class="switch"></div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FREE FIRE -->
+
+    <div class="gameBox">
+
+        <div class="gameTitle">
+            🎮 FREE FIRE
+        </div>
+
+        <div class="gameDescription">
+            Mở ứng dụng Free Fire từ control panel.
+        </div>
+
+        <button
+            class="gameButton"
+            onclick="openFreeFire()">
+
+            🚀 MỞ FREE FIRE
+
+        </button>
+
+    </div>
+
+
+
+    <!-- ACTIVITY -->
+
+    <div class="activityTitle">
+        HOẠT ĐỘNG GẦN ĐÂY
+    </div>
+
+    <div
+        id="activity"
+        class="activityBox">
+
+        Chưa có hoạt động.
+
+    </div>
+
+
+
+    <!-- LOGOUT -->
+
+    <button
+        class="logoutButton"
+        onclick="logout()">
+
+        ĐĂNG XUẤT
+
+    </button>
+
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   KEY
+===================================================== */
+
+const VALID_KEY = "MINHQUAN-2026";
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login(){
+
+    const input =
+        document.getElementById(
+            "keyInput"
+        );
+
+    const error =
+        document.getElementById(
+            "error"
+        );
+
+    const key =
+        input.value.trim();
+
+
+    if(key === VALID_KEY){
+
+        sessionStorage.setItem(
+            "mq_login",
+            "true"
+        );
+
+        document.getElementById(
+            "loginPage"
+        ).style.display = "none";
+
+        document.getElementById(
+            "app"
+        ).style.display = "block";
+
+        error.textContent = "";
+
+        loadStates();
+
+    }
+    else{
+
+        error.textContent =
+            "❌ Key không chính xác.";
+
+    }
+
+}
+
+
+/* =====================================================
+   ENTER
+===================================================== */
+
+document
+    .getElementById("keyInput")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(event.key === "Enter"){
+
+                login();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   ZALO
+===================================================== */
+
+function openZalo(){
+
+    window.location.href =
+        "https://zalo.me/0983774970";
+
+}
+
+
+/* =====================================================
+   FEATURE TOGGLE
+===================================================== */
+
+function toggleFeature(
+    element,
+    name
+){
+
+    element.classList.toggle(
+        "off"
+    );
+
+
+    const state =
+        element.classList.contains(
+            "off"
+        )
+        ? "OFF"
+        : "ON";
+
+
+    let states =
+        JSON.parse(
+            localStorage.getItem(
+                "mq_states"
+            ) || "{}"
+        );
+
+
+    states[name] = state;
+
+
+    localStorage.setItem(
+        "mq_states",
+        JSON.stringify(states)
+    );
+
+
+    document.getElementById(
+        "activity"
+    ).innerHTML =
+
+        "<b>" +
+        name +
+        "</b> → " +
+        state +
+        "<br>" +
+
+        "<span style='color:#77788b'>" +
+        "Vừa thay đổi" +
+        "</span>";
+
+
+    updateCount();
+
+}
+
+
+/* =====================================================
+   COUNT
+===================================================== */
+
+function updateCount(){
+
+    const features =
+        document.querySelectorAll(
+            ".feature"
+        );
+
+    let active = 0;
+
+
+    features.forEach(
+        function(feature){
+
+            if(
+                !feature.classList.contains(
+                    "off"
+                )
+            ){
+
+                active++;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "count"
+    ).textContent = active;
+
+}
+
+
+/* =====================================================
+   LOAD SAVED STATES
+===================================================== */
+
+function loadStates(){
+
+    let states =
+        JSON.parse(
+            localStorage.getItem(
+                "mq_states"
+            ) || "{}"
+        );
+
+
+    const features =
+        document.querySelectorAll(
+            ".feature"
+        );
+
+
+    features.forEach(
+        function(feature){
+
+            const name =
+                feature
+                    .querySelector(
+                        ".featureName"
+                    )
+                    .textContent
+                    .trim();
+
+
+            if(
+                states[name] === "OFF"
+            ){
+
+                feature.classList.add(
+                    "off"
+                );
+
+            }
+
+        }
+    );
+
+
+    updateCount();
+
+}
+
+
+/* =====================================================
+   FREE FIRE
+===================================================== */
+
+function openFreeFire(){
+
+    window.location.href =
+        "freefire://";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(){
+
+    sessionStorage.removeItem(
+        "mq_login"
+    );
+
+
+    document.getElementById(
+        "app"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "loginPage"
+    ).style.display = "flex";
+
+
+    document.getElementById(
+        "keyInput"
+    ).value = "";
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+if(
+    sessionStorage.getItem(
+        "mq_login"
+    ) === "true"
+){
+
+    document.getElementById(
+        "loginPage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "app"
+    ).style.display = "block";
+
+}
+
+
+loadStates();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MINHQUAN LOCK</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, #102a35 0%, #05080b 45%, #020304 100%);
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* LOGIN */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 390px;
+  padding: 28px 22px;
+  border-radius: 22px;
+  background: rgba(8, 14, 18, .94);
+  border: 1px solid rgba(0, 238, 255, .25);
+  box-shadow: 0 0 35px rgba(0, 220, 255, .12);
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 22px;
+  margin-bottom: 15px;
+}
+
+.logo-fallback {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #07151b;
+  border: 1px solid #00eaff;
+  font-size: 35px;
+}
+
+.login-title {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #00eaff;
+  margin-bottom: 8px;
+}
+
+.login-sub {
+  color: #8d9ba2;
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+.input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #20343d;
+  background: #05090c;
+  color: white;
+  outline: none;
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.input:focus {
+  border-color: #00eaff;
+  box-shadow: 0 0 12px rgba(0,234,255,.15);
+}
+
+.btn {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #001014;
+  background: #00eaff;
+  margin-top: 8px;
+}
+
+.btn:active {
+  transform: scale(.98);
+}
+
+.zalo-btn {
+  background: #14232a;
+  color: #00eaff;
+  border: 1px solid #00eaff;
+}
+
+.message {
+  min-height: 20px;
+  margin-top: 12px;
+  color: #ff6b6b;
+  font-size: 13px;
+}
+
+/* APP */
+
+.app {
+  max-width: 650px;
+  margin: auto;
+  padding: 18px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 0 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 13px;
+  object-fit: contain;
+  border: 1px solid rgba(0,234,255,.3);
+}
+
+.brand-name {
+  font-weight: 900;
+  font-size: 18px;
+  color: #00eaff;
+}
+
+.brand-status {
+  color: #7d8b91;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.menu {
+  display: flex;
+  gap: 7px;
+}
+
+.menu button {
+  border: 1px solid #20343d;
+  background: #081116;
+  color: #d9e5e8;
+  border-radius: 10px;
+  padding: 9px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* KEY STATUS */
+
+.key-status {
+  padding: 17px;
+  border-radius: 18px;
+  background: rgba(8, 19, 24, .9);
+  border: 1px solid rgba(0,234,255,.25);
+  margin-bottom: 14px;
+  box-shadow: 0 0 20px rgba(0,234,255,.06);
+}
+
+.key-title {
+  color: #00eaff;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.key-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  font-size: 13px;
+}
+
+.key-row:last-child {
+  border-bottom: 0;
+}
+
+.key-row span {
+  color: #87969c;
+}
+
+.key-row b {
+  text-align: right;
+  color: white;
+}
+
+#keyRemaining {
+  color: #00ff9d;
+}
+
+/* NETWORK */
+
+.network-box {
+  padding: 17px;
+  border-radius: 18px;
+  background: rgba(8, 19, 24, .9);
+  border: 1px solid rgba(0,234,255,.18);
+  margin-bottom: 14px;
+}
+
+.section-title {
+  color: #00eaff;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.network-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.network-item {
+  padding: 12px;
+  border-radius: 12px;
+  background: #071015;
+}
+
+.network-label {
+  color: #7d8b91;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.network-value {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* FEATURES */
+
+.feature-list {
+  display: grid;
+  gap: 10px;
+}
+
+.feature {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  border-radius: 15px;
+  background: rgba(8, 18, 23, .9);
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+.feature-name {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.feature-desc {
+  color: #718086;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+/* TOGGLE */
+
+.switch {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #263238;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 3px;
+  top: 3px;
+  background: #9ba6aa;
+  border-radius: 50%;
+  transition: .2s;
+}
+
+.switch input:checked + .slider {
+  background: #00b8cc;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(22px);
+  background: white;
+}
+
+/* ACTION */
+
+.action-box {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.game-btn {
+  background: #00eaff;
+  color: #001014;
+  padding: 15px;
+  border: 0;
+  border-radius: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.info-btn {
+  background: #101d23;
+  color: #00eaff;
+  border: 1px solid #00eaff;
+  padding: 13px;
+  border-radius: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.logout-btn {
+  background: #170b0b;
+  color: #ff7070;
+  border: 1px solid #522020;
+  padding: 13px;
+  border-radius: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.history {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 16px;
+  background: #070d10;
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+.history-title {
+  color: #00eaff;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.history-list {
+  color: #718086;
+  font-size: 11px;
+  line-height: 1.8;
+  max-height: 130px;
+  overflow: auto;
+}
+
+.footer {
+  text-align: center;
+  color: #526067;
+  font-size: 10px;
+  margin: 20px 0 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginPage" class="login-page">
+
+  <div class="login-box">
+
+    <img
+      class="logo"
+      src="https://baoquyen2737-del.github.io/minhquan-lock/logo.png"
+      onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex';"
+    >
+
+    <div id="logoFallback" class="logo-fallback" style="display:none;">
+      🔐
+    </div>
+
+    <div class="login-title">
+      MINHQUAN LOCK
+    </div>
+
+    <div class="login-sub">
+      NHẬP KEY ĐỂ ĐĂNG NHẬP
+    </div>
+
+    <input
+      id="keyInput"
+      class="input"
+      type="text"
+      placeholder="Nhập Key..."
+      autocomplete="off"
+    >
+
+    <button class="btn" onclick="login()">
+      🔐 ĐĂNG NHẬP
+    </button>
+
+    <button class="btn zalo-btn" onclick="openZalo()">
+      👑 BẢN QUYỀN
+    </button>
+
+    <div id="loginMessage" class="message"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= APP ================= -->
+
+<div id="app" class="app hidden">
+
+  <div class="header">
+
+    <div class="brand">
+
+      <img
+        class="brand-icon"
+        src="https://baoquyen2737-del.github.io/minhquan-lock/logo.png"
+        onerror="this.style.display='none';"
+      >
+
+      <div>
+        <div class="brand-name">
+          MINHQUAN LOCK
+        </div>
+
+        <div class="brand-status">
+          SYSTEM ONLINE
+        </div>
+      </div>
+
+    </div>
+
+    <div class="menu">
+      <button onclick="showNetworkInfo()">
+        ⚙️ Điều khiển
+      </button>
+
+      <button onclick="openZalo()">
+        👑 Bản quyền
+      </button>
+    </div>
+
+  </div>
+
+
+  <!-- KEY -->
+
+  <div class="key-status">
+
+    <div class="key-title">
+      🔐 THÔNG TIN KEY
+    </div>
+
+    <div class="key-row">
+      <span>Key</span>
+      <b id="keyDisplay">---</b>
+    </div>
+
+    <div class="key-row">
+      <span>Ngày hết hạn</span>
+      <b id="keyExpire">---</b>
+    </div>
+
+    <div class="key-row">
+      <span>Thời gian còn lại</span>
+      <b id="keyRemaining">---</b>
+    </div>
+
+  </div>
+
+
+  <!-- NETWORK -->
+
+  <div class="network-box">
+
+    <div class="section-title">
+      🌐 TRẠNG THÁI KẾT NỐI
+    </div>
+
+    <div class="network-grid">
+
+      <div class="network-item">
+        <div class="network-label">
+          Kết nối
+        </div>
+
+        <div id="networkType" class="network-value">
+          Đang kiểm tra...
+        </div>
+      </div>
+
+
+      <div class="network-item">
+        <div class="network-label">
+          Phản hồi
+        </div>
+
+        <div id="networkPing" class="network-value">
+          ---
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FEATURES -->
+
+  <div class="feature-list">
+
+    <div class="feature">
+      <div>
+        <div class="feature-name">HEADLOCK</div>
+        <div class="feature-desc">Chế độ giao diện theo dõi kết nối</div>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" data-feature="HEADLOCK">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
+    <div class="feature">
+      <div>
+        <div class="feature-name">AIMLOCK</div>
+        <div class="feature-desc">Chế độ giao diện theo dõi mạng</div>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" data-feature="AIMLOCK">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
+    <div class="feature">
+      <div>
+        <div class="feature-name">AIM STABILITY</div>
+        <div class="feature-desc">Theo dõi trạng thái kết nối</div>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" data-feature="AIM STABILITY">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
+    <div class="feature">
+      <div>
+        <div class="feature-name">PRECISION LOCK</div>
+        <div class="feature-desc">Theo dõi độ ổn định mạng</div>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" data-feature="PRECISION LOCK">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
+    <div class="feature">
+      <div>
+        <div class="feature-name">RECOIL CONTROL</div>
+        <div class="feature-desc">Chế độ giao diện</div>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" data-feature="RECOIL CONTROL">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
+    <div class="feature">
+      <div>
+        <div class="feature-name">SENSITIVITY BOOST</div>
+        <div class="feature-desc">Theo dõi kết nối</div>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" data-feature="SENSITIVITY BOOST">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
+    <div class="feature">
+      <div>
+        <div class="feature-name">PHANTOM MODE</div>
+        <div class="feature-desc">Chế độ giao diện mạng</div>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" data-feature="PHANTOM MODE">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
+    <div class="feature">
+      <div>
+        <div class="feature-name">OMEGA LOCK</div>
+        <div class="feature-desc">Theo dõi trạng thái hệ thống</div>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" data-feature="OMEGA LOCK">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+  </div>
+
+
+  <!-- ACTION -->
+
+  <div class="action-box">
+
+    <button class="game-btn" onclick="openGame()">
+      🎮 MỞ FREE FIRE
+    </button>
+
+    <button class="info-btn" onclick="testNetwork(true)">
+      🌐 KIỂM TRA MẠNG
+    </button>
+
+    <button class="logout-btn" onclick="logout()">
+      🚪 ĐĂNG XUẤT
+    </button>
+
+  </div>
+
+
+  <!-- HISTORY -->
+
+  <div class="history">
+
+    <div class="history-title">
+      📋 LỊCH SỬ HOẠT ĐỘNG
+    </div>
+
+    <div id="historyList" class="history-list">
+      Chưa có hoạt động.
+    </div>
+
+  </div>
+
+
+  <div class="footer">
+    MINHQUAN LOCK • Network Monitor
+  </div>
+
+</div>
+
+
+<script>
+
+/* ================= CONFIG ================= */
+
+const API =
+  "https://quan-key-admin.baoquyen2737.workers.dev";
+
+
+/* ================= DEVICE ID ================= */
+
+function getDeviceId() {
+
+  let deviceId =
+    localStorage.getItem("mq_device_id");
+
+  if (!deviceId) {
+
+    deviceId =
+      "device-" +
+      crypto.randomUUID();
+
+    localStorage.setItem(
+      "mq_device_id",
+      deviceId
+    );
+  }
+
+  return deviceId;
+}
+
+
+/* ================= ZALO ================= */
+
+function openZalo() {
+
+  window.open(
+    "https://zalo.me/0983774970",
+    "_blank"
+  );
+
+}
+
+
+/* ================= LOGIN ================= */
+
+async function login() {
+
+  const input =
+    document.getElementById("keyInput");
+
+  const message =
+    document.getElementById("loginMessage");
+
+  const key =
+    input.value.trim();
+
+  if (!key) {
+
+    message.textContent =
+      "Vui lòng nhập Key.";
+
+    return;
+  }
+
+  message.style.color =
+    "#00eaff";
+
+  message.textContent =
+    "Đang kiểm tra Key...";
+
+
+  try {
+
+    const response =
+      await fetch(
+        API + "/api/login",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            key: key,
+            deviceId: getDeviceId()
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+
+      message.style.color =
+        "#ff6b6b";
+
+      message.textContent =
+        data.message ||
+        "Key không hợp lệ.";
+
+      return;
+    }
+
+
+    /*
+      Lưu thời gian hết hạn.
+      Đây là timestamp do Worker trả về.
+    */
+
+    localStorage.setItem(
+      "mq_login_key",
+      key
+    );
+
+    localStorage.setItem(
+      "mq_expires_at",
+      data.expires_at
+    );
+
+
+    message.style.color =
+      "#00ff9d";
+
+    message.textContent =
+      "Đăng nhập thành công.";
+
+
+    setTimeout(() => {
+
+      openApp();
+
+    }, 400);
+
+
+  } catch (error) {
+
+    message.style.color =
+      "#ff6b6b";
+
+    message.textContent =
+      "Không kết nối được máy chủ.";
+
+  }
+
+}
+
+
+/* ================= OPEN APP ================= */
+
+function openApp() {
+
+  document
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("app")
+    .classList.remove("hidden");
+
+
+  updateKeyStatus();
+
+  loadFeatures();
+
+  loadHistory();
+
+  updateNetworkType();
+
+  testNetwork(false);
+
+}
+
+
+/* ================= KEY STATUS ================= */
+
+function updateKeyStatus() {
+
+  const key =
+    localStorage.getItem(
+      "mq_login_key"
+    );
+
+  const expiresAt =
+    Number(
+      localStorage.getItem(
+        "mq_expires_at"
+      )
+    );
+
+
+  const keyDisplay =
+    document.getElementById(
+      "keyDisplay"
+    );
+
+  const keyExpire =
+    document.getElementById(
+      "keyExpire"
+    );
+
+  const keyRemaining =
+    document.getElementById(
+      "keyRemaining"
+    );
+
+
+  if (
+    !key ||
+    !expiresAt ||
+    !Number.isFinite(expiresAt)
+  ) {
+
+    keyDisplay.textContent =
+      "---";
+
+    keyExpire.textContent =
+      "---";
+
+    keyRemaining.textContent =
+      "---";
+
+    return;
+  }
+
+
+  keyDisplay.textContent =
+    key;
+
+
+  const expireDate =
+    new Date(
+      expiresAt * 1000
+    );
+
+
+  keyExpire.textContent =
+    expireDate.toLocaleString(
+      "vi-VN"
+    );
+
+
+  updateRemaining();
+
+}
+
+
+/* ================= COUNTDOWN ================= */
+
+function updateRemaining() {
+
+  const expiresAt =
+    Number(
+      localStorage.getItem(
+        "mq_expires_at"
+      )
+    );
+
+
+  const element =
+    document.getElementById(
+      "keyRemaining"
+    );
+
+
+  if (
+    !expiresAt ||
+    !Number.isFinite(expiresAt)
+  ) {
+
+    element.textContent =
+      "---";
+
+    return;
+  }
+
+
+  const now =
+    Date.now();
+
+  const difference =
+    (expiresAt * 1000) -
+    now;
+
+
+  if (difference <= 0) {
+
+    element.textContent =
+      "KEY ĐÃ HẾT HẠN";
+
+    element.style.color =
+      "#ff4d4d";
+
+    return;
+  }
+
+
+  const totalSeconds =
+    Math.floor(
+      difference / 1000
+    );
+
+
+  const days =
+    Math.floor(
+      totalSeconds / 86400
+    );
+
+  const hours =
+    Math.floor(
+      (totalSeconds % 86400) / 3600
+    );
+
+  const minutes =
+    Math.floor(
+      (totalSeconds % 3600) / 60
+    );
+
+  const seconds =
+    totalSeconds % 60;
+
+
+  element.textContent =
+    `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+
+  element.style.color =
+    "#00ff9d";
+
+}
+
+
+/* Cập nhật đồng hồ mỗi giây */
+
+setInterval(
+  updateRemaining,
+  1000
+);
+
+
+/* ================= FEATURE ================= */
+
+function loadFeatures() {
+
+  document
+    .querySelectorAll(
+      "input[data-feature]"
+    )
+    .forEach(input => {
+
+      const name =
+        input.dataset.feature;
+
+      const saved =
+        localStorage.getItem(
+          "mq_feature_" + name
+        );
+
+      input.checked =
+        saved === "1";
+
+    });
+
+}
+
+
+document
+  .querySelectorAll(
+    "input[data-feature]"
+  )
+  .forEach(input => {
+
+    input.addEventListener(
+      "change",
+      function() {
+
+        const name =
+          this.dataset.feature;
+
+        localStorage.setItem(
+          "mq_feature_" + name,
+          this.checked
+            ? "1"
+            : "0"
+        );
+
+        addHistory(
+          name +
+          ": " +
+          (
+            this.checked
+              ? "BẬT"
+              : "TẮT"
+          )
+        );
+
+        testNetwork(false);
+
+      }
+    );
+
+  });
+
+
+/* ================= NETWORK ================= */
+
+function updateNetworkType() {
+
+  const element =
+    document.getElementById(
+      "networkType"
+    );
+
+
+  if (
+    navigator.connection
+  ) {
+
+    const type =
+      navigator.connection.effectiveType ||
+      navigator.connection.type ||
+      "Không rõ";
+
+    element.textContent =
+      type.toUpperCase();
+
+  } else {
+
+    element.textContent =
+      "Trình duyệt không hỗ trợ";
+
+  }
+
+}
+
+
+async function testNetwork(showMessage = true) {
+
+  const pingElement =
+    document.getElementById(
+      "networkPing"
+    );
+
+
+  const start =
+    performance.now();
+
+
+  try {
+
+    const response =
+      await fetch(
+        API + "/",
+        {
+          method: "GET",
+          cache: "no-store"
+        }
+      );
+
+
+    const end =
+      performance.now();
+
+
+    const ping =
+      Math.round(
+        end - start
+      );
+
+
+    if (response.ok) {
+
+      pingElement.textContent =
+        ping + " ms";
+
+      if (showMessage) {
+
+        addHistory(
+          "Kiểm tra mạng: " +
+          ping +
+          " ms"
+        );
+
+      }
+
+    } else {
+
+      pingElement.textContent =
+        "Lỗi";
+
+    }
+
+  } catch (error) {
+
+    pingElement.textContent =
+      "Offline";
+
+    if (showMessage) {
+
+      addHistory(
+        "Kiểm tra mạng: Offline"
+      );
+
+    }
+
+  }
+
+}
+
+
+if (navigator.connection) {
+
+  navigator.connection.addEventListener(
+    "change",
+    updateNetworkType
+  );
+
+}
+
+
+/* ================= HISTORY ================= */
+
+function addHistory(text) {
+
+  const history =
+    JSON.parse(
+      localStorage.getItem(
+        "mq_history"
+      ) || "[]"
+    );
+
+
+  const time =
+    new Date().toLocaleTimeString(
+      "vi-VN"
+    );
+
+
+  history.unshift(
+    `[${time}] ${text}`
+  );
+
+
+  /*
+    Chỉ giữ 30 dòng gần nhất
+  */
+
+  localStorage.setItem(
+    "mq_history",
+    JSON.stringify(
+      history.slice(0, 30)
+    )
+  );
+
+
+  loadHistory();
+
+}
+
+
+function loadHistory() {
+
+  const element =
+    document.getElementById(
+      "historyList"
+    );
+
+
+  if (!element) return;
+
+
+  const history =
+    JSON.parse(
+      localStorage.getItem(
+        "mq_history"
+      ) || "[]"
+    );
+
+
+  if (!history.length) {
+
+    element.textContent =
+      "Chưa có hoạt động.";
+
+    return;
+  }
+
+
+  element.innerHTML =
+    history
+      .map(
+        item =>
+          `<div>${escapeHtml(item)}</div>`
+      )
+      .join("");
+
+}
+
+
+/* ================= SECURITY ================= */
+
+function escapeHtml(text) {
+
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* ================= GAME ================= */
+
+function openGame() {
+
+  addHistory(
+    "Đã yêu cầu mở Free Fire"
+  );
+
+  window.location.href =
+    "freefire://";
+
+}
+
+
+/* ================= INFO ================= */
+
+function showNetworkInfo() {
+
+  alert(
+    "MINHQUAN LOCK\n\n" +
+    "• Quản lý thời hạn Key\n" +
+    "• Theo dõi kết nối mạng\n" +
+    "• Đo thời gian phản hồi server\n" +
+    "• Các nút tính năng hiện chỉ là giao diện\n" +
+    "• Không can thiệp vào dữ liệu hoặc hoạt động của game."
+  );
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logout() {
+
+  localStorage.removeItem(
+    "mq_login_key"
+  );
+
+  localStorage.removeItem(
+    "mq_expires_at"
+  );
+
+
+  document
+    .getElementById("app")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("loginPage")
+    .classList.remove("hidden");
+
+
+  document
+    .getElementById("keyInput")
+    .value = "";
+
+
+  document
+    .getElementById("loginMessage")
+    .textContent = "";
+
+}
+
+
+/* ================= AUTO LOGIN ================= */
+
+/*
+  Không tự động đăng nhập bằng Key cũ.
+  Mỗi lần mở trang sẽ yêu cầu nhập Key.
+*/
+
+</script>
+
+</body>
+</html>

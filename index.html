@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --bg:#05080e;
+  --card:#0b111b;
+  --card2:#0e1622;
+  --line:#1b293d;
+  --text:#f4f7fb;
+  --muted:#77859a;
+  --cyan:#00e5ff;
+  --green:#32e69a;
+  --red:#ff5570;
+}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 50% -10%,#07364a 0,#05080e 42%);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  min-height:100vh;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN */
+
+.login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:min(390px,100%);
+  padding:30px 22px;
+  background:#09101aee;
+  border:1px solid var(--line);
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 20px 70px #0008;
+}
+
+.logo{
+  width:70px;
+  height:70px;
+  border-radius:20px;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+
+.logo-fallback{
+  width:70px;
+  height:70px;
+  margin:0 auto 10px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#092633;
+  color:var(--cyan);
+  font-size:30px;
+  font-weight:900;
+}
+
+.login-title{
+  font-size:26px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.login-sub{
+  margin:7px 0 24px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.input{
+  width:100%;
+  padding:15px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:#050a11;
+  color:white;
+  outline:none;
+}
+
+.input:focus{
+  border-color:var(--cyan);
+}
+
+.primary{
+  width:100%;
+  margin-top:11px;
+  padding:14px;
+  border:0;
+  border-radius:13px;
+  background:var(--cyan);
+  color:#001116;
+  font-weight:900;
+}
+
+.primary:hover{
+  filter:brightness(1.08);
+}
+
+.login-msg{
+  min-height:20px;
+  margin-top:12px;
+  color:var(--red);
+  font-size:13px;
+}
+
+/* APP */
+
+.app{
+  min-height:100vh;
+  padding-bottom:92px;
+}
+
+.container{
+  width:min(720px,calc(100% - 24px));
+  margin:auto;
+}
+
+/* TOP */
+
+.top{
+  padding:18px 0 8px;
+}
+
+.top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.brand{
+  font-size:21px;
+  font-weight:950;
+  letter-spacing:.4px;
+}
+
+.brand span{
+  color:var(--cyan);
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 10px;
+  border-radius:20px;
+  background:#08271e;
+  color:var(--green);
+  font-size:11px;
+  font-weight:800;
+}
+
+.dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+}
+
+/* PAGES */
+
+.page{
+  display:none;
+  padding-top:18px;
+}
+
+.page.active{
+  display:block;
+}
+
+.page-title{
+  font-size:27px;
+  font-weight:900;
+  margin:4px 0 5px;
+}
+
+.page-sub{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+/* CARDS */
+
+.card{
+  background:linear-gradient(145deg,#0c141f,#080e17);
+  border:1px solid var(--line);
+  border-radius:19px;
+  padding:17px;
+  margin-bottom:12px;
+}
+
+.card-title{
+  font-size:14px;
+  font-weight:850;
+  margin-bottom:13px;
+}
+
+/* SYSTEM */
+
+.system{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.stat{
+  background:#070d15;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:15px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:7px;
+}
+
+.stat-value{
+  font-size:17px;
+  font-weight:850;
+}
+
+.green{
+  color:var(--green);
+}
+
+.cyan{
+  color:var(--cyan);
+}
+
+.red{
+  color:var(--red);
+}
+
+/* FEATURES */
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.feature{
+  min-height:76px;
+  padding:13px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  background:#080e16;
+  transition:.2s;
+}
+
+.feature.on{
+  border-color:#00bdd3;
+  background:#06202a;
+}
+
+.feature-name{
+  font-size:13px;
+  font-weight:850;
+  padding-right:42px;
+}
+
+.feature-desc{
+  margin-top:5px;
+  color:#647289;
+  font-size:10px;
+}
+
+.toggle{
+  position:relative;
+  float:right;
+  width:38px;
+  height:21px;
+  border-radius:20px;
+  background:#263244;
+}
+
+.toggle:after{
+  content:"";
+  position:absolute;
+  width:15px;
+  height:15px;
+  left:3px;
+  top:3px;
+  border-radius:50%;
+  background:#7c8798;
+  transition:.2s;
+}
+
+.feature.on .toggle{
+  background:#008fa4;
+}
+
+.feature.on .toggle:after{
+  left:20px;
+  background:white;
+}
+
+/* NETWORK */
+
+.network-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #142033;
+}
+
+.network-row:last-child{
+  border-bottom:0;
+}
+
+.network-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.network-value{
+  font-weight:800;
+  font-size:13px;
+}
+
+.small-btn{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid #244054;
+  background:#08151e;
+  color:var(--cyan);
+  font-weight:800;
+}
+
+.small-btn:hover{
+  background:#0b2530;
+}
+
+/* PROFILE */
+
+.profile-head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:16px;
+}
+
+.avatar{
+  width:58px;
+  height:58px;
+  flex-shrink:0;
+  border-radius:18px;
+  background:#092632;
+  border:1px solid #00bcd4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
+
+.profile-name{
+  font-size:18px;
+  font-weight:900;
+}
+
+.profile-status{
+  color:var(--green);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:13px 0;
+  border-bottom:1px solid #142033;
+}
+
+.info-row:last-child{
+  border-bottom:0;
+}
+
+.info-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.info-value{
+  max-width:60%;
+  text-align:right;
+  word-break:break-all;
+  font-size:12px;
+  font-weight:800;
+}
+
+.logout{
+  width:100%;
+  padding:13px;
+  border:1px solid #4b1e2a;
+  background:#190b10;
+  color:#ff647d;
+  border-radius:13px;
+  font-weight:850;
+}
+
+.zalo{
+  width:100%;
+  padding:13px;
+  border:0;
+  background:#1769ff;
+  color:white;
+  border-radius:13px;
+  font-weight:850;
+  margin-bottom:9px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  z-index:20;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(500px,calc(100% - 24px));
+  padding:7px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+  background:#080e17eF;
+  backdrop-filter:blur(18px);
+  border:1px solid #223149;
+  border-radius:18px;
+  box-shadow:0 10px 40px #000b;
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:#68768b;
+  border-radius:13px;
+  padding:10px 5px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.nav-icon{
+  display:block;
+  font-size:19px;
+  margin-bottom:3px;
+}
+
+.nav-btn.active{
+  background:#07303a;
+  color:var(--cyan);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:500px){
+
+  .container{
+    width:calc(100% - 18px);
+  }
+
+  .features{
+    grid-template-columns:1fr;
+  }
+
+  .system{
+    gap:8px;
+  }
+
+  .stat{
+    padding:13px;
+  }
+
+  .page-title{
+    font-size:24px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage" class="login">
+
+  <div class="login-box">
+
+    <img
+      class="logo"
+      src="https://baoquyen2737-del.github.io/minhquan-lock/logo.png"
+      onerror="this.style.display='none';document.getElementById('fallbackLogo').style.display='flex'"
+    >
+
+    <div id="fallbackLogo" class="logo-fallback" style="display:none">
+      MQ
+    </div>
+
+    <div class="login-title">MINHQUAN LOCK</div>
+
+    <div class="login-sub">
+      LICENSE CONTROL SYSTEM
+    </div>
+
+    <input
+      id="keyInput"
+      class="input"
+      placeholder="Nhập Key của bạn..."
+      autocomplete="off"
+    >
+
+    <button class="primary" onclick="login()">
+      ĐĂNG NHẬP
+    </button>
+
+    <div id="loginMsg" class="login-msg"></div>
+
+  </div>
+</div>
+
+
+<!-- APP -->
+<div id="app" class="app hidden">
+
+  <div class="container">
+
+    <!-- TOP -->
+    <div class="top">
+      <div class="top-row">
+
+        <div class="brand">
+          MINHQUAN <span>LOCK</span>
+        </div>
+
+        <div class="status">
+          <span class="dot"></span>
+          ONLINE
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ================= ĐIỀU KHIỂN ================= -->
+    <section id="controlPage" class="page active">
+
+      <div class="page-title">
+        Điều khiển
+      </div>
+
+      <div class="page-sub">
+        Theo dõi hệ thống và kết nối.
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-title">
+          ⚡ HỆ THỐNG
+        </div>
+
+        <div class="system">
+
+          <div class="stat">
+            <div class="stat-label">TRẠNG THÁI</div>
+            <div id="systemStatus" class="stat-value green">
+              ONLINE
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">PING</div>
+            <div id="ping" class="stat-value cyan">
+              -- ms
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">MẠNG</div>
+            <div id="networkType" class="stat-value">
+              ---
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">LICENSE</div>
+            <div id="controlCountdown" class="stat-value">
+              ---
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-title">
+          📡 KẾT NỐI
+        </div>
+
+        <div class="network-row">
+          <span class="network-label">Internet</span>
+          <strong id="internetStatus" class="network-value green">
+            Đang

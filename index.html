@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#05080e">
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+  --bg:#05080e;
+  --bg2:#080d15;
+  --card:#0a1019;
+  --card2:#0d1520;
+  --line:#1d2b40;
+  --text:#f4f7fb;
+  --muted:#7b899e;
+  --cyan:#00e5ff;
+  --cyan2:#08bcd2;
+  --green:#38e59c;
+  --red:#ff5872;
+  --yellow:#ffc44d;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* ================= LOGIN ================= */
+
+.login-page{
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(0,229,255,.14),
+      transparent 42%
+    ),
+    #05080e;
+}
+
+.login-box{
+  width:min(400px,100%);
+  padding:30px 22px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:rgba(9,15,24,.94);
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.55),
+    0 0 45px rgba(0,229,255,.04);
+  text-align:center;
+}
+
+.login-logo{
+  width:72px;
+  height:72px;
+  object-fit:cover;
+  border-radius:20px;
+  margin-bottom:12px;
+}
+
+.logo-fallback{
+  width:72px;
+  height:72px;
+  margin:0 auto 12px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  border-radius:20px;
+  background:#082b35;
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  font-size:25px;
+  font-weight:950;
+}
+
+.login-title{
+  font-size:27px;
+  font-weight:950;
+  letter-spacing:.4px;
+}
+
+.login-sub{
+  margin:7px 0 24px;
+  color:var(--muted);
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.key-input{
+  width:100%;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  outline:none;
+  background:#050a11;
+  color:white;
+  text-align:center;
+}
+
+.key-input:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(0,229,255,.07);
+}
+
+.login-btn{
+  width:100%;
+  margin-top:11px;
+  padding:14px;
+  border:0;
+  border-radius:13px;
+  background:var(--cyan);
+  color:#001116;
+  font-weight:950;
+}
+
+.login-btn:active{
+  transform:scale(.99);
+}
+
+.login-message{
+  min-height:20px;
+  margin-top:12px;
+  color:var(--red);
+  font-size:12px;
+}
+
+
+/* ================= APP ================= */
+
+.app{
+  min-height:100vh;
+  min-height:100svh;
+  padding-bottom:35px;
+  background:
+    radial-gradient(
+      circle at 50% -15%,
+      rgba(0,229,255,.10),
+      transparent 38%
+    ),
+    var(--bg);
+}
+
+.container{
+  width:min(900px,calc(100% - 28px));
+  margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+.header{
+  padding:22px 0 16px;
+  border-bottom:1px solid #132033;
+}
+
+.header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:22px;
+  font-weight:950;
+  letter-spacing:.3px;
+}
+
+.brand-lightning{
+  font-size:23px;
+}
+
+.brand-text span{
+  color:var(--cyan);
+}
+
+.header-status{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 10px;
+  border-radius:30px;
+  background:#07251d;
+  color:var(--green);
+  font-size:10px;
+  font-weight:900;
+}
+
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+}
+
+
+/* ================= TOP TABS ================= */
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:20px 0 25px;
+}
+
+.tab{
+  min-height:72px;
+  padding:9px 5px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#090f18;
+  color:#77859a;
+  transition:.2s;
+}
+
+.tab-icon{
+  display:block;
+  font-size:22px;
+  margin-bottom:5px;
+}
+
+.tab-name{
+  display:block;
+  font-size:12px;
+  font-weight:900;
+}
+
+.tab.active{
+  color:var(--cyan);
+  border-color:var(--cyan);
+  background:#07313b;
+  box-shadow:
+    0 0 25px rgba(0,229,255,.08),
+    inset 0 0 20px rgba(0,229,255,.04);
+}
+
+.tab:active{
+  transform:scale(.98);
+}
+
+
+/* ================= PAGE ================= */
+
+.page{
+  display:none;
+  animation:fade .18s ease;
+}
+
+.page.active{
+  display:block;
+}
+
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(5px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.page-title{
+  margin:0;
+  font-size:31px;
+  font-weight:950;
+}
+
+.page-sub{
+  margin:7px 0 20px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+
+/* ================= CARD ================= */
+
+.card{
+  margin-bottom:13px;
+  padding:19px;
+  border:1px solid var(--line);
+  border-radius:21px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(13,21,32,.98),
+      rgba(7,12,20,.98)
+    );
+  box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.card-title{
+  margin-bottom:15px;
+  color:var(--cyan);
+  font-size:17px;
+  font-weight:900;
+}
+
+
+/* ================= SYSTEM ================= */
+
+.system-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.stat{
+  padding:15px;
+  border:1px solid #17253a;
+  border-radius:15px;
+  background:#070d15;
+}
+
+.stat-label{
+  margin-bottom:7px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.5px;
+}
+
+.stat-value{
+  font-size:16px;
+  font-weight:900;
+}
+
+.green{
+  color:var(--green);
+}
+
+.cyan{
+  color:var(--cyan);
+}
+
+.red{
+  color:var(--red);
+}
+
+
+/* ================= NETWORK ================= */
+
+.network-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:13px 0;
+  border-bottom:1px solid #162337;
+}
+
+.network-row:last-of-type{
+  border-bottom:0;
+}
+
+.network-label{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.network-value{
+  font-size:13px;
+  font-weight:900;
+  text-align:right;
+}
+
+.action-btn{
+  width:100%;
+  margin-top:12px;
+  padding:13px;
+  border:1px solid #164454;
+  border-radius:13px;
+  background:#071923;
+  color:var(--cyan);
+  font-weight:900;
+}
+
+.action-btn:active{
+  transform:scale(.99);
+}
+
+
+/* ================= FEATURES ================= */
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.feature{
+  position:relative;
+  min-height:83px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#080e16;
+  transition:.2s;
+}
+
+.feature.active{
+  border-color:#00bcd4;
+  background:#06222b;
+  box-shadow:0 0 20px rgba(0,229,255,.06);
+}
+
+.feature-name{
+  padding-right:43px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.feature-desc{
+  margin-top:6px;
+  color:#68778d;
+  font-size:10px;
+}
+
+.toggle{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:39px;
+  height:22px;
+  border-radius:20px;
+  background:#273448;
+  transition:.2s;
+}
+
+.toggle::after{
+  content:"";
+  position:absolute;
+  top:3px;
+  left:3px;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:#7d899a;
+  transition:.2s;
+}
+
+.feature.active .toggle{
+  background:#008ea2;
+}
+
+.feature.active .toggle::after{
+  left:20px;
+  background:#fff;
+}
+
+
+/* ================= PROFILE ================= */
+
+.profile-head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
+}
+
+.avatar{
+  width:62px;
+  height:62px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--cyan);
+  border-radius:19px;
+  background:#082832;
+  font-size:27px;
+}
+
+.profile-name{
+  font-size:18px;
+  font-weight:950;
+}
+
+.profile-active{
+  margin-top:4px;
+  color:var(--green);
+  font-size:11px;
+  font-weight:700;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+  padding:13px 0;
+  border-bottom:1px solid #162337;
+}
+
+.info-row:last-child{
+  border-bottom:0;
+}
+
+.info-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.info-value{
+  max-width:62%;
+  color:#edf2f8;
+  font-size:12px;
+  font-weight:900;
+  text-align:right;
+  word-break:break-word;
+}
+
+.zalo-btn{
+  width:100%;
+  margin-bottom:10px;
+  padding:13px;
+  border:0;
+  border-radius:13px;
+  background:#1769ff;
+  color:white;
+  font-weight:900;
+}
+
+.logout-btn{
+  width:100%;
+  padding:13px;
+  border:1px solid #4b1d2a;
+  border-radius:13px;
+  background:#190b10;
+  color:#ff647d;
+  font-weight:900;
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer{
+  padding:25px 0 10px;
+  text-align:center;
+  color:#46556b;
+  font-size:10px;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:560px){
+
+  .container{
+    width:calc(100% - 18px);
+  }
+
+  .header{
+    padding-top:18px;
+  }
+
+  .brand{
+    font-size:19px;
+  }
+
+  .tabs{
+    gap:7px;
+    margin-top:15px;
+  }
+
+  .tab{
+    min-height:68px;
+    border-radius:15px;
+  }
+
+  .tab-icon{
+    font-size:20px;
+  }
+
+  .tab-name{
+    font-size:10px;
+  }
+
+  .page-title{
+    font-size:27px;
+  }
+
+  .card{
+    padding:16px;
+    border-radius:18px;
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:370px){
+
+  .header-status{
+    display:none;
+  }
+
+  .system-grid{
+    grid-template-columns:1fr;
+  }
+
+  .tab-name{
+    font-size:9px;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<section id="loginPage" class="login-page">
+
+  <div class="login-box">
+
+    <img
+      class="login-logo"
+      src="https://baoquyen2737-del.github.io/minhquan-lock/logo.png"
+      onerror="
+        this.style.display='none';
+        document.getElementById('logoFallback').style.display='flex';
+      "
+    >
+
+    <div id="logoFallback" class="logo-fallback">
+      MQ
+    </div>
+
+    <div class="login-title">
+      MINHQUAN LOCK
+    </div>
+
+    <div class="login-sub">
+     

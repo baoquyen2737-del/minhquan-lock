@@ -1,0 +1,2369 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0,user-scalable=no">
+
+<meta name="theme-color" content="#050911">
+
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+    --bg:#03070d;
+    --panel:#080f19;
+    --panel2:#0b1520;
+    --line:#16283b;
+    --cyan:#00d9ff;
+    --cyan2:#00aeca;
+    --green:#29e69b;
+    --red:#ff5268;
+    --yellow:#ffc400;
+    --text:#f5f8fc;
+    --muted:#74849a;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(0,217,255,.15),
+            transparent 38%
+        ),
+        var(--bg);
+    color:var(--text);
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+/* =========================
+   SPLASH
+========================= */
+
+#splash{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(0,217,255,.13),
+            transparent 35%
+        ),
+        #03070d;
+}
+
+.splash-card{
+    width:calc(100% - 44px);
+    max-width:430px;
+
+    padding:54px 28px 42px;
+
+    border:1px solid #20364c;
+    border-radius:34px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10,19,30,.96),
+            rgba(5,11,18,.98)
+        );
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.5),
+        0 0 50px rgba(0,217,255,.05);
+
+    text-align:center;
+}
+
+.logo{
+    width:112px;
+    height:112px;
+
+    margin:0 auto 30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid var(--cyan);
+    border-radius:30px;
+
+    background:rgba(0,217,255,.08);
+
+    color:var(--cyan);
+    font-size:40px;
+    font-weight:900;
+
+    box-shadow:
+        0 0 35px rgba(0,217,255,.16);
+}
+
+.brand{
+    font-size:29px;
+    font-weight:900;
+    letter-spacing:-1px;
+}
+
+.brand span{
+    color:var(--cyan);
+}
+
+.subtitle{
+    margin-top:9px;
+    color:#687a91;
+    font-size:13px;
+    letter-spacing:4px;
+}
+
+.loading-track{
+    height:7px;
+    margin-top:38px;
+
+    overflow:hidden;
+
+    background:#142335;
+    border-radius:99px;
+}
+
+#loadingBar{
+    width:0%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        var(--cyan2),
+        var(--cyan)
+    );
+
+    border-radius:99px;
+
+    transition:width .08s linear;
+}
+
+#loadingText{
+    margin-top:15px;
+    color:#dce4ed;
+    font-size:15px;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginScreen{
+    min-height:100vh;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:25px;
+}
+
+.login-card{
+    width:100%;
+    max-width:430px;
+
+    padding:35px 25px 28px;
+
+    border:1px solid #1d344a;
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #09131e,
+            #060c14
+        );
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.45);
+}
+
+.login-logo{
+    width:78px;
+    height:78px;
+
+    margin:0 auto 22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid var(--cyan);
+    border-radius:24px;
+
+    background:rgba(0,217,255,.08);
+
+    color:var(--cyan);
+    font-size:27px;
+    font-weight:900;
+}
+
+.login-card h1{
+    text-align:center;
+    font-size:27px;
+}
+
+.login-card h1 span{
+    color:var(--cyan);
+}
+
+.login-desc{
+    margin:8px 0 25px;
+
+    color:var(--muted);
+    text-align:center;
+    font-size:14px;
+}
+
+.key-input{
+    width:100%;
+    height:57px;
+
+    padding:0 18px;
+
+    border:1px solid #22394f;
+    border-radius:17px;
+
+    outline:none;
+
+    background:#050b13;
+    color:white;
+
+    font-size:16px;
+}
+
+.key-input:focus{
+    border-color:var(--cyan);
+    box-shadow:0 0 0 3px rgba(0,217,255,.08);
+}
+
+.login-btn{
+    width:100%;
+    height:57px;
+
+    margin-top:13px;
+
+    border-radius:17px;
+
+    background:linear-gradient(
+        135deg,
+        #00bcd9,
+        #00dfff
+    );
+
+    color:#001016;
+
+    font-weight:900;
+    font-size:16px;
+
+    box-shadow:0 10px 30px rgba(0,217,255,.15);
+}
+
+.login-btn:disabled{
+    opacity:.5;
+}
+
+.login-error{
+    min-height:22px;
+
+    margin-top:13px;
+
+    color:var(--red);
+
+    text-align:center;
+    font-size:13px;
+}
+
+/* =========================
+   APP
+========================= */
+
+#app{
+    display:none;
+    min-height:100vh;
+    padding-bottom:100px;
+}
+
+.container{
+    width:100%;
+    max-width:720px;
+
+    margin:auto;
+    padding:22px 17px 30px;
+}
+
+/* HEADER */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:4px 2px 19px;
+
+    border-bottom:1px solid #142538;
+}
+
+.header-brand{
+    font-size:23px;
+    font-weight:900;
+}
+
+.header-brand .bolt{
+    color:var(--yellow);
+}
+
+.header-brand span{
+    color:var(--cyan);
+}
+
+.online{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:9px 14px;
+
+    border:1px solid rgba(41,230,155,.18);
+    border-radius:99px;
+
+    background:rgba(41,230,155,.08);
+
+    color:var(--green);
+
+    font-size:12px;
+    font-weight:800;
+}
+
+.online-dot{
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:0 0 10px var(--green);
+}
+
+/* PAGE */
+
+.page{
+    display:none;
+    animation:fade .25s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(7px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.page-title{
+    margin:28px 0 5px;
+
+    font-size:34px;
+    font-weight:900;
+    letter-spacing:-1px;
+}
+
+.page-desc{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+/* CARDS */
+
+.card{
+    margin-bottom:15px;
+
+    padding:20px;
+
+    border:1px solid #172b40;
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10,19,29,.96),
+            rgba(6,12,20,.96)
+        );
+
+    box-shadow:0 12px 35px rgba(0,0,0,.16);
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-bottom:17px;
+
+    color:var(--cyan);
+
+    font-size:18px;
+    font-weight:900;
+}
+
+/* SYSTEM GRID */
+
+.system-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.stat{
+    min-height:100px;
+
+    padding:16px;
+
+    border:1px solid #172c41;
+    border-radius:19px;
+
+    background:#050b13;
+}
+
+.stat-label{
+    color:#687a91;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.stat-value{
+    margin-top:11px;
+
+    font-size:19px;
+    font-weight:900;
+}
+
+.green{
+    color:var(--green);
+}
+
+.cyan{
+    color:var(--cyan);
+}
+
+/* NETWORK */
+
+.network-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:14px 0;
+
+    border-bottom:1px solid #152639;
+}
+
+.network-row:last-of-type{
+    border-bottom:0;
+}
+
+.network-label{
+    color:#78889d;
+}
+
+.network-value{
+    font-weight:800;
+}
+
+.check-btn,
+.game-btn{
+    width:100%;
+    height:53px;
+
+    margin-top:15px;
+
+    border-radius:16px;
+
+    font-weight:900;
+}
+
+.check-btn{
+    background:#062631;
+    border:1px solid #087e93;
+    color:var(--cyan);
+}
+
+.game-btn{
+    background:linear-gradient(
+        135deg,
+        #ffc400,
+        #ff9d00
+    );
+
+    color:#171000;
+
+    box-shadow:0 10px 25px rgba(255,183,0,.12);
+}
+
+/* FEATURES */
+
+.feature{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:18px;
+
+    margin-bottom:10px;
+
+    border:1px solid #172b40;
+    border-radius:20px;
+
+    background:#07101a;
+
+    transition:.2s;
+}
+
+.feature.on{
+    border-color:#00abc4;
+    background:#06212a;
+}
+
+.feature-name{
+    font-size:15px;
+    font-weight:900;
+}
+
+.feature-desc{
+    margin-top:5px;
+    color:#66788c;
+    font-size:12px;
+}
+
+/* SWITCH */
+
+.switch{
+    position:relative;
+
+    width:52px;
+    height:30px;
+
+    flex:none;
+
+    border-radius:99px;
+
+    background:#1a2a3a;
+
+    transition:.2s;
+}
+
+.switch::after{
+    content:"";
+
+    position:absolute;
+
+    width:22px;
+    height:22px;
+
+    top:4px;
+    left:4px;
+
+    border-radius:50%;
+
+    background:#dfe8ef;
+
+    transition:.2s;
+}
+
+.switch.active{
+    background:#00a6c1;
+}
+
+.switch.active::after{
+    transform:translateX(22px);
+    background:white;
+}
+
+/* PROFILE */
+
+.profile-head{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    margin-bottom:18px;
+}
+
+.avatar{
+    width:62px;
+    height:62px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid var(--cyan);
+    border-radius:20px;
+
+    background:rgba(0,217,255,.08);
+
+    color:var(--cyan);
+    font-size:21px;
+    font-weight:900;
+}
+
+.profile-name{
+    font-size:19px;
+    font-weight:900;
+}
+
+.profile-status{
+    margin-top:5px;
+    color:var(--green);
+    font-size:12px;
+    font-weight:800;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+
+    padding:14px 0;
+
+    border-bottom:1px solid #142538;
+}
+
+.info-row:last-child{
+    border-bottom:0;
+}
+
+.info-label{
+    color:#718399;
+}
+
+.info-value{
+    max-width:60%;
+
+    text-align:right;
+
+    font-weight:800;
+    word-break:break-all;
+}
+
+.logout-btn{
+    width:100%;
+    height:50px;
+
+    margin-top:5px;
+
+    border:1px solid rgba(255,82,104,.3);
+    border-radius:16px;
+
+    background:rgba(255,82,104,.08);
+
+    color:#ff7183;
+
+    font-weight:900;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+    position:fixed;
+
+    left:50%;
+    bottom:14px;
+
+    transform:translateX(-50%);
+
+    z-index:100;
+
+    width:calc(100% - 26px);
+    max-width:680px;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+
+    padding:7px;
+
+    border:1px solid #1b3147;
+    border-radius:23px;
+
+    background:rgba(5,12,20,.92);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    box-shadow:0 15px 45px rgba(0,0,0,.5);
+}
+
+.nav-btn{
+    height:62px;
+
+    border-radius:17px;
+
+    background:transparent;
+
+    color:#687a91;
+
+    font-size:11px;
+    font-weight:900;
+
+    transition:.2s;
+}
+
+.nav-icon{
+    display:block;
+
+    margin-bottom:4px;
+
+    font-size:20px;
+}
+
+.nav-btn.active{
+    background:#07303a;
+    color:var(--cyan);
+
+    box-shadow:
+        inset 0 0 0 1px rgba(0,217,255,.7);
+}
+
+/* FOOTER */
+
+.footer{
+    padding:10px 0 20px;
+
+    text-align:center;
+
+    color:#314256;
+
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+/* MOBILE */
+
+@media(max-width:430px){
+
+    .container{
+        padding-left:14px;
+        padding-right:14px;
+    }
+
+    .page-title{
+        font-size:30px;
+    }
+
+    .card{
+        padding:17px;
+    }
+
+    .system-grid{
+        gap:8px;
+    }
+
+    .stat{
+        padding:14px;
+    }
+
+    .stat-value{
+        font-size:17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     SPLASH
+===================================================== -->
+
+<div id="splash">
+
+    <div class="splash-card">
+
+        <div class="logo">
+            MQ
+        </div>
+
+        <div class="brand">
+            MINHQUAN <span>LOCK</span>
+        </div>
+
+        <div class="subtitle">
+            NETWORK CONTROL
+        </div>
+
+        <div class="loading-track">
+            <div id="loadingBar"></div>
+        </div>
+
+        <div id="loadingText">
+            Đang khởi động hệ thống...
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<div id="loginScreen">
+
+    <div class="login-card">
+
+        <div class="login-logo">
+            MQ
+        </div>
+
+        <h1>
+            MINHQUAN <span>LOCK</span>
+        </h1>
+
+        <div class="login-desc">
+            Nhập License Key để tiếp tục
+        </div>
+
+        <input
+            id="keyInput"
+            class="key-input"
+            type="text"
+            placeholder="MQ-XXXXXXXXXXXXXXXX"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+        >
+
+        <button
+            id="loginBtn"
+            class="login-btn"
+            onclick="login()"
+        >
+            ⚡ ĐĂNG NHẬP
+        </button>
+
+        <div
+            id="loginError"
+            class="login-error"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<div id="app">
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="header-brand">
+                <span class="bolt">ϟ</span>
+                MINHQUAN <span>LOCK</span>
+            </div>
+
+            <div class="online">
+                <span class="online-dot"></span>
+                ONLINE
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             TAB 1 - CONTROL
+        ================================================== -->
+
+        <section
+            id="controlPage"
+            class="page active"
+        >
+
+            <h1 class="page-title">
+                Control Panel
+            </h1>
+
+            <p class="page-desc">
+                Quản lý trạng thái hệ thống và kết nối.
+            </p>
+
+
+            <!-- SYSTEM -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    ⚡ HỆ THỐNG
+                </div>
+
+                <div class="system-grid">
+
+                    <div class="stat">
+
+                        <div class="stat-label">
+                            TRẠNG THÁI
+                        </div>
+
+                        <div
+                            id="systemStatus"
+                            class="stat-value green"
+                        >
+                            ONLINE
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-label">
+                            PING
+                        </div>
+
+                        <div
+                            id="pingValue"
+                            class="stat-value cyan"
+                        >
+                            -- ms
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-label">
+                            LOẠI MẠNG
+                        </div>
+
+                        <div
+                            id="networkType"
+                            class="stat-value"
+                        >
+                            ---
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-label">
+                            LICENSE
+                        </div>
+
+                        <div
+                            id="licenseTime"
+                            class="stat-value cyan"
+                        >
+                            ---
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- NETWORK -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    📶 KẾT NỐI MẠNG
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Internet
+                    </span>
+
+                    <span
+                        id="internetStatus"
+                        class="network-value green"
+                    >
+                        ONLINE
+                    </span>
+
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Máy chủ
+                    </span>
+
+                    <span
+                        id="serverStatus"
+                        class="network-value green"
+                    >
+                        ONLINE
+                    </span>
+
+                </div>
+
+                <button
+                    class="check-btn"
+                    onclick="networkCheck(true)"
+                >
+                    ⚡ KIỂM TRA MẠNG
+                </button>
+
+            </div>
+
+
+            <!-- GAME -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    🎮 TRUY CẬP GAME
+                </div>
+
+                <div
+                    style="
+                    color:#718399;
+                    font-size:13px;
+                    line-height:1.6;
+                    "
+                >
+                    Nút này chỉ mở ứng dụng game nếu thiết bị
+                    hỗ trợ liên kết ứng dụng.
+                </div>
+
+                <button
+                    class="game-btn"
+                    onclick="openGame()"
+                >
+                    🎮 MỞ GAME
+                </button>
+
+            </div>
+
+
+            <div class="footer">
+                MINHQUAN LOCK • NETWORK CONTROL
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TAB 2 - FEATURES
+        ================================================== -->
+
+        <section
+            id="featuresPage"
+            class="page"
+        >
+
+            <h1 class="page-title">
+                Tính năng
+            </h1>
+
+            <p class="page-desc">
+                Các trạng thái giao diện của hệ thống.
+            </p>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    🎛️ MODULES
+                </div>
+
+
+                <div
+                    class="feature"
+                    data-name="HEADLOCK"
+                    onclick="toggleFeature(this)"
+                >
+
+                    <div>
+                        <div class="feature-name">
+                            HEADLOCK
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                    <div class="switch"></div>
+
+                </div>
+
+
+                <div
+                    class="feature"
+                    data-name="AIMLOCK"
+                    onclick="toggleFeature(this)"
+                >
+
+                    <div>
+                        <div class="feature-name">
+                            AIMLOCK
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                    <div class="switch"></div>
+
+                </div>
+
+
+                <div
+                    class="feature"
+                    data-name="AIM STABILITY"
+                    onclick="toggleFeature(this)"
+                >
+
+                    <div>
+                        <div class="feature-name">
+                            AIM STABILITY
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                    <div class="switch"></div>
+
+                </div>
+
+
+                <div
+                    class="feature"
+                    data-name="PRECISION LOCK"
+                    onclick="toggleFeature(this)"
+                >
+
+                    <div>
+                        <div class="feature-name">
+                            PRECISION LOCK
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                    <div class="switch"></div>
+
+                </div>
+
+
+                <div
+                    class="feature"
+                    data-name="RECOIL CONTROL"
+                    onclick="toggleFeature(this)"
+                >
+
+                    <div>
+                        <div class="feature-name">
+                            RECOIL CONTROL
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                    <div class="switch"></div>
+
+                </div>
+
+
+                <div
+                    class="feature"
+                    data-name="SENSITIVITY BOOST"
+                    onclick="toggleFeature(this)"
+                >
+
+                    <div>
+                        <div class="feature-name">
+                            SENSITIVITY BOOST
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                    <div class="switch"></div>
+
+                </div>
+
+
+                <div
+                    class="feature"
+                    data-name="PHANTOM MODE"
+                    onclick="toggleFeature(this)"
+                >
+
+                    <div>
+                        <div class="feature-name">
+                            PHANTOM MODE
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                    <div class="switch"></div>
+
+                </div>
+
+
+                <div
+                    class="feature"
+                    data-name="OMEGA LOCK"
+                    onclick="toggleFeature(this)"
+                >
+
+                    <div>
+                        <div class="feature-name">
+                            OMEGA LOCK
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                    <div class="switch"></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer">
+                MODULE STATUS • UI ONLY
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TAB 3 - PROFILE
+        ================================================== -->
+
+        <section
+            id="profilePage"
+            class="page"
+        >
+
+            <h1 class="page-title">
+                Hồ sơ
+            </h1>
+
+            <p class="page-desc">
+                Thông tin License và thiết bị.
+            </p>
+
+
+            <div class="card">
+
+                <div class="profile-head">
+
+                    <div class="avatar">
+                        MQ
+                    </div>
+
+                    <div>
+
+                        <div class="profile-name">
+                            MINHQUAN USER
+                        </div>
+
+                        <div class="profile-status">
+                            ● LICENSE ACTIVE
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Key
+                    </span>
+
+                    <span
+                        id="profileKey"
+                        class="info-value"
+                    >
+                        ---
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Thời hạn
+                    </span>
+
+                    <span
+                        id="profileExpiry"
+                        class="info-value"
+                    >
+                        ---
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Còn lại
+                    </span>
+
+                    <span
+                        id="profileCountdown"
+                        class="info-value cyan"
+                    >
+                        ---
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Device ID
+                    </span>
+
+                    <span
+                        id="profileDevice"
+                        class="info-value"
+                    >
+                        ---
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Kết nối
+                    </span>
+
+                    <span
+                        id="profileNetwork"
+                        class="info-value green"
+                    >
+                        ONLINE
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    🔐 TÀI KHOẢN
+                </div>
+
+                <button
+                    class="logout-btn"
+                    onclick="logout()"
+                >
+                    ĐĂNG XUẤT
+                </button>
+
+            </div>
+
+
+            <div class="footer">
+                MINHQUAN LOCK
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =================================================
+         BOTTOM NAV
+    ================================================== -->
+
+    <nav class="bottom-nav">
+
+        <button
+            id="navControl"
+            class="nav-btn active"
+            onclick="switchTab('control')"
+        >
+            <span class="nav-icon">⚙️</span>
+            ĐIỀU KHIỂN
+        </button>
+
+
+        <button
+            id="navFeatures"
+            class="nav-btn"
+            onclick="switchTab('features')"
+        >
+            <span class="nav-icon">🎛️</span>
+            TÍNH NĂNG
+        </button>
+
+
+        <button
+            id="navProfile"
+            class="nav-btn"
+            onclick="switchTab('profile')"
+        >
+            <span class="nav-icon">👤</span>
+            HỒ SƠ
+        </button>
+
+    </nav>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   CONFIG
+===================================================== */
+
+const API =
+    "https://quan-key-admin.baoquyen2737.workers.dev";
+
+const DEVICE_KEY =
+    "mq_device_id";
+
+const LOGIN_KEY =
+    "mq_login_key";
+
+const EXPIRE_KEY =
+    "mq_expires_at";
+
+
+/* =====================================================
+   SOUND
+===================================================== */
+
+let audioContext = null;
+
+function clickSound(type = "normal") {
+
+    try {
+
+        if (!audioContext) {
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        const osc =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        const now =
+            audioContext.currentTime;
+
+        if(type === "success"){
+
+            osc.frequency.setValueAtTime(
+                520,
+                now
+            );
+
+            osc.frequency.exponentialRampToValueAtTime(
+                760,
+                now + .12
+            );
+
+        }else{
+
+            osc.frequency.setValueAtTime(
+                430,
+                now
+            );
+
+            osc.frequency.exponentialRampToValueAtTime(
+                620,
+                now + .08
+            );
+        }
+
+        gain.gain.setValueAtTime(
+            .0001,
+            now
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .045,
+            now + .01
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            now + .12
+        );
+
+        osc.start(now);
+        osc.stop(now + .13);
+
+    }catch(e){}
+}
+
+
+/* =====================================================
+   DEVICE
+===================================================== */
+
+function getDeviceId(){
+
+    let id =
+        localStorage.getItem(DEVICE_KEY);
+
+    if(!id){
+
+        id =
+            "MQ-" +
+            crypto
+            .randomUUID()
+            .replaceAll("-","")
+            .slice(0,20)
+            .toUpperCase();
+
+        localStorage.setItem(
+            DEVICE_KEY,
+            id
+        );
+    }
+
+    return id;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+function startLoading(){
+
+    const splash =
+        document.getElementById("splash");
+
+    const login =
+        document.getElementById("loginScreen");
+
+    const bar =
+        document.getElementById("loadingBar");
+
+    const text =
+        document.getElementById("loadingText");
+
+    let progress = 0;
+
+    const messages = [
+        "Đang khởi động hệ thống...",
+        "Đang kiểm tra kết nối...",
+        "Đang chuẩn bị giao diện...",
+        "Sẵn sàng!"
+    ];
+
+    const timer =
+        setInterval(() => {
+
+            progress += 2;
+
+            if(progress > 100)
+                progress = 100;
+
+            bar.style.width =
+                progress + "%";
+
+            if(progress < 30){
+
+                text.textContent =
+                    messages[0];
+
+            }else if(progress < 65){
+
+                text.textContent =
+                    messages[1];
+
+            }else if(progress < 95){
+
+                text.textContent =
+                    messages[2];
+
+            }else{
+
+                text.textContent =
+                    messages[3];
+            }
+
+        },50);
+
+
+    /*
+       Loading luôn kết thúc.
+       Không phụ thuộc API.
+    */
+
+    setTimeout(() => {
+
+        clearInterval(timer);
+
+        splash.style.display =
+            "none";
+
+        login.style.display =
+            "flex";
+
+        /*
+           Nếu đã nhập Key trước đó,
+           chỉ điền lại Key.
+           Không tự đăng nhập.
+        */
+
+        const oldKey =
+            localStorage.getItem(
+                LOGIN_KEY
+            );
+
+        if(oldKey){
+
+            document.getElementById(
+                "keyInput"
+            ).value = oldKey;
+        }
+
+    },2600);
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login(){
+
+    clickSound();
+
+    const input =
+        document.getElementById(
+            "keyInput"
+        );
+
+    const error =
+        document.getElementById(
+            "loginError"
+        );
+
+    const button =
+        document.getElementById(
+            "loginBtn"
+        );
+
+    const key =
+        input.value.trim();
+
+    if(!key){
+
+        error.textContent =
+            "Vui lòng nhập Key.";
+
+        return;
+    }
+
+    button.disabled = true;
+
+    button.textContent =
+        "ĐANG KIỂM TRA...";
+
+    error.textContent = "";
+
+    try{
+
+        const controller =
+            new AbortController();
+
+        const timeout =
+            setTimeout(() => {
+
+                controller.abort();
+
+            },8000);
+
+
+        const response =
+            await fetch(
+                API + "/api/login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        key:key,
+                        deviceId:getDeviceId()
+                    }),
+
+                    signal:
+                        controller.signal
+                }
+            );
+
+
+        clearTimeout(timeout);
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            error.textContent =
+                data.message ||
+                "Key không hợp lệ.";
+
+            return;
+        }
+
+
+        localStorage.setItem(
+            LOGIN_KEY,
+            key
+        );
+
+        localStorage.setItem(
+            EXPIRE_KEY,
+            String(
+                data.expires_at
+            )
+        );
+
+
+        clickSound("success");
+
+        showApp();
+
+    }catch(errorObject){
+
+        if(
+            errorObject.name ===
+            "AbortError"
+        ){
+
+            error.textContent =
+                "Máy chủ phản hồi quá lâu.";
+
+        }else{
+
+            error.textContent =
+                "Không thể kết nối máy chủ.";
+        }
+
+    }finally{
+
+        button.disabled = false;
+
+        button.textContent =
+            "⚡ ĐĂNG NHẬP";
+    }
+}
+
+
+/* =====================================================
+   SHOW APP
+===================================================== */
+
+function showApp(){
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "app"
+    ).style.display = "block";
+
+
+    updateProfile();
+
+    updateExpiry();
+
+    networkCheck(false);
+}
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+function switchTab(tab){
+
+    clickSound();
+
+    const pages = {
+
+        control:
+            document.getElementById(
+                "controlPage"
+            ),
+
+        features:
+            document.getElementById(
+                "featuresPage"
+            ),
+
+        profile:
+            document.getElementById(
+                "profilePage"
+            )
+    };
+
+
+    const navs = {
+
+        control:
+            document.getElementById(
+                "navControl"
+            ),
+
+        features:
+            document.getElementById(
+                "navFeatures"
+            ),
+
+        profile:
+            document.getElementById(
+                "navProfile"
+            )
+    };
+
+
+    Object.values(pages)
+        .forEach(page => {
+
+            page.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    Object.values(navs)
+        .forEach(nav => {
+
+            nav.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    pages[tab].classList.add(
+        "active"
+    );
+
+    navs[tab].classList.add(
+        "active"
+    );
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =====================================================
+   FEATURE TOGGLE
+===================================================== */
+
+function toggleFeature(element){
+
+    clickSound();
+
+    const sw =
+        element.querySelector(
+            ".switch"
+        );
+
+    const active =
+        sw.classList.toggle(
+            "active"
+        );
+
+    element.classList.toggle(
+        "on",
+        active
+    );
+
+    /*
+       Chỉ thay đổi giao diện.
+       Không can thiệp game.
+    */
+}
+
+
+/* =====================================================
+   NETWORK CHECK
+===================================================== */
+
+async function networkCheck(showMessage){
+
+    const internet =
+        document.getElementById(
+            "internetStatus"
+        );
+
+    const server =
+        document.getElementById(
+            "serverStatus"
+        );
+
+    const system =
+        document.getElementById(
+            "systemStatus"
+        );
+
+    const ping =
+        document.getElementById(
+            "pingValue"
+        );
+
+
+    internet.textContent =
+        "CHECKING...";
+
+    server.textContent =
+        "CHECKING...";
+
+
+    const start =
+        performance.now();
+
+
+    try{
+
+        const controller =
+            new AbortController();
+
+        const timeout =
+            setTimeout(() => {
+
+                controller.abort();
+
+            },5000);
+
+
+        const response =
+            await fetch(
+                API + "/",
+                {
+                    method:"GET",
+                    cache:"no-store",
+                    signal:
+                        controller.signal
+                }
+            );
+
+
+        clearTimeout(timeout);
+
+
+        const elapsed =
+            Math.round(
+                performance.now() -
+                start
+            );
+
+
+        if(response.ok){
+
+            internet.textContent =
+                "ONLINE";
+
+            internet.className =
+                "network-value green";
+
+
+            server.textContent =
+                "ONLINE";
+
+            server.className =
+                "network-value green";
+
+
+            system.textContent =
+                "ONLINE";
+
+            system.className =
+                "stat-value green";
+
+
+            ping.textContent =
+                elapsed + " ms";
+
+        }else{
+
+            throw new Error();
+        }
+
+
+    }catch(e){
+
+        internet.textContent =
+            navigator.onLine
+                ? "ONLINE"
+                : "OFFLINE";
+
+        internet.className =
+            navigator.onLine
+                ? "network-value green"
+                : "network-value";
+
+        server.textContent =
+            "OFFLINE";
+
+        server.className =
+            "network-value";
+
+        system.textContent =
+            "LIMITED";
+
+        system.className =
+            "stat-value";
+
+        ping.textContent =
+            "-- ms";
+    }
+
+
+    updateNetworkType();
+
+    if(showMessage)
+        clickSound("success");
+}
+
+
+/* =====================================================
+   NETWORK TYPE
+===================================================== */
+
+function updateNetworkType(){
+
+    const el =
+        document.getElementById(
+            "networkType"
+        );
+
+    if(
+        navigator.connection &&
+        navigator.connection.effectiveType
+    ){
+
+        el.textContent =
+            navigator
+            .connection
+            .effectiveType
+            .toUpperCase();
+
+    }else{
+
+        el.textContent =
+            "UNKNOWN";
+    }
+
+
+    const profile =
+        document.getElementById(
+            "profileNetwork"
+        );
+
+    if(profile){
+
+        profile.textContent =
+            navigator.onLine
+                ? "ONLINE"
+                : "OFFLINE";
+
+        profile.className =
+            navigator.onLine
+                ? "info-value green"
+                : "info-value";
+    }
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+function updateProfile(){
+
+    const key =
+        localStorage.getItem(
+            LOGIN_KEY
+        ) || "---";
+
+
+    document.getElementById(
+        "profileKey"
+    ).textContent = key;
+
+
+    document.getElementById(
+        "profileDevice"
+    ).textContent =
+        getDeviceId();
+
+
+    const expiry =
+        Number(
+            localStorage.getItem(
+                EXPIRE_KEY
+            )
+        );
+
+
+    if(expiry){
+
+        const date =
+            new Date(
+                expiry * 1000
+            );
+
+        document.getElementById(
+            "profileExpiry"
+        ).textContent =
+            date.toLocaleString(
+                "vi-VN"
+            );
+    }
+
+
+    updateNetworkType();
+}
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+function updateExpiry(){
+
+    const expiry =
+        Number(
+            localStorage.getItem(
+                EXPIRE_KEY
+            )
+        );
+
+
+    const elements = [
+
+        document.getElementById(
+            "licenseTime"
+        ),
+
+        document.getElementById(
+            "profileCountdown"
+        )
+    ];
+
+
+    if(!expiry){
+
+        elements.forEach(el => {
+
+            if(el)
+                el.textContent =
+                    "---";
+
+        });
+
+        return;
+    }
+
+
+    const update = () => {
+
+        const now =
+            Math.floor(
+                Date.now() / 1000
+            );
+
+        let remaining =
+            expiry - now;
+
+
+        if(remaining <= 0){
+
+            elements.forEach(el => {
+
+                if(el)
+                    el.textContent =
+                        "HẾT HẠN";
+
+            });
+
+            return;
+        }
+
+
+        const days =
+            Math.floor(
+                remaining / 86400
+            );
+
+        remaining %= 86400;
+
+
+        const hours =
+            Math.floor(
+                remaining / 3600
+            );
+
+        remaining %= 3600;
+
+
+        const minutes =
+            Math.floor(
+                remaining / 60
+            );
+
+        const seconds =
+            remaining % 60;
+
+
+        let result = "";
+
+
+        if(days > 0)
+            result += days + "d ";
+
+        result +=
+            String(hours).padStart(2,"0")
+            + "h ";
+
+        result +=
+            String(minutes).padStart(2,"0")
+            + "m ";
+
+        result +=
+            String(seconds).padStart(2,"0")
+            + "s";
+
+
+        elements.forEach(el => {
+
+            if(el)
+                el.textContent =
+                    result;
+
+        });
+    };
+
+
+    update();
+
+    setInterval(
+        update,
+        1000
+    );
+}
+
+
+/* =====================================================
+   OPEN GAME
+===================================================== */
+
+function openGame(){
+
+    clickSound();
+
+    /*
+       Chỉ mở URI của ứng dụng nếu thiết bị hỗ trợ.
+       Không thực

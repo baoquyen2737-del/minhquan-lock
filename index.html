@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>MINHQUAN LOCK</title>
+
+<style>
+:root{
+  --bg:#02070d;
+  --card:#071019;
+  --card2:#09141e;
+  --line:#183049;
+  --cyan:#00d9ff;
+  --cyan2:#00aeca;
+  --green:#2ff0a3;
+  --red:#ff5266;
+  --text:#f4f8fc;
+  --muted:#718399;
+  --yellow:#ffc928;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 50% 0%,#06252d 0,#02070d 38%,#02050a 100%);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+/* =========================
+   SPLASH
+========================= */
+
+#splash{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 50% 20%,#07333c 0,#02070d 48%,#010409 100%);
+  transition:.5s ease;
+}
+
+.splash-box{
+  width:88%;
+  max-width:430px;
+  padding:55px 28px 45px;
+  text-align:center;
+  border:1px solid #1d3850;
+  border-radius:34px;
+  background:rgba(5,13,21,.94);
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.55),
+    0 0 60px rgba(0,217,255,.06);
+}
+
+.logo{
+  width:150px;
+  height:150px;
+  margin:auto;
+  border:4px solid var(--cyan);
+  border-radius:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px;
+  font-weight:900;
+  color:var(--cyan);
+  background:#082932;
+  box-shadow:0 0 40px rgba(0,217,255,.15);
+}
+
+.splash-title{
+  margin-top:28px;
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.splash-title span{
+  color:var(--cyan);
+}
+
+.splash-sub{
+  margin-top:12px;
+  color:var(--muted);
+  letter-spacing:6px;
+  font-size:13px;
+}
+
+.loading{
+  margin-top:42px;
+  height:7px;
+  background:#102236;
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.loading-bar{
+  width:0%;
+  height:100%;
+  background:var(--cyan);
+  box-shadow:0 0 15px var(--cyan);
+  animation:load 1.3s linear forwards;
+}
+
+@keyframes load{
+  from{width:0}
+  to{width:100%}
+}
+
+.loading-text{
+  margin-top:20px;
+  color:#d9e3ed;
+  font-size:17px;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#login{
+  display:none;
+  min-height:100vh;
+  padding:35px 20px;
+  align-items:center;
+  justify-content:center;
+}
+
+.login-card{
+  width:100%;
+  max-width:440px;
+  padding:32px 24px;
+  background:rgba(7,16,25,.96);
+  border:1px solid var(--line);
+  border-radius:30px;
+  box-shadow:0 25px 80px rgba(0,0,0,.5);
+}
+
+.login-logo{
+  width:80px;
+  height:80px;
+  border-radius:23px;
+  margin:0 auto 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#082932;
+  border:2px solid var(--cyan);
+  color:var(--cyan);
+  font-size:27px;
+  font-weight:900;
+}
+
+.login-title{
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+}
+
+.login-title span{
+  color:var(--cyan);
+}
+
+.login-desc{
+  text-align:center;
+  color:var(--muted);
+  margin:9px 0 28px;
+}
+
+.input-wrap{
+  position:relative;
+}
+
+.input-wrap input{
+  width:100%;
+  height:58px;
+  padding:0 18px;
+  color:white;
+  background:#030910;
+  border:1px solid #1b344c;
+  border-radius:17px;
+  outline:none;
+}
+
+.input-wrap input:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(0,217,255,.08);
+}
+
+.primary-btn{
+  width:100%;
+  height:58px;
+  margin-top:15px;
+  border:0;
+  border-radius:17px;
+  background:linear-gradient(135deg,#00d9ff,#00aeca);
+  color:#001018;
+  font-weight:900;
+  font-size:17px;
+  box-shadow:0 10px 30px rgba(0,217,255,.12);
+}
+
+.primary-btn:active{
+  transform:scale(.98);
+}
+
+.login-status{
+  min-height:22px;
+  margin-top:16px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.login-status.error{
+  color:var(--red);
+}
+
+.login-status.ok{
+  color:var(--green);
+}
+
+/* =========================
+   APP
+========================= */
+
+#app{
+  display:none;
+  padding-bottom:105px;
+}
+
+.header{
+  padding:24px 20px 18px;
+  border-bottom:1px solid rgba(27,48,69,.7);
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(2,7,13,.88);
+  backdrop-filter:blur(18px);
+}
+
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.brand{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-.5px;
+}
+
+.brand .bolt{
+  color:var(--yellow);
+}
+
+.brand .blue{
+  color:var(--cyan);
+}
+
+.online{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 15px;
+  border-radius:99px;
+  background:rgba(47,240,163,.08);
+  color:var(--green);
+  font-weight:800;
+  font-size:13px;
+}
+
+.online-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+}
+
+.content{
+  padding:25px 20px;
+  max-width:700px;
+  margin:auto;
+}
+
+.page-title{
+  font-size:42px;
+  line-height:1;
+  margin:10px 0 10px;
+  font-weight:950;
+}
+
+.page-desc{
+  color:var(--muted);
+  margin-bottom:25px;
+  font-size:16px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+  background:linear-gradient(145deg,#07111b,#050b12);
+  border:1px solid var(--line);
+  border-radius:25px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 15px 45px rgba(0,0,0,.18);
+}
+
+.card-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--cyan);
+  font-size:21px;
+  font-weight:900;
+  margin-bottom:17px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.stat{
+  padding:18px;
+  border:1px solid #16304a;
+  border-radius:18px;
+  background:#030a11;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.stat-value{
+  margin-top:9px;
+  font-size:19px;
+  font-weight:900;
+}
+
+.green{
+  color:var(--green);
+}
+
+.cyan{
+  color:var(--cyan);
+}
+
+.divider{
+  height:1px;
+  background:#14263a;
+  margin:17px 0;
+}
+
+/* =========================
+   NETWORK
+========================= */
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 0;
+  border-bottom:1px solid #132438;
+}
+
+.info-row:last-child{
+  border-bottom:0;
+}
+
+.info-name{
+  color:#7d8ea3;
+}
+
+.info-value{
+  font-weight:800;
+}
+
+.check-btn,
+.game-btn,
+.logout-btn{
+  width:100%;
+  height:55px;
+  border-radius:16px;
+  font-weight:900;
+  border:1px solid #155d70;
+  background:#06232b;
+  color:var(--cyan);
+}
+
+.game-btn{
+  margin-top:12px;
+  background:linear-gradient(135deg,#00d9ff,#00aeca);
+  border:0;
+  color:#001017;
+}
+
+.logout-btn{
+  background:#160a0e;
+  border-color:#57202b;
+  color:#ff6678;
+}
+
+.check-btn:active,
+.game-btn:active,
+.logout-btn:active{
+  transform:scale(.98);
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.feature{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:18px;
+  margin-bottom:12px;
+  border:1px solid #17304a;
+  background:#050d15;
+  border-radius:19px;
+}
+
+.feature-name{
+  font-size:16px;
+  font-weight:900;
+}
+
+.feature-desc{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.switch{
+  position:relative;
+  width:58px;
+  height:32px;
+  flex-shrink:0;
+}
+
+.switch input{
+  display:none;
+}
+
+.slider{
+  position:absolute;
+  inset:0;
+  background:#172b3c;
+  border-radius:99px;
+  transition:.2s;
+}
+
+.slider:before{
+  content:"";
+  position:absolute;
+  width:24px;
+  height:24px;
+  left:4px;
+  top:4px;
+  border-radius:50%;
+  background:#738294;
+  transition:.2s;
+}
+
+.switch input:checked + .slider{
+  background:#0799b3;
+  box-shadow:0 0 15px rgba(0,217,255,.12);
+}
+
+.switch input:checked + .slider:before{
+  transform:translateX(26px);
+  background:white;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-head{
+  text-align:center;
+  padding:10px 0 25px;
+}
+
+.avatar{
+  width:88px;
+  height:88px;
+  border-radius:27px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#082932;
+  border:2px solid var(--cyan);
+  color:var(--cyan);
+  font-size:28px;
+  font-weight:900;
+}
+
+.profile-name{
+  margin-top:15px;
+  font-size:24px;
+  font-weight:900;
+}
+
+.profile-status{
+  color:var(--green);
+  font-size:13px;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.profile-item{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:15px 0;
+  border-bottom:1px solid #14263a;
+}
+
+.profile-item:last-child{
+  border-bottom:0;
+}
+
+.profile-item span:first-child{
+  color:var(--muted);
+}
+
+.profile-item span:last-child{
+  text-align:right;
+  font-weight:800;
+  max-width:60%;
+  word-break:break-word;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.bottom-tabs{
+  position:fixed;
+  z-index:100;
+  left:12px;
+  right:12px;
+  bottom:13px;
+  height:78px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  padding:7px;
+  border:1px solid #1b344c;
+  border-radius:24px;
+  background:rgba(4,11,18,.94);
+  backdrop-filter:blur(20px);
+  box-shadow:0 15px 45px rgba(0,0,0,.5);
+}
+
+.tab{
+  border:0;
+  border-radius:17px;
+  background:transparent;
+  color:#6f8094;
+  font-weight:900;
+  font-size:11px;
+}
+
+.tab-icon{
+  display:block;
+  font-size:22px;
+  margin-bottom:3px;
+}
+
+.tab.active{
+  color:var(--cyan);
+  background:#082b34;
+  box-shadow:inset 0 0 0 1px rgba(0,217,255,.55);
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toast{
+  position:fixed;
+  z-index:99999;
+  left:50%;
+  bottom:105px;
+  transform:translateX(-50%) translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  padding:12px 17px;
+  border-radius:14px;
+  background:#0c1823;
+  border:1px solid #21405c;
+  color:white;
+  font-size:13px;
+  font-weight:800;
+  transition:.25s;
+  white-space:nowrap;
+}
+
+#toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+.hidden{
+  display:none!important;
+}
+
+.footer{
+  text-align:center;
+  color:#405267;
+  font-size:12px;
+  padding:10px 0 20px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:420px){
+  .page-title{
+    font-size:36px;
+  }
+
+  .brand{
+    font-size:21px;
+  }
+
+  .online{
+    padding:9px 11px;
+  }
+
+  .grid{
+    gap:8px;
+  }
+
+  .stat{
+    padding:14px;
+  }
+
+  .stat-value{
+    font-size:17px;
+  }
+
+  .content{
+    padding-left:15px;
+    padding-right:15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     SPLASH
+========================= -->
+
+<section id="splash">
+  <div class="splash-box">
+
+    <div class="logo">MQ</div>
+
+    <div class="splash-title">
+      MINHQ​UAN <span>LOCK</span>
+    </div>
+
+    <div class="splash-sub">
+      NETWORK CONTROL
+    </div>
+
+    <div class="loading">
+      <div class="loading-bar"></div>
+    </div>
+
+    <div class="loading-text">
+      Đang khởi động hệ thống...
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<section id="login">
+
+  <div class="login-card">
+
+    <div class="login-logo">MQ</div>
+
+    <div class="login-title">
+      MINHQUAN <span>LOCK</span>
+    </div>
+
+    <div class="login-desc">
+      Nhập Key để tiếp tục
+    </div>
+
+    <div class="input-wrap">
+      <input
+        id="keyInput"
+        type="text"
+        autocomplete="off"
+        autocapitalize="characters"
+        placeholder="Nhập Key của bạn..."
+      >
+    </div>
+
+    <button
+      class="primary-btn"
+      onclick="login()">
+      🔐 ĐĂNG NHẬP
+    </button>
+
+    <div id="loginStatus" class="login-status"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     APP
+========================= -->
+
+<section id="app">
+
+  <header class="header">
+
+    <div class="header-row">
+
+      <div class="brand">
+        <span class="bolt">⚡</span>
+        MINHQUAN <span class="blue">LOCK</span>
+      </div>
+
+      <div class="online">
+        <span class="online-dot"></span>
+        ONLINE
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- TAB 1 -->
+  <main id="tab-control" class="content tab-page">
+
+    <h1 class="page-title">Điều khiển</h1>
+
+    <div class="page-desc">
+      Quản lý trạng thái hệ thống và kết nối.
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        ⚡ HỆ THỐNG
+      </div>
+
+      <div class="grid">
+
+        <div class="stat">
+          <div class="stat-label">Trạng thái</div>
+          <div class="stat-value green">ONLINE</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Ping</div>
+          <div id="ping" class="stat-value cyan">---</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Loại mạng</div>
+          <div id="networkType" class="stat-value">---</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">License</div>
+          <div id="licenseTime" class="stat-value cyan">---</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        📶 KẾT NỐI MẠNG
+      </div>
+
+      <div class="info-row">
+        <span class="info-name">Internet</span>
+        <span id="internetStatus" class="info-value green">
+          ONLINE
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-name">Máy chủ</span>
+        <span id="serverStatus" class="info-value green">
+          ONLINE
+        </span>
+      </div>
+
+      <button
+        class="check-btn"
+        onclick="networkCheck()">
+        ⚡ KIỂM TRA MẠNG
+      </button>
+
+      <button
+        class="game-btn"
+        onclick="openGame()">
+        🎮 VÀO GAME
+      </button>
+
+    </div>
+
+
+    <div class="footer">
+      MINHQUAN LOCK • Network Control
+    </div>
+
+  </main>
+
+
+  <!-- TAB 2 -->
+  <main id="tab-features" class="content tab-page hidden">
+
+    <h1 class="page-title">Tính năng</h1>
+
+    <div class="page-desc">
+      Các trạng thái giao diện của hệ thống.
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        🎛️ CONTROL MODULES
+      </div>
+
+
+      <div class="feature">
+
+        <div>
+          <div class="feature-name">HEADLOCK</div>
+          <div class="feature-desc">
+            Trạng thái giao diện
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" onchange="featureSound()">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div>
+          <div class="feature-name">AIMLOCK</div>
+          <div class="feature-desc">
+            Trạng thái giao diện
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" onchange="featureSound()">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div>
+          <div class="feature-name">AIM STABILITY</div>
+          <div class="feature-desc">
+            Trạng thái giao diện
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" onchange="featureSound()">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div>
+          <div class="feature-name">PRECISION LOCK</div>
+          <div class="feature-desc">
+            Trạng thái giao diện
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" onchange="featureSound()">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div>
+          <div class="feature-name">RECOIL CONTROL</div>
+          <div class="feature-desc">
+            Trạng thái giao diện
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" onchange="featureSound()">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div>
+          <div class="feature-name">SENSITIVITY BOOST</div>
+          <div class="feature-desc">
+            Trạng thái giao diện
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" onchange="featureSound()">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div>
+          <div class="feature-name">PHANTOM MODE</div>
+          <div class="feature-desc">
+            Trạng thái giao diện
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" onchange="featureSound()">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div>
+          <div class="feature-name">OMEGA LOCK</div>
+          <div class="feature-desc">
+            Trạng thái giao diện
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" onchange="featureSound()">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- TAB 3 -->
+  <main id="tab-profile" class="content tab-page hidden">
+
+    <h1 class="page-title">Hồ sơ</h1>
+
+    <div class="page-desc">
+      Thông tin tài khoản và thiết bị.
+    </div>
+
+
+    <div class="card">
+
+      <div class="profile-head">
+
+        <div class="avatar">
+          MQ
+        </div>
+
+        <div class="profile-name">
+          MINHQUAN USER
+        </div>
+
+        <div class="profile-status">
+          ● ACCOUNT ACTIVE
+        </div>
+
+      </div>
+
+
+      <div class="profile-item">
+        <span>Key</span>
+        <span id="profileKey">---</span>
+      </div>
+
+      <div class="profile-item">
+        <span>Thời hạn</span>
+        <span id="profileExpiry">---</span>
+      </div>
+
+      <div class="profile-item">
+        <span>Còn lại</span>
+        <span id="profileCountdown" class="cyan">---</span>
+      </div>
+
+      <div class="profile-item">
+        <span>Device ID</span>
+        <span id="profileDevice">---</span>
+      </div>
+
+      <div class="profile-item">
+        <span>Trạng thái</span>
+        <span class="green">ONLINE</span>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        👑 BẢN QUYỀN
+      </div>
+
+      <div class="info-row">
+        <span class="info-name">Zalo</span>
+        <span class="info-value cyan">0983774970</span>
+      </div>
+
+      <button
+        class="check-btn"
+        onclick="openZalo()">
+        💬 LIÊN HỆ ZALO
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <button
+        class="logout-btn"
+        onclick="logout()">
+        🚪 ĐĂNG XUẤT
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- BOTTOM TABS -->
+
+  <nav class="bottom-tabs">
+
+    <button
+      class="tab active"
+      id="tabBtn-control"
+      onclick="switchTab('control')">
+      <span class="tab-icon">⚙️</span>
+      ĐIỀU KHIỂN
+    </button>
+
+    <button
+      class="tab"
+      id="tabBtn-features"
+      onclick="switchTab('features')">
+      <span class="tab-icon">🎛️</span>
+      TÍNH NĂNG
+    </button>
+
+    <button
+      class="tab"
+      id="tabBtn-profile"
+      onclick="switchTab('profile')">
+      <span class="tab-icon">👤</span>
+      HỒ SƠ
+    </button>
+
+  </nav>
+
+</section>
+
+
+<div id="toast"></div>
+
+
+<script>
+/* =====================================
+   CONFIG
+===================================== */
+
+const API =
+  "https://quan-key-admin.baoquyen2737.workers.dev";
+
+const ZALO =
+  "https://zalo.me/0983774970";
+
+const GAME_URL =
+  "freefire://";
+
+let expiresAt = null;
+
+
+/* =====================================
+   DEVICE ID
+===================================== */
+
+function getDeviceId(){
+
+  let id =
+    localStorage.getItem("mq_device_id");
+
+  if(!id){
+
+    id =
+      "MQ-" +
+      crypto.randomUUID()
+        .replaceAll("-","")
+        .slice(0,20)
+        .toUpperCase();
+
+    localStorage.setItem(
+      "mq_device_id",
+      id
+    );
+  }
+
+  return id;
+}
+
+
+/* =====================================
+   SOUND
+===================================== */
+
+let audioContext = null;
+
+function clickSound(){
+
+  try{
+
+    if(!audioContext){
+      audioContext =
+        new (window.AudioContext ||
+        window.webkitAudioContext)();
+    }
+
+    const osc =
+      audioContext.createOscillator();
+
+    const gain =
+      audioContext.createGain();
+
+    osc.type = "sine";
+    osc.frequency.value = 650;
+
+    gain.gain.setValueAtTime(
+      .0001,
+      audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .06,
+      audioContext.currentTime + .01
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .0001,
+      audioContext.currentTime + .09
+    );
+
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    osc.start();
+
+    osc.stop(
+      audioContext.currentTime + .1
+    );
+
+  }catch(e){}
+}
+
+function featureSound(){
+  clickSound();
+}
+
+
+/* =====================================
+   SPLASH
+===================================== */
+
+window.addEventListener("load",()=>{
+
+  setTimeout(()=>{
+
+    document
+      .getElementById("splash")
+      .style.opacity = "0";
+
+    setTimeout(()=>{
+
+      document
+        .getElementById("splash")
+        .style.display = "none";
+
+      showLogin();
+
+    },450);
+
+  },1500);
+
+});
+
+
+/* =====================================
+   LOGIN SCREEN
+===================================== */
+
+function showLogin(){
+
+  document
+    .getElementById("login")
+    .style.display = "flex";
+
+  document
+    .getElementById("app")
+    .style.display = "none";
+
+  setTimeout(()=>{
+
+    document
+      .getElementById("keyInput")
+      .focus();
+
+  },100);
+
+}
+
+
+/* =====================================
+   LOGIN
+===================================== */
+
+async function login(){
+
+  clickSound();
+
+  const input =
+    document.getElementById("keyInput");
+
+  const status =
+    document.getElementById("loginStatus");
+
+  const key =
+    input.value.trim();
+
+  if(!key){
+
+    status.className =
+      "login-status error";
+
+    status.textContent =
+      "Vui lòng nhập Key.";
+
+    return;
+  }
+
+  status.className =
+    "login-status";
+
+  status.textContent =
+    "Đang xác thực Key...";
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/api/login",
+        {
+          method:"POST",
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+          body:JSON.stringify({
+            key:key,
+            deviceId:getDeviceId()
+          })
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if(!data.success){
+
+      status.className =
+        "login-status error";
+
+      status.textContent =
+        data.message ||
+        "Key không hợp lệ.";
+
+      return;
+    }
+
+    expiresAt =
+      Number(data.expires_at) * 1000;
+
+    localStorage.setItem(
+      "mq_login_key",
+      key
+    );
+
+    localStorage.setItem(
+      "mq_expires_at",
+      expiresAt
+    );
+
+    status.className =
+      "login-status ok";
+
+    status.textContent =
+      "Đăng nhập thành công.";
+
+    setTimeout(()=>{
+
+      document
+        .getElementById("login")
+        .style.display = "none";
+
+      document
+        .getElementById("app")
+        .style.display = "block";
+
+      updateProfile();
+      updateExpiry();
+      networkCheck();
+
+    },500);
+
+  }catch(error){
+
+    status.className =
+      "login-status error";
+
+    status.textContent =
+      "Không kết nối được máy chủ.";
+  }
+}
+
+
+/* =====================================
+   TAB SYSTEM
+===================================== */
+
+function switchTab(tab){
+
+  clickSound();
+
+  document
+    .querySelectorAll(".tab-page")
+    .forEach(el=>{
+      el.classList.add("hidden");
+    });
+
+  document
+    .getElementById(
+      "tab-" + tab
+    )
+    .classList.remove("hidden");
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(el=>{
+      el.classList.remove("active");
+    });
+
+  document
+    .getElementById(
+      "tabBtn-" + tab
+    )
+    .classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =====================================
+   EXPIRY
+===================================== */
+
+function updateExpiry(){
+
+  const saved =
+    localStorage.getItem(
+      "mq_expires_at"
+    );
+
+  if(saved){
+    expiresAt =
+      Number(saved);
+  }
+
+  if(!expiresAt)
+    return;
+
+  const update = ()=>{
+
+    const remaining =
+      expiresAt -
+      Date.now();
+
+    if(remaining <= 0){
+
+      document
+        .getElementById("licenseTime")
+        .textContent =
+        "HẾT HẠN";
+
+      document
+        .getElementById("profileCountdown")
+        .textContent =
+        "HẾT HẠN";
+
+      return;
+    }
+
+    const totalSeconds =
+      Math.floor(
+        remaining / 1000
+      );
+
+    const days =
+      Math.floor(
+        totalSeconds / 86400
+      );
+
+    const hours =
+      Math.floor(
+        (totalSeconds % 86400) / 3600
+      );
+
+    const minutes =
+      Math.floor(
+        (totalSeconds % 3600) / 60
+      );
+
+    const seconds =
+      totalSeconds % 60;
+
+    const text =
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+    document
+      .getElementById("licenseTime")
+      .textContent = text;
+
+    document
+      .getElementById("profileCountdown")
+      .textContent = text;
+
+    document
+      .getElementById("profileExpiry")
+      .textContent =
+      new Date(expiresAt)
+        .toLocaleString("vi-VN");
+
+  };
+
+  update();
+
+  setInterval(update,1000);
+}
+
+
+/* =====================================
+   PROFILE
+===================================== */
+
+function updateProfile(){
+
+  const key =
+    localStorage.getItem(
+      "mq_login_key"
+    );
+
+  document
+    .getElementById("profileKey")
+    .textContent =
+    key || "---";
+
+  document
+    .getElementById("profileDevice")
+    .textContent =
+    getDeviceId();
+
+}
+
+
+/* =====================================
+   NETWORK CHECK
+===================================== */
+
+async function networkCheck(){
+
+  clickSound();
+
+  const internet =
+    document
+      .getElementById(
+        "internetStatus"
+      );
+
+  const server =
+    document
+      .getElementById(
+        "serverStatus"
+      );
+
+  const ping =
+    document
+      .getElementById(
+        "ping"
+      );
+
+  internet.textContent =
+    navigator.onLine
+      ? "ONLINE"
+      : "OFFLINE";
+
+  internet.className =
+    navigator.onLine
+      ? "info-value green"
+      : "info-value";
+
+  const type =
+    navigator.connection
+      ? navigator.connection.effectiveType
+      : "---";
+
+  document
+    .getElementById("networkType")
+    .textContent =
+    type || "---";
+
+
+  const start =
+    performance.now();
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/",
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
+
+    const end =
+      performance.now();
+
+    const ms =
+      Math.round(end - start);
+
+    ping.textContent =
+      ms + " ms";
+
+    if(response.ok){
+
+      server.textContent =
+        "ONLINE";
+
+      server.className =
+        "info-value green";
+
+    }else{
+
+      server.textContent =
+        "ERROR";
+
+      server.className =
+        "info-value";
+    }
+
+  }catch(e){
+
+    ping.textContent =
+      "---";
+
+    server.textContent =
+      "OFFLINE";
+
+    server.className =
+      "info-value";
+  }
+
+  toast("Đã kiểm tra kết nối");
+}
+
+
+/* =====================================
+   GAME BUTTON
+===================================== */
+
+function openGame(){
+
+  clickSound();
+
+  try{
+
+    window.location.href =
+      GAME_URL;
+
+    setTimeout(()=>{
+
+      toast(
+        "Nếu game không mở, hãy mở Free Fire từ màn hình chính."
+      );
+
+    },1000);
+
+  }catch(e){
+
+    toast(
+      "Không thể mở ứng dụng game."
+    );
+
+  }
+}
+
+
+/* =====================================
+   ZALO
+===================================== */
+
+function openZalo(){
+
+  clickSound();
+
+  window.open(
+    ZALO,
+    "_blank"
+  );
+}
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+function logout(){
+
+  clickSound();
+
+  localStorage.removeItem(
+    "mq_login_key"
+  );
+
+  localStorage.removeItem(
+    "mq_expires_at"
+  );
+
+  document
+    .getElementById("app")
+    .style.display = "none";
+
+  document
+    .getElementById("login")
+    .style.display = "flex";
+
+  document
+    .getElementById("keyInput")
+    .value = "";
+
+  document
+    .getElementById("loginStatus")
+    .textContent = "";
+
+  switchTab("control");
+
+  toast("Đã đăng xuất");
+}
+
+
+/* =====================================
+   TOAST
+===================================== */
+
+let toastTimer;
+
+function toast(message){
+
+  const el =
+    document.getElementById("toast");
+
+  el.textContent =
+    message;
+
+  el.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(()=>{
+      el.classList.remove("show");
+    },1800);
+}
+
+
+/* =====================================
+   ENTER KEY
+===================================== */
+
+document
+  .getElementById("keyInput")
+  .addEventListener(
+    "keydown",
+    e=>{
+      if(e.key === "Enter"){
+        login();
+      }
+    }
+  );
+
+
+/* =====================================
+   ONLINE/OFFLINE
+===================================== */
+
+window.addEventListener(
+  "online",
+  ()=>{
+    document
+      .getElementById("internetStatus")
+      .textContent = "ONLINE";
+
+    document
+      .getElementById("internetStatus")
+      .className =
+      "info-value green";
+  }
+);
+
+window.addEventListener(
+  "offline",
+  ()=>{
+    document
+      .getElementById("internetStatus")
+      .textContent = "OFFLINE";
+
+    document
+      .getElementById("internetStatus")
+      .className =
+      "info-value";
+  }
+);
+</script>
+
+</body>
+</html>

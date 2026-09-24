@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#080a10">
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:#080a10;
+  color:#fff;
+}
+
+body{overflow-x:hidden}
+button,input{font:inherit}
+button,a{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+:root{
+  --purple:#a855f7;
+  --cyan:#22d3ee;
+  --green:#35e889;
+  --red:#ff5577;
+  --muted:#8992a6;
+  --line:#293144;
+  --card:#111624;
+  --card2:#0d111b;
+}
+
+.hidden{display:none!important}
+
+/* ================= LOADING ================= */
+
+.screen{
+  min-height:100dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.center{
+  width:min(430px,100%);
+  text-align:center;
+}
+
+.avatar{
+  width:140px;
+  height:140px;
+  object-fit:cover;
+  display:block;
+  margin:0 auto 20px;
+  border-radius:50%;
+  border:3px solid var(--purple);
+  box-shadow:
+    0 0 22px rgba(168,85,247,.85),
+    0 0 60px rgba(168,85,247,.30);
+}
+
+.brand{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.subtitle{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:4px;
+}
+
+.loading-bar{
+  height:5px;
+  margin:28px 0 10px;
+  border-radius:99px;
+  background:#202637;
+  overflow:hidden;
+}
+
+.loading-bar span{
+  display:block;
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,var(--purple),var(--cyan));
+  animation:loading 1.5s ease forwards;
+}
+
+@keyframes loading{
+  to{width:100%}
+}
+
+.loading-text{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* ================= LOGIN ================= */
+
+.login-box{
+  width:min(430px,100%);
+  padding:25px 20px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:linear-gradient(145deg,#151a28,#0c1019);
+  box-shadow:0 20px 70px rgba(0,0,0,.45);
+  text-align:center;
+}
+
+.login-box h1{
+  margin:0 0 6px;
+  font-size:25px;
+}
+
+.login-box p{
+  margin:0 0 20px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.key-input{
+  width:100%;
+  padding:14px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  outline:none;
+  background:#080b12;
+  color:#fff;
+  text-align:center;
+}
+
+.key-input:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 3px rgba(168,85,247,.12);
+}
+
+.primary{
+  width:100%;
+  margin-top:11px;
+  padding:14px;
+  border:0;
+  border-radius:13px;
+  color:#fff;
+  font-weight:900;
+  background:linear-gradient(135deg,#8b3eea,#536dff);
+}
+
+.primary:disabled{
+  opacity:.6;
+}
+
+.error{
+  min-height:20px;
+  margin-top:9px;
+  color:var(--red);
+  font-size:12px;
+}
+
+/* ================= APP ================= */
+
+#app{
+  min-height:100dvh;
+  padding-bottom:94px;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:13px 15px;
+  background:rgba(8,10,16,.92);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(16px);
+}
+
+.brand-mini{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand-mini img{
+  width:43px;
+  height:43px;
+  object-fit:cover;
+  border-radius:50%;
+  border:2px solid var(--purple);
+}
+
+.brand-mini strong{
+  display:block;
+  font-size:13px;
+  letter-spacing:1px;
+}
+
+.brand-mini small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+.online{
+  color:var(--green);
+  font-size:10px;
+  font-weight:800;
+  padding:7px 10px;
+  border-radius:99px;
+  border:1px solid rgba(53,232,137,.3);
+  background:rgba(53,232,137,.08);
+}
+
+.wrap{
+  width:min(720px,100%);
+  margin:auto;
+  padding:17px 14px;
+}
+
+.panel{
+  display:none;
+}
+
+.panel.active{
+  display:block;
+}
+
+.title{
+  margin:3px 2px 5px;
+  font-size:20px;
+  font-weight:900;
+}
+
+.desc{
+  margin:0 2px 15px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:11px;
+}
+
+.card{
+  padding:16px;
+  border-radius:17px;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,var(--card),var(--card2));
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+.label{
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:1.5px;
+}
+
+.value{
+  margin-top:7px;
+  font-size:16px;
+  font-weight:800;
+}
+
+.green{color:var(--green)}
+.cyan{color:var(--cyan)}
+.purple{color:#c084fc}
+
+/* ================= FEATURES ================= */
+
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.feature-name{
+  margin-top:7px;
+  font-size:14px;
+  font-weight:900;
+}
+
+.feature-desc{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.toggle{
+  position:relative;
+  flex:none;
+  width:48px;
+  height:27px;
+  padding:0;
+  border:1px solid #3a4357;
+  border-radius:99px;
+  background:#252c3a;
+}
+
+.toggle i{
+  position:absolute;
+  top:2px;
+  left:2px;
+  width:21px;
+  height:21px;
+  border-radius:50%;
+  background:#939bab;
+  transition:.2s;
+}
+
+.toggle.on{
+  border-color:var(--purple);
+  background:rgba(168,85,247,.30);
+}
+
+.toggle.on i{
+  left:24px;
+  background:#c084fc;
+  box-shadow:0 0 11px rgba(168,85,247,.8);
+}
+
+/* ================= NHẸ TÂM 50% ================= */
+
+.percent{
+  color:#c084fc;
+  font-size:25px;
+  font-weight:900;
+}
+
+.meter{
+  height:9px;
+  margin-top:13px;
+  overflow:hidden;
+  border-radius:99px;
+  background:#202638;
+}
+
+.meter span{
+  display:block;
+  width:50%;
+  height:100%;
+  background:linear-gradient(90deg,var(--purple),var(--cyan));
+}
+
+/* ================= BUTTON ================= */
+
+.action{
+  width:100%;
+  margin-top:11px;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#151b29;
+  color:#fff;
+  font-weight:800;
+}
+
+.game{
+  display:block;
+  margin-top:11px;
+  padding:14px;
+  text-align:center;
+  border-radius:13px;
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+  font-weight:900;
+}
+
+/* ================= PROFILE ================= */
+
+.profile-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+
+.profile-row span{
+  color:var(--muted);
+}
+
+.profile-row:last-of-type{
+  border-bottom:0;
+}
+
+/* ================= BOTTOM NAV ================= */
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:11px;
+  transform:translateX(-50%);
+  z-index:30;
+  width:min(680px,calc(100% - 18px));
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  padding:7px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(17,22,36,.95);
+  backdrop-filter:blur(16px);
+  box-shadow:0 12px 40px rgba(0,0,0,.45);
+}
+
+.bottom-nav button{
+  padding:9px 3px;
+  border:0;
+  border-radius:12px;
+  background:transparent;
+  color:var(--muted);
+  font-size:17px;
+}
+
+.bottom-nav button span{
+  display:block;
+  margin-top:3px;
+  font-size:8px;
+  letter-spacing:1px;
+}
+
+.bottom-nav button.active{
+  color:#fff;
+  background:#1a2030;
+}
+
+@media(max-width:420px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOADING ================= -->
+
+<section id="loader" class="screen">
+
+  <div class="center">
+
+    <img
+      class="avatar"
+      src="./avatar.png"
+      alt="MINHQUAN LOCK"
+    >
+
+    <div class="brand">
+      MINHQUAN LOCK
+    </div>
+
+    <div class="subtitle">
+      NETWORK CONTROL
+    </div>
+
+    <div class="loading-bar">
+      <span></span>
+    </div>
+
+    <div class="loading-text">
+      Đang khởi động hệ thống…
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= LOGIN ================= -->
+
+<section id="loginScreen" class="screen hidden">
+
+  <div class="login-box">
+
+    <img
+      class="avatar"
+      src="./avatar.png"
+      alt="MINHQUAN LOCK"
+    >
+
+    <h1>MINHQUAN LOCK</h1>
+
+    <p>
+      Nhập Key để truy cập hệ thống
+    </p>
+
+    <input
+      id="keyInput"
+      class="key-input"
+      type="text"
+      autocomplete="off"
+      placeholder="MQ-XXXXXXXXXXXXXXXX"
+    >
+
+    <button
+      id="loginButton"
+      class="primary"
+    >
+      ĐĂNG NHẬP
+    </button>
+
+    <div
+      id="loginError"
+      class="error"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= APP ================= -->
+
+<div id="app" class="hidden">
+
+  <header class="topbar">
+
+    <div class="brand-mini">
+
+      <img
+        src="./avatar.png"
+        alt="Avatar"
+      >
+
+      <div>
+        <strong>
+          MINHQUAN LOCK
+        </strong>
+
+        <small>
+          NETWORK CONTROL
+        </small>
+      </div>
+
+    </div>
+
+    <div class="online">
+      ● ONLINE
+    </div>
+
+  </header>
+
+
+  <main class="wrap">
+
+    <!-- ================= TRANG CHỦ ================= -->
+
+    <section
+      id="panelHome"
+      class="panel active"
+    >
+
+      <div class="title">
+        🏠 TRANG CHỦ
+      </div>
+
+      <div class="desc">
+        Tổng quan hệ thống
+      </div>
+
+
+      <div class="grid">
+
+        <div class="card">
+
+          <div class="label">
+            HỆ THỐNG
+          </div>
+
+          <div class="value green">
+            ONLINE
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="label">
+            MẠNG
+          </div>
+
+          <div
+            id="networkStatus"
+            class="value cyan"
+          >
+            Đang kiểm tra
+          </div>
+
+        </div>
+
+
+        <div class="card full">
+
+          <div class="label">
+            THỜI HẠN KEY
+          </div>
+
+          <div
+            id="countdown"
+            class="value"
+          >
+            Đang tải…
+          </div>
+
+          <button
+            id="networkButton"
+            class="action"
+          >
+            ↻ KIỂM TRA KẾT NỐI
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= ĐIỀU KHIỂN ================= -->
+
+    <section
+      id="panelControl"
+      class="panel"
+    >
+
+      <div class="title">
+        🎛️ ĐIỀU KHIỂN
+      </div>
+
+      <div class="desc">
+        Các mục hiển thị trong ứng dụng
+      </div>
+
+
+      <div class="grid">
+
+        <!-- AIMLOCK -->
+
+        <div class="card">
+
+          <div class="row">
+
+            <div>
+
+              <div class="label">
+                FEATURE
+              </div>
+
+              <div class="feature-name">
+                AIMLOCK
+              </div>
+
+              <div class="feature-desc">
+                Trạng thái giao diện
+              </div>
+
+            </div>
+
+            <button
+              class="toggle"
+              type="button"
+              aria-label="AIMLOCK"
+            >
+              <i></i>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- HEADLOCK -->
+
+        <div class="card">
+
+          <div class="row">
+
+            <div>
+
+              <div class="label">
+                FEATURE
+              </div>
+
+              <div class="feature-name">
+                HEADLOCK
+              </div>
+
+              <div class="feature-desc">
+                Trạng thái giao diện
+              </div>
+
+            </div>
+
+            <button
+              class="toggle"
+              type="button"
+              aria-label="HEADLOCK"
+            >
+              <i></i>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- NHẸ TÂM 50% -->
+
+        <div class="card full">
+
+          <div class="row">
+
+            <div>
+
+              <div class="label">
+                SENSITIVITY
+              </div>
+
+              <div class="feature-name">
+                NHẸ TÂM
+              </div>
+
+              <div class="feature-desc">
+                Mức cấu hình hiển thị
+              </div>
+
+            </div>
+
+            <div class="percent">
+              50%
+            </div>
+
+          </div>
+
+          <div class="meter">
+            <span></span>
+          </div>
+
+        </div>
+
+
+        <!-- GAME -->
+
+        <div class="card full">
+
+          <div class="label">
+            GAME
+          </div>
+
+          <div class="feature-name">
+            Free Fire
+          </div>
+
+          <div class="feature-desc">
+            Mở trang chính thức của game
+          </div>
+
+          <a
+            class="game"
+            href="https://ff.garena.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            🎮 MỞ GAME
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= HỒ SƠ ================= -->
+
+    <section
+      id="panelProfile"
+      class="panel"
+    >
+
+      <div class="title">
+        👤 HỒ SƠ
+      </div>
+
+      <div class="desc">
+        Thông tin tài khoản hiện tại
+      </div>
+
+
+      <div class="card">
+
+        <div class="profile-row">
+          <span>Tài khoản</span>
+          <strong>MINHQUAN USER</strong>
+        </div>
+
+        <div class="profile-row">
+          <span>License Key</span>
+          <strong id="profileKey">••••••</strong>
+        </div>
+
+        <div class="profile-row">
+          <span>HWID / Device</span>
+          <strong id="profileDevice">Đang tải…</strong>
+        </div>
+
+        <div class="profile-row">
+          <span>Trạng thái</span>
+          <strong class="green">ACTIVE</strong>
+        </div>
+
+        <div class="profile-row">
+          <span>Ngày hết hạn</span>
+          <strong id="profileExpiry">Đang tải…</strong>
+        </div>
+
+        <button
+          id="logoutButton"
+          class="action"
+        >
+          ĐĂNG XUẤT
+        </button>
+
+      </div>
+
+
+      <div
+        class="card"
+        style="margin-top:11px"
+      >
+
+        <div class="label">
+          HỖ TRỢ
+        </div>
+
+        <a
+          class="game"
+          href="https://zalo.me/0983774970"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          💬 ZALO 0983774970
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= MENU ================= -->
+
+  <nav class="bottom-nav">
+
+    <button
+      class="active"
+      type="button"
+      data-panel="panelHome"
+    >
+      🏠
+      <span>TRANG CHỦ</span>
+    </button>
+
+    <button
+      type="button"
+      data-panel="panelControl"
+    >
+      🎛️
+      <span>ĐIỀU KHIỂN</span>
+    </button>
+
+    <button
+      type="button"
+      data-panel="panelProfile"
+    >
+      👤
+      <span>HỒ SƠ</span>
+    </button>
+
+  </nav>
+
+</div>
+
+
+<script>
+"use strict";
+
+/* =========================================
+   API WORKER
+========================================= */
+
+const API_URL =
+  "https://quan-key-admin.baoquyen2737.workers.dev";
+
+
+/* =========================================
+   DOM
+========================================= */
+
+const loader =
+  document.getElementById("loader");
+
+const loginScreen =
+  document.getElementById("loginScreen");
+
+const app =
+  document.getElementById("app");
+
+const keyInput =
+  document.getElementById("keyInput");
+
+const loginButton =
+  document.getElementById("loginButton");
+
+const loginError =
+  document.getElementById("loginError");
+
+const networkStatus =
+  document.getElementById("networkStatus");
+
+const networkButton =
+  document.getElementById("networkButton");
+
+const countdown =
+  document.getElementById("countdown");
+
+const profileKey =
+  document.getElementById("profileKey");
+
+const profileDevice =
+  document.getElementById("profileDevice");
+
+const profileExpiry =
+  document.getElementById("profileExpiry");
+
+const logoutButton =
+  document.getElementById("logoutButton");
+
+
+let countdownTimer = null;
+let audioContext = null;
+
+
+/* =========================================
+   ÂM THANH
+========================================= */
+
+function playClickSound(){
+
+  try{
+
+    const AudioCtx =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+    if(!AudioCtx){
+      return;
+    }
+
+    if(!audioContext){
+      audioContext = new AudioCtx();
+    }
+
+    const oscillator =
+      audioContext.createOscillator();
+
+    const gain =
+      audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = 620;
+
+    gain.gain.setValueAtTime(
+      0.0001,
+      audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.035,
+      audioContext.currentTime + 0.01
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      audioContext.currentTime + 0.08
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start();
+
+    oscillator.stop(
+      audioContext.currentTime + 0.09
+    );
+
+  }catch(error){
+
+    /* Không làm app lỗi nếu trình duyệt chặn audio */
+
+  }
+
+}
+
+
+/* =========================================
+   DEVICE ID
+========================================= */
+
+function getDeviceId(){
+
+  let id =
+    localStorage.getItem("mq_device_id");
+
+  if(!id){
+
+    if(
+      window.crypto &&
+      typeof crypto.randomUUID === "function"
+    ){
+
+      id =
+        "MQ-" +
+        crypto.randomUUID();
+
+    }else{
+
+      id =
+        "MQ-" +
+        Date.now() +
+        "-" +
+        Math.random()
+          .toString(16)
+          .slice(2);
+
+    }
+
+    localStorage.setItem(
+      "mq_device_id",
+      id
+    );
+
+  }
+
+  return id;
+}
+
+
+/* =========================================
+   FETCH TIMEOUT
+========================================= */
+
+async function fetchWithTimeout(
+  url,
+  options = {},
+  timeout = 5000
+){
+
+  const controller =
+    new AbortController();
+
+  const timer =
+    setTimeout(function(){
+
+      controller.abort();
+
+    }, timeout);
+
+  try{
+
+    return await fetch(
+      url,
+      {
+        ...options,
+        signal:controller.signal
+      }
+    );
+
+  }finally{
+
+    clearTimeout(timer);
+
+  }
+
+}
+
+
+/* =========================================
+   MÀN HÌNH
+========================================= */
+
+function showLogin(){
+
+  loader.classList.add("hidden");
+
+  app.classList.add("hidden");
+
+  loginScreen.classList.remove("hidden");
+
+}
+
+
+function showApp(){
+
+  loader.classList.add("hidden");
+
+  loginScreen.classList.add("hidden");
+
+  app.classList.remove("hidden");
+
+  updateProfile();
+
+  startCountdown();
+
+  checkNetwork();
+
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+function updateProfile(){
+
+  const key =
+    localStorage.getItem(
+      "mq_login_key"
+    ) || "";
+
+  const deviceId =
+    getDeviceId();
+
+  const expiresAt =
+    Number(
+      localStorage.getItem(
+        "mq_expires_at"
+      ) || 0
+    );
+
+
+  if(key.length > 8){
+
+    profileKey.textContent =
+      key.slice(0,4) +
+      "••••" +
+      key.slice(-4);
+
+  }else{
+
+    profileKey.textContent =
+      "••••••";
+
+  }
+
+
+  profileDevice.textContent =
+    deviceId.slice(0,16) +
+    "…";
+
+
+  if(expiresAt > 0){
+
+    profileExpiry.textContent =
+      new Date(
+        expiresAt * 1000
+      ).toLocaleString("vi-VN");
+
+  }else{
+
+    profileExpiry.textContent =
+      "Không xác định";
+
+  }
+
+}
+
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+
+function formatRemaining(seconds){
+
+  if(seconds <= 0){
+
+    return "Hết hạn";
+
+  }
+
+
+  let value =
+    seconds;
+
+
+  const days =
+    Math.floor(
+      value / 86400
+    );
+
+  value %= 86400;
+
+
+  const hours =
+    Math.floor(
+      value / 3600
+    );
+
+  value %= 3600;
+
+
+  const minutes =
+    Math.floor(
+      value / 60
+    );
+
+  const secs =
+    value % 60;
+
+
+  return (
+    days + "d " +
+    hours + "h " +
+    minutes + "m " +
+    secs + "s"
+  );
+
+}
+
+
+function startCountdown(){
+
+  clearInterval(
+    countdownTimer
+  );
+
+
+  const expiresAt =
+    Number(
+      localStorage.getItem(
+        "mq_expires_at"
+      ) || 0
+    );
+
+
+  function update(){
+
+    if(!expiresAt){
+
+      countdown.textContent =
+        "Không xác định";
+
+      return;
+
+    }
+
+
+    const now =
+      Math.floor(
+        Date.now() / 1000
+      );
+
+
+    const remaining =
+      expiresAt - now;
+
+
+    countdown.textContent =
+      formatRemaining(
+        remaining
+      );
+
+
+    if(remaining <= 0){
+
+      clearInterval(
+        countdownTimer
+      );
+
+    }
+
+  }
+
+
+  update();
+
+
+  countdownTimer =
+    setInterval(
+      update,
+      1000
+    );
+
+}
+
+
+/* =========================================
+   KIỂM TRA MẠNG
+========================================= */
+
+async function checkNetwork(){
+
+  networkStatus.textContent =
+    "Đang kiểm tra";
+
+
+  try{
+
+    const response =
+      await fetchWithTimeout(
+        API_URL + "/",
+        {},
+        4000
+      );
+
+
+    if(response.ok){
+
+      const connection =
+        navigator.connection ||
+        navigator.mozConnection ||
+        navigator.webkitConnection;
+
+
+      if(
+        connection &&
+        connection.effectiveType
+      ){
+
+        networkStatus.textContent =
+          connection.effectiveType
+            .toUpperCase();
+
+      }else{
+
+        networkStatus.textContent =
+          "ONLINE";
+
+      }
+
+    }else{
+
+      networkStatus.textContent =
+        "OFFLINE";
+
+    }
+
+  }catch(error){
+
+    networkStatus.textContent =
+      "Không xác định";
+
+  }
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+async function login(){
+
+  const key =
+    keyInput.value.trim();
+
+
+  if(!key){
+
+    loginError.textContent =
+      "Vui lòng nhập Key";
+
+    return;
+
+  }
+
+
+  loginButton.disabled =
+    true;
+
+  loginButton.textContent =
+    "ĐANG KIỂM TRA…";
+
+  loginError.textContent =
+    "";
+
+
+  try{
+
+    const response =
+      await fetchWithTimeout(
+
+        API_URL +
+        "/api/login",
+
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            key:key,
+
+            deviceId:
+              getDeviceId()
+
+          })
+
+        },
+
+        5000
+
+      );
+
+
+    let data;
+
+
+    try{
+
+      data =
+        await response.json();
+
+    }catch(error){
+
+      throw new Error(
+        "Máy chủ trả về dữ liệu không hợp lệ"
+      );
+
+    }
+
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      throw new Error(
+        data.message ||
+        "Key không hợp lệ"
+      );
+
+    }
+
+
+    localStorage.setItem(
+      "mq_login_key",
+      key
+    );
+
+
+    localStorage.setItem(
+      "mq_expires_at",
+      String(
+        data.expires_at
+      )
+    );
+
+
+    showApp();
+
+
+  }catch(error){
+
+    if(
+      error.name ===
+      "AbortError"
+    ){
+
+      loginError.textContent =
+        "Máy chủ phản hồi quá lâu";
+
+    }else{
+
+      loginError.textContent =
+        error.message ||
+        "Đăng nhập thất bại";
+
+    }
+
+  }finally{
+
+    loginButton.disabled =
+      false;
+
+    loginButton.textContent =
+      "ĐĂNG NHẬP";
+
+  }
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+  localStorage.removeItem(
+    "mq_login_key"
+  );
+
+  localStorage.removeItem(
+    "mq_expires_at"
+  );
+
+  clearInterval(
+    countdownTimer
+  );
+
+  keyInput.value =
+    "";
+
+  loginError.textContent =
+    "";
+
+  showLogin();
+
+}
+
+
+/* =========================================
+   MENU DƯỚI
+========================================= */
+
+document
+  .querySelectorAll(
+    ".bottom-nav button"
+  )
+  .forEach(function(button){
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        const targetId =
+          button.dataset.panel;
+
+
+        document
+          .querySelectorAll(
+            ".bottom-nav button"
+          )
+          .forEach(function(item){
+
+            item.classList.remove(
+              "active"
+            );
+
+          });
+
+
+        button.classList.add(
+          "active"
+        );
+
+
+        document
+          .querySelectorAll(
+            ".panel"
+          )
+          .forEach(function(panel){
+
+            panel.classList.remove(
+              "active"
+            );
+
+          });
+
+
+        const target =
+          document.getElementById(
+            targetId
+          );
+
+
+        if(target){
+
+          target.classList.add(
+            "active"
+          );
+
+        }
+
+
+        window.scrollTo({
+
+          top:0,
+
+          behavior:"smooth"
+
+        });
+
+      }
+    );
+
+  });
+
+
+/* =========================================
+   AIMLOCK / HEADLOCK
+   CHỈ ĐỔI GIAO DIỆN
+========================================= */
+
+document
+  .querySelectorAll(
+    ".toggle"
+  )
+  .forEach(function(toggle){
+
+    toggle.addEventListener(
+      "click",
+      function(){
+
+        toggle.classList.toggle(
+          "on"
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================================
+   CLICK SOUND
+========================================= */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target.closest(
+        "button,a"
+      )
+    ){
+
+      playClickSound();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   EVENTS
+========================================= */
+
+loginButton.addEventListener(
+  "click",
+  login
+);
+
+
+keyInput.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Enter"){
+
+      login();
+
+    }
+
+  }
+);
+
+
+networkButton.addEventListener(
+  "click",
+  checkNetwork
+);
+
+
+logoutButton.addEventListener(
+  "click",
+  logout
+);
+
+
+/* =========================================
+   KHỞI ĐỘNG
+   Không bị kẹt Loading
+========================================= */
+
+window.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    setTimeout(
+      async function(){
+
+        const savedKey =
+          localStorage.getItem(
+            "mq_login_key"
+          );
+
+
+        if(!savedKey){
+
+          showLogin();
+
+          return;
+
+        }
+
+
+        try{
+
+          const response =
+            await fetchWithTimeout(
+
+              API_URL +
+              "/api/login",
+
+              {
+                method:"POST",
+
+                headers:{
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body:JSON.stringify({
+
+                  key:savedKey,
+
+                  deviceId:
+                    getDeviceId()
+
+                })
+
+              },
+
+              4000
+
+            );
+
+
+          const data =
+            await response.json();
+
+
+          if(
+            response.ok &&
+            data.success
+          ){
+
+            localStorage.setItem(
+              "mq_expires_at",
+              String(
+                data.expires_at
+              )
+            );
+
+            showApp();
+
+          }else{
+
+            showLogin();
+
+          }
+
+        }catch(error){
+
+          showLogin();
+
+        }
+
+      },
+
+      1600
+
+    );
+
+  }
+);
+</script>
+
+</body>
+</html>

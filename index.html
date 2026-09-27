@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 50% 15%,#32105c 0,#0b0813 35%,#050509 75%);
+}
+
+.app{
+  width:min(720px,94%);
+  margin:25px auto 100px;
+}
+
+.header{
+  text-align:center;
+  padding:22px 10px;
+}
+
+.avatar{
+  width:105px;
+  height:105px;
+  object-fit:cover;
+  border-radius:50%;
+  border:3px solid #a855f7;
+  box-shadow:0 0 25px #9b4dff,0 0 70px #6d28d9;
+}
+
+.logo{
+  margin-top:12px;
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:2px;
+  text-shadow:0 0 15px #a855f7;
+}
+
+.status{
+  margin-top:7px;
+  color:#aaa;
+  font-size:13px;
+}
+
+.panel{
+  padding:16px;
+  border:1px solid #6427a5;
+  border-radius:25px;
+  background:rgba(16,12,28,.88);
+  box-shadow:0 0 35px rgba(142,54,255,.25);
+}
+
+.title{
+  text-align:center;
+  color:#d36cff;
+  font-weight:900;
+  font-size:17px;
+  margin-bottom:15px;
+  text-shadow:0 0 12px #a855f7;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.card{
+  min-height:92px;
+  border:1px solid #8b35bd;
+  border-radius:17px;
+  background:linear-gradient(145deg,#35103f,#180d23);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  cursor:pointer;
+  transition:.18s;
+  box-shadow:inset 0 0 15px rgba(255,0,180,.08);
+  -webkit-tap-highlight-color:transparent;
+}
+
+.card:active{
+  transform:scale(.95);
+}
+
+.card.on{
+  border-color:#d946ef;
+  background:linear-gradient(145deg,#68165f,#29103e);
+  box-shadow:0 0 18px rgba(217,70,239,.55);
+}
+
+.icon{
+  font-size:25px;
+}
+
+.name{
+  font-size:12px;
+  font-weight:800;
+  text-align:center;
+}
+
+.badge{
+  font-size:8px;
+  padding:3px 6px;
+  border-radius:6px;
+  background:#ff397d;
+  font-weight:bold;
+}
+
+.bottom{
+  position:fixed;
+  left:50%;
+  bottom:12px;
+  transform:translateX(-50%);
+  width:min(680px,92%);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  padding:7px;
+  border:1px solid #522071;
+  border-radius:18px;
+  background:rgba(10,7,16,.94);
+  backdrop-filter:blur(12px);
+}
+
+.nav{
+  border:0;
+  border-radius:12px;
+  padding:12px 5px;
+  color:#aaa;
+  background:transparent;
+  font-weight:bold;
+}
+
+.nav.active{
+  color:#fff;
+  background:#6820a0;
+  box-shadow:0 0 15px rgba(168,85,247,.45);
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.info{
+  padding:15px;
+  margin-bottom:10px;
+  border:1px solid #632c85;
+  border-radius:15px;
+  background:#120d1b;
+}
+
+.info b{
+  color:#c76cff;
+}
+
+.green{color:#55ef9b}
+
+.range{
+  width:85%;
+  height:7px;
+  border-radius:10px;
+  background:#32143e;
+  overflow:hidden;
+}
+
+.range span{
+  display:block;
+  width:50%;
+  height:100%;
+  background:linear-gradient(90deg,#a855f7,#ec4899);
+  box-shadow:0 0 12px #d946ef;
+}
+
+@media(max-width:500px){
+  .app{width:94%}
+  .grid{gap:8px}
+  .card{min-height:84px}
+  .icon{font-size:22px}
+  .name{font-size:10px}
+  .logo{font-size:25px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+  <img src="./avatar.png" class="avatar" alt="Avatar">
+  <div class="logo">MINHQUAN LOCK</div>
+  <div class="status">● HỆ THỐNG ĐANG HOẠT ĐỘNG</div>
+</header>
+
+<!-- TRANG CHỦ -->
+<section id="home" class="page active">
+  <div class="panel">
+    <div class="title">⚡ MENU CHÍNH</div>
+
+    <div class="grid">
+
+      <button class="card toggle">
+        <div class="icon">🎯</div>
+        <div class="name">AIMLOCK</div>
+        <span class="badge">UI</span>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">🎯</div>
+        <div class="name">HEADLOCK</div>
+        <span class="badge">UI</span>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">⚡</div>
+        <div class="name">NHẸ TÂM</div>
+        <span class="badge">50%</span>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">🎚️</div>
+        <div class="name">ĐỘ NHẠY</div>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">🛡️</div>
+        <div class="name">BẢO VỆ</div>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">📁</div>
+        <div class="name">CHECK FILE</div>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">💾</div>
+        <div class="name">LỊCH SỬ</div>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">👑</div>
+        <div class="name">VIP</div>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">🔑</div>
+        <div class="name">KEY</div>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">📊</div>
+        <div class="name">THỐNG KÊ</div>
+      </button>
+
+      <button class="card toggle">
+        <div class="icon">🌐</div>
+        <div class="name">MẠNG</div>
+      </button>
+
+      <button class="card" id="game">
+        <div class="icon">🎮</div>
+        <div class="name">MỞ GAME</div>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- ĐIỀU KHIỂN -->
+<section id="control" class="page">
+  <div class="panel">
+    <div class="title">🎛️ ĐIỀU KHIỂN</div>
+
+    <div class="info">
+      <b>Hệ thống</b><br><br>
+      Trạng thái: <span class="green">ONLINE</span>
+    </div>
+
+    <div class="info">
+      <b>🌐 Kết nối mạng</b><br><br>
+      Kết nối ổn định
+    </div>
+
+    <div class="info">
+      <b>⚡ NHẸ TÂM — 50%</b>
+      <br><br>
+      <div class="range"><span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- HỒ SƠ -->
+<section id="profile" class="page">
+  <div class="panel">
+    <div class="title">👤 HỒ SƠ</div>
+
+    <div class="info">
+      <b>Tài khoản:</b> MINHQUAN USER
+    </div>
+
+    <div class="info">
+      <b>Key:</b> MQ-••••••••••••
+    </div>
+
+    <div class="info">
+      <b>Thiết bị:</b> <span id="device">Đang tải...</span>
+    </div>
+
+    <div class="info">
+      <b>Trạng thái:</b>
+      <span class="green"> ACTIVE</span>
+    </div>
+
+    <div class="info">
+      <b>Mạng:</b>
+      <span class="green"> ONLINE</span>
+    </div>
+
+    <div class="info">
+      <b>Hỗ trợ Zalo:</b>
+      0983774970
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- MENU DƯỚI -->
+<nav class="bottom">
+  <button class="nav active" data-page="home">🏠<br>TRANG CHỦ</button>
+  <button class="nav" data-page="control">🎛️<br>ĐIỀU KHIỂN</button>
+  <button class="nav" data-page="profile">👤<br>HỒ SƠ</button>
+</nav>
+
+<script>
+const navs=document.querySelectorAll(".nav");
+const pages=document.querySelectorAll(".page");
+
+function sound(){
+  try{
+    const C=window.AudioContext||window.webkitAudioContext;
+    const ctx=new C();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+
+    osc.frequency.value=650;
+    gain.gain.setValueAtTime(.05,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.08);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime+.08);
+  }catch(e){}
+}
+
+navs.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    sound();
+
+    navs.forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+
+    pages.forEach(p=>p.classList.remove("active"));
+    document.getElementById(btn.dataset.page).classList.add("active");
+  });
+});
+
+document.querySelectorAll(".toggle").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    sound();
+    btn.classList.toggle("on");
+  });
+});
+
+document.getElementById("game").addEventListener("click",()=>{
+  sound();
+  window.open("https://ff.garena.com/","_blank");
+});
+
+document.getElementById("device").textContent =
+  localStorage.getItem("mq_device_id") ||
+  (crypto.randomUUID ? crypto.randomUUID() : "DEVICE-"+Date.now());
+</script>
+
+</body>
+</html>

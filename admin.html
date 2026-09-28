@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MINHQUAN LOCK - KEY ADMIN</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:18px;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top,#17152b 0,#070811 45%,#03040a 100%);
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+.container{
+  width:100%;
+  max-width:900px;
+  margin:auto;
+}
+
+.header{
+  text-align:center;
+  padding:25px 15px;
+}
+
+.logo{
+  width:70px;
+  height:70px;
+  margin:auto;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#7c3aed,#00eaff);
+  font-size:34px;
+  box-shadow:0 0 35px #7c3aed66;
+}
+
+.header h1{
+  margin:14px 0 5px;
+  font-size:25px;
+}
+
+.header p{
+  margin:0;
+  color:#8993aa;
+}
+
+.card{
+  background:#0b0e18dd;
+  border:1px solid #252b40;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 10px 35px #00000055;
+}
+
+.card h2{
+  margin:0 0 15px;
+  font-size:18px;
+  color:#00eaff;
+}
+
+.hour h2{
+  color:#b77cff;
+}
+
+label{
+  display:block;
+  margin:10px 0 6px;
+  color:#8993aa;
+  font-size:13px;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  border-radius:11px;
+  border:1px solid #293249;
+  outline:none;
+  background:#060812;
+  color:#fff;
+  font-size:15px;
+}
+
+input:focus{
+  border-color:#00eaff;
+  box-shadow:0 0 12px #00eaff22;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+button{
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:13px;
+  margin-top:13px;
+  background:linear-gradient(90deg,#00a8c6,#00eaff);
+  color:#001018;
+  font-weight:bold;
+  font-size:14px;
+  cursor:pointer;
+}
+
+button:hover{
+  filter:brightness(1.12);
+}
+
+.red{
+  background:#ef4444;
+  color:#fff;
+}
+
+.gray{
+  background:#20283a;
+  color:#fff;
+}
+
+.status{
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  background:#111625;
+  color:#9ba6ba;
+  font-size:14px;
+}
+
+.success{
+  color:#35ff9b;
+}
+
+.error{
+  color:#ff6475;
+}
+
+.key-result{
+  margin-top:15px;
+  padding:16px;
+  border:1px solid #26334c;
+  background:#060912;
+  border-radius:13px;
+}
+
+.key-result .key{
+  margin:8px 0;
+  color:#00eaff;
+  font-weight:bold;
+  font-size:17px;
+  word-break:break-all;
+}
+
+.small{
+  color:#7e899f;
+  font-size:12px;
+}
+
+.key-item{
+  padding:15px;
+  margin-top:10px;
+  border-radius:13px;
+  background:#070a12;
+  border:1px solid #20283a;
+}
+
+.key-name{
+  color:#b77cff;
+  font-weight:bold;
+}
+
+.key-code{
+  color:#00eaff;
+  word-break:break-all;
+  margin-top:6px;
+}
+
+.meta{
+  color:#8d98ad;
+  font-size:13px;
+  margin-top:8px;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.actions button{
+  margin-top:10px;
+}
+
+.empty{
+  color:#707b91;
+  text-align:center;
+  padding:20px;
+}
+
+@media(max-width:600px){
+
+  body{
+    padding:10px;
+  }
+
+  .row{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    grid-template-columns:1fr;
+  }
+
+  .header h1{
+    font-size:22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+
+<div class="header">
+
+  <div class="logo">
+    🔑
+  </div>
+
+  <h1>MINHQUAN LOCK</h1>
+
+  <p>KEY ADMIN PANEL</p>
+
+</div>
+
+
+<!-- ADMIN SECRET -->
+
+<div class="card">
+
+  <h2>🔐 ADMIN</h2>
+
+  <label>ADMIN_SECRET</label>
+
+  <input
+    id="secret"
+    type="password"
+    placeholder="Nhập ADMIN_SECRET"
+    autocomplete="off"
+  >
+
+  <button onclick="loginAdmin()">
+    🔓 XÁC THỰC ADMIN
+  </button>
+
+  <div
+    id="status"
+    class="status"
+  >
+    Chưa xác thực
+  </div>
+
+</div>
+
+
+<!-- KEY NGÀY -->
+
+<div class="card">
+
+  <h2>➕ TẠO KEY NGÀY</h2>
+
+  <label>Tên Key</label>
+
+  <input
+    id="dayName"
+    type="text"
+    placeholder="Ví dụ: QUANVIP"
+    maxlength="20"
+  >
+
+  <div class="row">
+
+    <div>
+
+      <label>Số ngày</label>
+
+      <input
+        id="dayDays"
+        type="number"
+        min="1"
+        value="30"
+      >
+
+    </div>
+
+    <div>
+
+      <label>Số thiết bị</label>
+
+      <input
+        id="dayDevices"
+        type="number"
+        min="1"
+        value="1"
+      >
+
+    </div>
+
+  </div>
+
+  <button onclick="createDayKey()">
+    ⚡ TẠO KEY NGÀY
+  </button>
+
+  <div id="dayResult"></div>
+
+</div>
+
+
+<!-- KEY GIỜ -->
+
+<div class="card hour">
+
+  <h2>⏱️ TẠO KEY GIỜ</h2>
+
+  <label>Tên Key</label>
+
+  <input
+    id="hourName"
+    type="text"
+    placeholder="Ví dụ: TEST1H"
+    maxlength="20"
+  >
+
+  <div class="row">
+
+    <div>
+
+      <label>Số giờ</label>
+
+      <input
+        id="hourHours"
+        type="number"
+        min="1"
+        value="1"
+      >
+
+    </div>
+
+    <div>
+
+      <label>Số thiết bị</label>
+
+      <input
+        id="hourDevices"
+        type="number"
+        min="1"
+        value="1"
+      >
+
+    </div>
+
+  </div>
+
+  <button onclick="createHourKey()">
+    ⚡ TẠO KEY GIỜ
+  </button>
+
+  <div id="hourResult"></div>
+
+</div>
+
+
+<!-- DANH SÁCH -->
+
+<div class="card">
+
+  <h2>📋 DANH SÁCH KEY</h2>
+
+  <button
+    class="gray"
+    onclick="loadKeys()"
+  >
+    🔄 LÀM MỚI
+  </button>
+
+  <div id="keyList">
+    <div class="empty">
+      Chưa tải danh sách.
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const API =
+  "https://quan-key-admin.baoquyen2737.workers.dev";
+
+let ADMIN_SECRET = "";
+
+
+/* =========================
+   STATUS
+========================= */
+
+function status(text,type=""){
+
+  const box =
+    document.getElementById("status");
+
+  box.className =
+    "status " + type;
+
+  box.textContent =
+    text;
+}
+
+
+/* =========================
+   ADMIN LOGIN
+========================= */
+
+async function loginAdmin(){
+
+  const secret =
+    document
+      .getElementById("secret")
+      .value
+      .trim();
+
+  if(!secret){
+
+    status(
+      "Vui lòng nhập ADMIN_SECRET.",
+      "error"
+    );
+
+    return;
+  }
+
+  ADMIN_SECRET = secret;
+
+  await loadKeys();
+}
+
+
+/* =========================
+   HEADERS
+========================= */
+
+function headers(){
+
+  return {
+    "Content-Type":"application/json",
+    "Authorization":
+      "Bearer " + ADMIN_SECRET
+  };
+}
+
+
+/* =========================
+   CREATE CUSTOM KEY
+========================= */
+
+async function createCustomKey(
+  name,
+  hours,
+  devices,
+  resultId
+){
+
+  if(!ADMIN_SECRET){
+
+    status(
+      "Hãy xác thực Admin trước.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(!name){
+
+    status(
+      "Vui lòng nhập tên Key.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(hours <= 0){
+
+    status(
+      "Thời gian phải lớn hơn 0.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(devices <= 0){
+
+    status(
+      "Số thiết bị phải lớn hơn 0.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/api/admin/create-key",
+        {
+          method:"POST",
+          headers:headers(),
+
+          body:JSON.stringify({
+            name:name,
+            hours:hours,
+            maxDevices:devices
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!data.success){
+
+      status(
+        data.message ||
+        "Không thể tạo Key.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    document
+      .getElementById(resultId)
+      .innerHTML = `
+
+        <div class="key-result">
+
+          <div class="small">
+            KEY ĐÃ TẠO
+          </div>
+
+          <div class="key">
+            ${escapeHtml(data.key)}
+          </div>
+
+          <div class="meta">
+            Tên: <b>
+              ${escapeHtml(name)}
+            </b>
+          </div>
+
+          <div class="meta">
+            Thời hạn:
+            <b>${hours} giờ</b>
+          </div>
+
+          <div class="meta">
+            Thiết bị:
+            <b>${devices}</b>
+          </div>
+
+          <button
+            onclick="copyKey('${escapeHtml(data.key)}')"
+          >
+            📋 SAO CHÉP KEY
+          </button>
+
+        </div>
+
+      `;
+
+
+    status(
+      "Tạo Key thành công.",
+      "success"
+    );
+
+
+    loadKeys();
+
+
+  }catch(error){
+
+    status(
+      "Không kết nối được Worker.",
+      "error"
+    );
+
+  }
+}
+
+
+/* =========================
+   CREATE DAY KEY
+========================= */
+
+async function createDayKey(){
+
+  const name =
+    document
+      .getElementById("dayName")
+      .value
+      .trim();
+
+  const days =
+    Number(
+      document
+        .getElementById("dayDays")
+        .value
+    );
+
+  const devices =
+    Number(
+      document
+        .getElementById("dayDevices")
+        .value
+    );
+
+
+  await createCustomKey(
+    name,
+    days * 24,
+    devices,
+    "dayResult"
+  );
+}
+
+
+/* =========================
+   CREATE HOUR KEY
+========================= */
+
+async function createHourKey(){
+
+  const name =
+    document
+      .getElementById("hourName")
+      .value
+      .trim();
+
+  const hours =
+    Number(
+      document
+        .getElementById("hourHours")
+        .value
+    );
+
+  const devices =
+    Number(
+      document
+        .getElementById("hourDevices")
+        .value
+    );
+
+
+  await createCustomKey(
+    name,
+    hours,
+    devices,
+    "hourResult"
+  );
+}
+
+
+/* =========================
+   LOAD KEYS
+========================= */
+
+async function loadKeys(){
+
+  if(!ADMIN_SECRET){
+
+    return;
+  }
+
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/api/admin/keys",
+        {
+          method:"GET",
+          headers:headers()
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!data.success){
+
+      status(
+        data.message ||
+        "ADMIN_SECRET không đúng.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    status(
+      "Admin đã xác thực.",
+      "success"
+    );
+
+
+    renderKeys(data.keys);
+
+
+  }catch(error){
+
+    status(
+      "Không kết nối được Worker.",
+      "error"
+    );
+
+  }
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderKeys(keys){
+
+  const box =
+    document.getElementById("keyList");
+
+
+  if(!keys || !keys.length){
+
+    box.innerHTML = `
+      <div class="empty">
+        Chưa có Key.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  let html = "";
+
+
+  keys.forEach(item => {
+
+    const expires =
+      new Date(
+        item.expires_at * 1000
+      ).toLocaleString("vi-VN");
+
+
+    const revoked =
+      Number(item.revoked) === 1;
+
+
+    html += `
+
+      <div class="key-item">
+
+        <div class="key-name">
+          🏷️
+          ${escapeHtml(
+            item.name || "Không tên"
+          )}
+        </div>
+
+        <div class="key-code">
+          🔑
+          ${escapeHtml(item.key)}
+        </div>
+
+        <div class="meta">
+          ⏰ Hết hạn:
+          ${expires}
+        </div>
+
+        <div class="meta">
+          📱 Thiết bị:
+          ${item.max_devices}
+        </div>
+
+        <div class="meta">
+          ${
+            revoked
+            ? '<span class="error">🚫 Đã thu hồi</span>'
+            : '<span class="success">🟢 Đang hoạt động</span>'
+          }
+        </div>
+
+        <div class="actions">
+
+          <button
+            class="gray"
+            onclick="copyKey('${escapeHtml(item.key)}')"
+          >
+            📋 SAO CHÉP
+          </button>
+
+          ${
+            !revoked
+            ? `
+              <button
+                class="red"
+                onclick="revokeKey('${escapeHtml(item.key)}')"
+              >
+                🚫 THU HỒI
+              </button>
+            `
+            : ""
+          }
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  box.innerHTML =
+    html;
+}
+
+
+/* =========================
+   REVOKE
+========================= */
+
+async function revokeKey(key){
+
+  if(
+    !confirm(
+      "Bạn chắc chắn muốn thu hồi Key này?"
+    )
+  ){
+
+    return;
+  }
+
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/api/admin/revoke-key",
+        {
+          method:"POST",
+          headers:headers(),
+
+          body:JSON.stringify({
+            key:key
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!data.success){
+
+      status(
+        data.message ||
+        "Không thể thu hồi Key.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    status(
+      "Đã thu hồi Key.",
+      "success"
+    );
+
+
+    loadKeys();
+
+
+  }catch(error){
+
+    status(
+      "Không kết nối được Worker.",
+      "error"
+    );
+
+  }
+}
+
+
+/* =========================
+   COPY
+========================= */
+
+async function copyKey(key){
+
+  try{
+
+    await navigator
+      .clipboard
+      .writeText(key);
+
+
+    status(
+      "Đã sao chép Key.",
+      "success"
+    );
+
+  }catch{
+
+    prompt(
+      "Sao chép Key:",
+      key
+    );
+
+  }
+}
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHtml(value){
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+}
+
+</script>
+
+</body>
+</html>

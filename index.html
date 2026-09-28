@@ -1,0 +1,5283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#07040a">
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+  --bg:#050308;
+  --panel:#0e0a11;
+  --panel2:#151019;
+
+  --purple:#a855f7;
+  --purple2:#6d28d9;
+
+  --cyan:#22dfff;
+
+  --red:#ff1744;
+  --red2:#ff003c;
+
+  --green:#42f59b;
+  --yellow:#ffd32a;
+
+  --text:#fff;
+  --muted:#89818f;
+
+  --line:rgba(255,255,255,.07);
+}
+
+html,
+body{
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(168,85,247,.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 100% 20%,
+      rgba(255,0,60,.10),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #070309,
+      #040206
+    );
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* ==================================================
+   LOADING
+================================================== */
+
+#loading{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#050308;
+}
+
+.loader{
+  width:min(360px,88%);
+  text-align:center;
+}
+
+.loader img{
+  width:90px;
+  height:90px;
+
+  object-fit:cover;
+
+  border-radius:26px;
+
+  border:1px solid
+    rgba(168,85,247,.45);
+
+  box-shadow:
+    0 0 45px
+    rgba(168,85,247,.30);
+
+  animation:
+    floating 2s infinite ease-in-out;
+}
+
+.loader h1{
+  margin-top:18px;
+
+  font-size:27px;
+  letter-spacing:4px;
+}
+
+.loader p{
+  margin-top:7px;
+
+  color:#817884;
+
+  font-size:9px;
+  letter-spacing:3px;
+}
+
+.loadbar{
+  width:100%;
+  height:5px;
+
+  margin-top:24px;
+
+  overflow:hidden;
+
+  border-radius:20px;
+
+  background:#1b141d;
+}
+
+.loadbar div{
+  width:0;
+  height:100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--purple),
+      var(--cyan)
+    );
+
+  box-shadow:
+    0 0 18px var(--purple);
+
+  animation:
+    loading 1.6s forwards ease;
+}
+
+@keyframes loading{
+  to{
+    width:100%;
+  }
+}
+
+@keyframes floating{
+  50%{
+    transform:translateY(-7px);
+  }
+}
+
+/* ==================================================
+   LOGIN
+================================================== */
+
+#loginPage{
+  min-height:100vh;
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+}
+
+.login{
+  width:min(430px,100%);
+
+  padding:28px 23px;
+
+  border-radius:28px;
+
+  border:
+    1px solid
+    rgba(168,85,247,.18);
+
+  background:
+    rgba(15,10,19,.90);
+
+  backdrop-filter:blur(20px);
+
+  box-shadow:
+    0 30px 90px
+    rgba(0,0,0,.65);
+}
+
+.login-avatar{
+  display:block;
+
+  width:86px;
+  height:86px;
+
+  margin:auto;
+
+  object-fit:cover;
+
+  border-radius:25px;
+
+  border:
+    2px solid
+    rgba(168,85,247,.45);
+
+  box-shadow:
+    0 0 30px
+    rgba(168,85,247,.25);
+}
+
+.login h1{
+  margin-top:17px;
+
+  text-align:center;
+
+  font-size:23px;
+
+  letter-spacing:2px;
+}
+
+.login-desc{
+  margin-top:7px;
+  margin-bottom:24px;
+
+  color:var(--muted);
+
+  text-align:center;
+
+  font-size:11px;
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+.field label{
+  display:block;
+
+  margin-bottom:7px;
+
+  color:#aaa1ad;
+
+  font-size:9px;
+  font-weight:900;
+
+  letter-spacing:1.5px;
+}
+
+.input{
+  width:100%;
+  height:51px;
+
+  padding:0 15px;
+
+  outline:none;
+
+  color:#fff;
+
+  border:
+    1px solid
+    rgba(255,255,255,.07);
+
+  border-radius:15px;
+
+  background:
+    rgba(255,255,255,.045);
+}
+
+.input:focus{
+  border-color:
+    rgba(168,85,247,.7);
+
+  box-shadow:
+    0 0 20px
+    rgba(168,85,247,.12);
+}
+
+.primary{
+  width:100%;
+  height:51px;
+
+  margin-top:5px;
+
+  color:#fff;
+
+  border-radius:15px;
+
+  font-weight:900;
+
+  background:
+    linear-gradient(
+      135deg,
+      #a855f7,
+      #6d28d9
+    );
+
+  box-shadow:
+    0 12px 30px
+    rgba(109,40,217,.28);
+}
+
+.login-error{
+  min-height:18px;
+
+  margin-top:10px;
+
+  color:#ff5577;
+
+  text-align:center;
+
+  font-size:10px;
+}
+
+/* ==================================================
+   APP
+================================================== */
+
+#app{
+  display:none;
+
+  min-height:100vh;
+
+  padding-bottom:92px;
+}
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:50;
+
+  padding:13px 15px;
+
+  background:
+    rgba(5,3,8,.78);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.05);
+}
+
+.top-inner{
+  width:min(700px,100%);
+
+  margin:auto;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+}
+
+.brand img{
+  width:42px;
+  height:42px;
+
+  object-fit:cover;
+
+  border-radius:13px;
+}
+
+.brand-name{
+  font-size:12px;
+  font-weight:900;
+
+  letter-spacing:1px;
+}
+
+.online{
+  margin-top:3px;
+
+  color:var(--green);
+
+  font-size:8px;
+  letter-spacing:1px;
+}
+
+.dot{
+  display:inline-block;
+
+  width:6px;
+  height:6px;
+
+  margin-right:3px;
+
+  border-radius:50%;
+
+  background:var(--green);
+
+  box-shadow:
+    0 0 9px var(--green);
+}
+
+.key-badge{
+  padding:7px 10px;
+
+  color:var(--green);
+
+  border-radius:10px;
+
+  background:
+    rgba(66,245,155,.07);
+
+  border:
+    1px solid
+    rgba(66,245,155,.14);
+
+  font-size:8px;
+  font-weight:900;
+}
+
+/* ==================================================
+   CONTENT
+================================================== */
+
+.content{
+  width:min(700px,100%);
+
+  margin:auto;
+
+  padding:17px 14px;
+}
+
+/* ==================================================
+   HERO
+================================================== */
+
+.hero{
+  padding:21px;
+
+  margin-bottom:17px;
+
+  border-radius:24px;
+
+  border:
+    1px solid
+    rgba(168,85,247,.18);
+
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(34,223,255,.10),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(35,21,48,.95),
+      rgba(10,7,13,.95)
+    );
+}
+
+.hero-tag{
+  color:var(--cyan);
+
+  font-size:8px;
+  font-weight:900;
+
+  letter-spacing:2px;
+}
+
+.hero h2{
+  margin-top:8px;
+
+  font-size:25px;
+}
+
+.hero p{
+  margin-top:8px;
+
+  color:var(--muted);
+
+  font-size:10px;
+
+  line-height:1.6;
+}
+
+.game-button{
+  width:100%;
+
+  margin-top:15px;
+
+  padding:13px;
+
+  color:#fff;
+
+  border-radius:13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(168,85,247,.20),
+      rgba(34,223,255,.08)
+    );
+
+  border:
+    1px solid
+    rgba(168,85,247,.20);
+
+  font-size:11px;
+  font-weight:900;
+}
+
+/* ==================================================
+   SECTION
+================================================== */
+
+.section-head{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  margin:
+    18px 3px 10px;
+}
+
+.section-head h3{
+  font-size:11px;
+}
+
+.section-head span{
+  color:#716975;
+
+  font-size:8px;
+}
+
+/* ==================================================
+   CARDS
+================================================== */
+
+.grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:10px;
+}
+
+.card{
+  position:relative;
+
+  min-height:120px;
+
+  padding:15px;
+
+  text-align:left;
+
+  color:#fff;
+
+  border-radius:18px;
+
+  border:
+    1px solid
+    rgba(168,85,247,.12);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(27,20,34,.95),
+      rgba(10,7,13,.94)
+    );
+
+  transition:.15s;
+}
+
+.card:active{
+  transform:scale(.97);
+}
+
+.card-icon{
+  width:39px;
+  height:39px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border-radius:12px;
+
+  background:
+    rgba(168,85,247,.10);
+
+  font-size:19px;
+}
+
+.card h3{
+  margin-top:10px;
+
+  font-size:11px;
+}
+
+.card p{
+  margin-top:4px;
+
+  color:var(--muted);
+
+  font-size:8px;
+}
+
+.card-arrow{
+  position:absolute;
+
+  top:13px;
+  right:13px;
+
+  color:#625b66;
+
+  font-size:16px;
+}
+
+/* ==================================================
+   NAV
+================================================== */
+
+.nav{
+  position:fixed;
+
+  left:50%;
+  bottom:10px;
+
+  z-index:100;
+
+  transform:
+    translateX(-50%);
+
+  width:min(
+    430px,
+    calc(100% - 22px)
+  );
+
+  padding:7px;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  border-radius:20px;
+
+  background:
+    rgba(14,10,18,.93);
+
+  backdrop-filter:blur(20px);
+
+  border:
+    1px solid
+    rgba(168,85,247,.17);
+
+  box-shadow:
+    0 18px 55px
+    rgba(0,0,0,.55);
+}
+
+.nav button{
+  padding:8px 4px;
+
+  color:#766d7b;
+
+  border-radius:13px;
+
+  background:transparent;
+
+  font-size:8px;
+  font-weight:900;
+}
+
+.nav button.active{
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(168,85,247,.22),
+      rgba(34,223,255,.05)
+    );
+}
+
+.nav i{
+  display:block;
+
+  margin-bottom:3px;
+
+  font-style:normal;
+
+  font-size:17px;
+}
+
+/* ==================================================
+   MODAL
+================================================== */
+
+.modal{
+  position:fixed;
+
+  inset:0;
+
+  z-index:500;
+
+  display:none;
+
+  align-items:flex-end;
+  justify-content:center;
+
+  padding:10px;
+
+  background:
+    rgba(0,0,0,.72);
+
+  backdrop-filter:blur(8px);
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(620px,100%);
+
+  max-height:92vh;
+
+  overflow:auto;
+
+  padding:18px;
+
+  border-radius:
+    25px 25px 17px 17px;
+
+  background:#0f0a11;
+
+  border:
+    1px solid
+    rgba(168,85,247,.20);
+
+  animation:
+    modalUp .22s ease;
+}
+
+@keyframes modalUp{
+  from{
+    transform:translateY(30px);
+    opacity:0;
+  }
+
+  to{
+    transform:none;
+    opacity:1;
+  }
+}
+
+.modal-head{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:15px;
+}
+
+.modal-head h2{
+  font-size:15px;
+}
+
+.close{
+  width:34px;
+  height:34px;
+
+  color:#aaa;
+
+  border-radius:11px;
+
+  background:
+    rgba(255,255,255,.06);
+}
+
+/* ==================================================
+   CONTROL
+================================================== */
+
+.control{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  gap:12px;
+
+  padding:14px;
+
+  margin-bottom:9px;
+
+  border-radius:15px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid
+    rgba(255,255,255,.045);
+}
+
+.control strong{
+  display:block;
+
+  font-size:11px;
+}
+
+.control small{
+  display:block;
+
+  margin-top:4px;
+
+  color:var(--muted);
+
+  font-size:8px;
+}
+
+/* ==================================================
+   SWITCH
+================================================== */
+
+.switch{
+  position:relative;
+
+  width:51px;
+  height:29px;
+
+  flex-shrink:0;
+}
+
+.switch input{
+  display:none;
+}
+
+.slider{
+  position:absolute;
+
+  inset:0;
+
+  border-radius:30px;
+
+  background:#29232d;
+
+  transition:.2s;
+}
+
+.slider:before{
+  content:"";
+
+  position:absolute;
+
+  width:21px;
+  height:21px;
+
+  left:4px;
+  top:4px;
+
+  border-radius:50%;
+
+  background:#aaa4ae;
+
+  transition:.2s;
+}
+
+.switch input:checked + .slider{
+  background:
+    linear-gradient(
+      90deg,
+      var(--purple),
+      var(--cyan)
+    );
+
+  box-shadow:
+    0 0 16px
+    rgba(34,223,255,.20);
+}
+
+.switch input:checked +
+.slider:before{
+  transform:
+    translateX(22px);
+
+  background:#fff;
+}
+
+/* ==================================================
+   KEY PANEL
+================================================== */
+
+.key-panel{
+  padding:16px;
+
+  margin-bottom:13px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(168,85,247,.11),
+      rgba(34,223,255,.04)
+    );
+
+  border:
+    1px solid
+    rgba(168,85,247,.14);
+}
+
+.key-top{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+}
+
+.key-title{
+  font-size:11px;
+  font-weight:900;
+}
+
+.active-status{
+  color:var(--green);
+
+  font-size:8px;
+  font-weight:900;
+}
+
+.remaining{
+  margin-top:9px;
+
+  color:var(--cyan);
+
+  font-size:23px;
+  font-weight:900;
+}
+
+.expiry{
+  margin-top:4px;
+
+  color:var(--muted);
+
+  font-size:9px;
+}
+
+/* ==================================================
+   SENSITIVITY
+================================================== */
+
+.phone-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:8px;
+
+  margin-bottom:14px;
+}
+
+.phone{
+  padding:12px 7px;
+
+  color:#aaa2ae;
+
+  border-radius:13px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid
+    rgba(255,255,255,.05);
+
+  font-size:9px;
+  font-weight:900;
+}
+
+.phone.active{
+  color:#fff;
+
+  background:
+    rgba(168,85,247,.12);
+
+  border-color:
+    rgba(168,85,247,.55);
+}
+
+.preset{
+  padding:14px;
+
+  margin-bottom:14px;
+
+  border-radius:15px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid
+    var(--line);
+}
+
+.preset strong{
+  font-size:11px;
+}
+
+.preset span{
+  float:right;
+
+  color:var(--cyan);
+
+  font-size:10px;
+}
+
+.range-head{
+  display:flex;
+
+  justify-content:space-between;
+
+  margin-bottom:8px;
+
+  font-size:9px;
+}
+
+.range-value{
+  color:var(--cyan);
+
+  font-weight:900;
+}
+
+input[type=range]{
+  width:100%;
+  height:5px;
+
+  appearance:none;
+
+  outline:none;
+
+  border-radius:20px;
+
+  background:#29222d;
+}
+
+input[type=range]::-webkit-slider-thumb{
+  appearance:none;
+
+  width:18px;
+  height:18px;
+
+  border-radius:50%;
+
+  background:#fff;
+
+  border:
+    3px solid
+    var(--purple);
+
+  box-shadow:
+    0 0 12px
+    rgba(168,85,247,.7);
+}
+
+/* ==================================================
+   PROFILE
+================================================== */
+
+.profile{
+  text-align:center;
+}
+
+.profile-avatar{
+  width:90px;
+  height:90px;
+
+  object-fit:cover;
+
+  border-radius:25px;
+
+  border:
+    2px solid
+    rgba(168,85,247,.45);
+
+  box-shadow:
+    0 0 30px
+    rgba(168,85,247,.20);
+}
+
+.profile h2{
+  margin-top:12px;
+
+  font-size:18px;
+}
+
+.profile-sub{
+  margin-top:4px;
+
+  color:var(--muted);
+
+  font-size:9px;
+}
+
+.info-list{
+  margin-top:18px;
+
+  text-align:left;
+}
+
+.info{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  gap:15px;
+
+  padding:12px 1px;
+
+  border-bottom:
+    1px solid
+    var(--line);
+}
+
+.info span:first-child{
+  color:var(--muted);
+
+  font-size:9px;
+}
+
+.info span:last-child{
+  max-width:63%;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+  text-align:right;
+
+  font-size:9px;
+}
+
+.green{
+  color:var(--green)!important;
+}
+
+.red-text{
+  color:var(--red)!important;
+}
+
+/* ==================================================
+   CHECK FILE SCANNER
+================================================== */
+
+.scan-box{
+  background:#080407;
+
+  border:
+    1px solid
+    rgba(255,0,60,.35);
+}
+
+.scanner{
+  padding:16px;
+
+  border:
+    2px solid
+    #ff003c;
+
+  border-radius:21px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(35,0,10,.88),
+      rgba(8,2,5,.97)
+    );
+
+  box-shadow:
+    0 0 25px
+    rgba(255,0,60,.10),
+
+    inset 0 0 35px
+    rgba(255,0,60,.04);
+}
+
+.scan-percent{
+  color:#27ddff;
+
+  font-family:monospace;
+
+  font-size:20px;
+
+  margin-bottom:17px;
+}
+
+.scan-label{
+  color:#27ddff;
+
+  font-family:monospace;
+
+  font-size:13px;
+
+  margin-bottom:9px;
+}
+
+.scan-progress{
+  height:27px;
+
+  padding:2px;
+
+  overflow:hidden;
+
+  background:#13070a;
+
+  border:
+    1px solid
+    rgba(0,220,255,.25);
+}
+
+.scan-progress-inner{
+  width:0%;
+  height:100%;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #16dfff 0,
+      #16dfff 10px,
+      #08b8d8 10px,
+      #08b8d8 13px
+    );
+
+  box-shadow:
+    0 0 12px
+    #00d9ff;
+
+  transition:
+    width .06s linear;
+}
+
+.scan-complete{
+  min-height:20px;
+
+  margin-top:15px;
+
+  color:#27dcff;
+
+  font-family:monospace;
+
+  font-size:12px;
+}
+
+.scan-line{
+  height:4px;
+
+  margin:19px 0;
+
+  border-radius:10px;
+
+  background:#19d8ff;
+
+  box-shadow:
+    0 0 8px
+    rgba(0,220,255,.45);
+}
+
+.result-title{
+  color:#22dfff;
+
+  font-family:monospace;
+
+  font-size:14px;
+}
+
+.result-row{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:6px;
+
+  margin:14px 0;
+
+  font-family:monospace;
+
+  font-size:11px;
+
+  line-height:1.55;
+}
+
+.result-row span{
+  font-weight:700;
+}
+
+.yellow{
+  color:#ffd42d;
+}
+
+.red-result{
+  color:#ff3159;
+}
+
+.cyan{
+  color:#25ddff;
+}
+
+.rating{
+  margin-top:18px;
+
+  color:#ffd42d;
+
+  font-family:monospace;
+
+  font-size:12px;
+
+  line-height:1.8;
+}
+
+.rating-stars{
+  color:#ffd42d;
+
+  font-size:17px;
+
+  letter-spacing:2px;
+}
+
+.rating-score{
+  color:#fff;
+}
+
+.file-line{
+  padding:7px 0;
+
+  color:#aaa6b7;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.05);
+
+  font-family:monospace;
+
+  font-size:9px;
+
+  line-height:1.5;
+
+  word-break:break-all;
+}
+
+.scan-warning{
+  margin-top:15px;
+
+  padding:13px;
+
+  color:#ffd42d;
+
+  border:
+    1px solid
+    rgba(255,190,0,.17);
+
+  border-radius:12px;
+
+  background:
+    rgba(255,180,0,.09);
+
+  font-size:10px;
+
+  line-height:1.5;
+}
+
+.scan-button{
+  display:block;
+
+  margin-top:14px;
+
+  padding:16px;
+
+  text-align:center;
+
+  color:#fff;
+
+  border-radius:17px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff003c,
+      #ff1744
+    );
+
+  box-shadow:
+    0 8px 25px
+    rgba(255,0,55,.25);
+
+  font-size:12px;
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+.scan-note{
+  margin-top:9px;
+
+  color:#68616d;
+
+  text-align:center;
+
+  font-size:8px;
+  line-height:1.5;
+}
+
+/* ==================================================
+   HISTORY
+================================================== */
+
+.history{
+  padding:12px;
+
+  margin-bottom:8px;
+
+  border-radius:14px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid
+    var(--line);
+}
+
+.history b{
+  font-size:10px;
+}
+
+.history small{
+  display:block;
+
+  margin-top:4px;
+
+  color:var(--muted);
+
+  font-size:8px;
+}
+
+/* ==================================================
+   TOAST
+================================================== */
+
+#toast{
+  position:fixed;
+
+  left:50%;
+  bottom:95px;
+
+  z-index:1000;
+
+  transform:
+    translate(-50%,20px);
+
+  opacity:0;
+
+  pointer-events:none;
+
+  padding:10px 15px;
+
+  color:#fff;
+
+  border-radius:12px;
+
+  background:
+    rgba(20,15,24,.96);
+
+  border:
+    1px solid
+    rgba(168,85,247,.25);
+
+  font-size:9px;
+
+  transition:.22s;
+}
+
+#toast.show{
+  opacity:1;
+
+  transform:
+    translate(-50%,0);
+}
+
+/* ==================================================
+   NOTE
+================================================== */
+
+.note{
+  margin-top:10px;
+
+  color:#756d78;
+
+  font-size:8px;
+
+  line-height:1.6;
+}
+
+@media(max-width:380px){
+
+  .grid{
+    gap:7px;
+  }
+
+  .card{
+    padding:12px;
+  }
+
+  .hero h2{
+    font-size:23px;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     LOADING
+================================================== -->
+
+<div id="loading">
+
+  <div class="loader">
+
+    <img
+      src="./avatar.png"
+      onerror="this.style.display='none'"
+    >
+
+    <h1>MINHQUAN</h1>
+
+    <p>
+      SECURE CONTROL PANEL
+    </p>
+
+    <div class="loadbar">
+      <div></div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     LOGIN
+================================================== -->
+
+<section id="loginPage">
+
+  <div class="login">
+
+    <img
+      class="login-avatar"
+      src="./avatar.png"
+      onerror="
+        this.src='https://placehold.co/100x100/171526/fff?text=MQ'
+      "
+    >
+
+    <h1>
+      MINHQUAN LOCK
+    </h1>
+
+    <div class="login-desc">
+      Đăng nhập bằng tài khoản Key
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        TÊN NGƯỜI DÙNG
+      </label>
+
+      <input
+        id="username"
+        class="input"
+        type="text"
+        autocomplete="username"
+        placeholder="Nhập tên của bạn"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        KEY
+      </label>
+
+      <input
+        id="key"
+        class="input"
+        type="password"
+        autocomplete="current-password"
+        placeholder="MQ-XXXXXXXX"
+      >
+
+    </div>
+
+
+    <button
+      class="primary"
+      onclick="login()"
+    >
+      🔐 ĐĂNG NHẬP
+    </button>
+
+
+    <div
+      id="loginError"
+      class="login-error"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- ==================================================
+     APP
+================================================== -->
+
+<div id="app">
+
+
+  <!-- HEADER -->
+
+  <header class="top">
+
+    <div class="top-inner">
+
+      <div class="brand">
+
+        <img
+          src="./avatar.png"
+          onerror="
+            this.src='https://placehold.co/100x100/171526/fff?text=MQ'
+          "
+        >
+
+        <div>
+
+          <div class="brand-name">
+            MINHQUAN LOCK
+          </div>
+
+          <div class="online">
+
+            <span class="dot"></span>
+
+            ONLINE
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="topKey"
+        class="key-badge"
+      >
+        KEY ACTIVE
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- ==================================================
+       HOME
+  ================================================== -->
+
+  <main
+    id="homePage"
+    class="content page"
+  >
+
+    <section class="hero">
+
+      <div class="hero-tag">
+        SECURE CONTROL PANEL
+      </div>
+
+      <h2>
+        Xin chào,
+        <span id="helloName">
+          User
+        </span>
+      </h2>
+
+      <p>
+        Quản lý tài khoản, thiết bị và
+        các thiết lập giao diện của bạn.
+      </p>
+
+
+      <button
+        class="game-button"
+        onclick="openFreeFire()"
+      >
+        🎮 MỞ FREE FIRE
+      </button>
+
+    </section>
+
+
+    <div class="section-head">
+
+      <h3>
+        ĐIỀU KHIỂN
+      </h3>
+
+      <span>
+        CONTROL
+      </span>
+
+    </div>
+
+
+    <div class="grid">
+
+
+      <button
+        class="card"
+        onclick="
+          openFeature('AIMLOCK')
+        "
+      >
+
+        <div class="card-icon">
+          🎯
+        </div>
+
+        <h3>
+          AIMLOCK
+        </h3>
+
+        <p>
+          Công tắc giao diện
+        </p>
+
+        <span class="card-arrow">
+          ›
+        </span>
+
+      </button>
+
+
+      <button
+        class="card"
+        onclick="
+          openFeature('HEADLOCK')
+        "
+      >
+
+        <div class="card-icon">
+          🎯
+        </div>
+
+        <h3>
+          HEADLOCK
+        </h3>
+
+        <p>
+          Công tắc giao diện
+        </p>
+
+        <span class="card-arrow">
+          ›
+        </span>
+
+      </button>
+
+
+      <button
+        class="card"
+        onclick="
+          openFeature('NHẸ TÂM')
+        "
+      >
+
+        <div class="card-icon">
+          ⚡
+        </div>
+
+        <h3>
+          NHẸ TÂM
+        </h3>
+
+        <p>
+          Công tắc giao diện
+        </p>
+
+        <span class="card-arrow">
+          ›
+        </span>
+
+      </button>
+
+
+      <button
+        class="card"
+        onclick="
+          openSensitivity()
+        "
+      >
+
+        <div class="card-icon">
+          🎚️
+        </div>
+
+        <h3>
+          ĐỘ NHẠY
+        </h3>
+
+        <p>
+          0 — 200
+        </p>
+
+        <span class="card-arrow">
+          ›
+        </span>
+
+      </button>
+
+
+      <button
+        class="card"
+        onclick="
+          openFileCheck()
+        "
+      >
+
+        <div class="card-icon">
+          📁
+        </div>
+
+        <h3>
+          CHECK FILE
+        </h3>
+
+        <p>
+          Phân tích file
+        </p>
+
+        <span class="card-arrow">
+          ›
+        </span>
+
+      </button>
+
+
+      <button
+        class="card"
+        onclick="
+          openProtection()
+        "
+      >
+
+        <div class="card-icon">
+          🛡️
+        </div>
+
+        <h3>
+          BẢO VỆ
+        </h3>
+
+        <p>
+          Trạng thái hệ thống
+        </p>
+
+        <span class="card-arrow">
+          ›
+        </span>
+
+      </button>
+
+
+      <button
+        class="card"
+        onclick="
+          openDevice()
+        "
+      >
+
+        <div class="card-icon">
+          📱
+        </div>
+
+        <h3>
+          THÔNG TIN MÁY
+        </h3>
+
+        <p>
+          Device ID
+        </p>
+
+        <span class="card-arrow">
+          ›
+        </span>
+
+      </button>
+
+
+      <button
+        class="card"
+        onclick="
+          openHistory()
+        "
+      >
+
+        <div class="card-icon">
+          📜
+        </div>
+
+        <h3>
+          LỊCH SỬ
+        </h3>
+
+        <p>
+          Hoạt động gần đây
+        </p>
+
+        <span class="card-arrow">
+          ›
+        </span>
+
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- ==================================================
+       CONTROL TAB
+  ================================================== -->
+
+  <main
+    id="controlPage"
+    class="content page hidden"
+  >
+
+    <div class="section-head">
+
+      <h3>
+        ĐIỀU KHIỂN
+      </h3>
+
+      <span>
+        CONTROL
+      </span>
+
+    </div>
+
+
+    <div class="control">
+
+      <div>
+
+        <strong>
+          AIMLOCK
+        </strong>
+
+        <small>
+          Công tắc giao diện
+        </small>
+
+      </div>
+
+
+      <label class="switch">
+
+        <input
+          id="aimToggle"
+          type="checkbox"
+          onchange="
+            toggleFeature(
+              'AIMLOCK',
+              this.checked
+            )
+          "
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <div class="control">
+
+      <div>
+
+        <strong>
+          HEADLOCK
+        </strong>
+
+        <small>
+          Công tắc giao diện
+        </small>
+
+      </div>
+
+
+      <label class="switch">
+
+        <input
+          id="headToggle"
+          type="checkbox"
+          onchange="
+            toggleFeature(
+              'HEADLOCK',
+              this.checked
+            )
+          "
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <div class="control">
+
+      <div>
+
+        <strong>
+          NHẸ TÂM
+        </strong>
+
+        <small>
+          Công tắc giao diện
+        </small>
+
+      </div>
+
+
+      <label class="switch">
+
+        <input
+          id="lightToggle"
+          type="checkbox"
+          onchange="
+            toggleFeature(
+              'NHẸ TÂM',
+              this.checked
+            )
+          "
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <div class="control">
+
+      <div>
+
+        <strong>
+          ÂM THANH
+        </strong>
+
+        <small>
+          Âm thanh khi thao tác
+        </small>
+
+      </div>
+
+
+      <label class="switch">
+
+        <input
+          id="soundToggle"
+          type="checkbox"
+          checked
+          onchange="
+            localStorage.setItem(
+              'mq_sound',
+              this.checked
+            )
+          "
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <p class="note">
+      Các công tắc AIMLOCK, HEADLOCK và NHẸ TÂM
+      ở bản này chỉ là giao diện điều khiển,
+      không sửa đổi dữ liệu hoặc tiến trình game.
+    </p>
+
+  </main>
+
+
+  <!-- ==================================================
+       PROFILE TAB
+  ================================================== -->
+
+  <main
+    id="profilePage"
+    class="content page hidden"
+  >
+
+    <div class="profile">
+
+      <img
+        class="profile-avatar"
+        src="./avatar.png"
+        onerror="
+          this.src='https://placehold.co/100x100/171526/fff?text=MQ'
+        "
+      >
+
+      <h2 id="profileName">
+        User
+      </h2>
+
+      <div class="profile-sub">
+        Tài khoản MINHQUAN LOCK
+      </div>
+
+
+      <!-- KEY -->
+
+      <div class="key-panel">
+
+        <div class="key-top">
+
+          <div class="key-title">
+            KEY ACCOUNT
+          </div>
+
+          <div
+            id="keyStatus"
+            class="active-status"
+          >
+            ● ACTIVE
+          </div>
+
+        </div>
+
+
+        <div
+          id="remaining"
+          class="remaining"
+        >
+          --
+        </div>
+
+
+        <div
+          id="expiry"
+          class="expiry"
+        >
+          Đang tải...
+        </div>
+
+      </div>
+
+
+      <div class="info-list">
+
+
+        <div class="info">
+
+          <span>
+            Tên người dùng
+          </span>
+
+          <span id="infoName">
+            -
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span>
+            Key
+          </span>
+
+          <span id="infoKey">
+            -
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span>
+            Thời gian còn lại
+          </span>
+
+          <span id="infoRemaining">
+            -
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span>
+            Ngày hết hạn
+          </span>
+
+          <span id="infoExpiry">
+            -
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span>
+            Device ID
+          </span>
+
+          <span id="infoDevice">
+            -
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span>
+            Trạng thái
+          </span>
+
+          <span
+            id="infoStatus"
+            class="green"
+          >
+            ĐANG HOẠT ĐỘNG
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span>
+            Zalo
+          </span>
+
+          <span>
+            0983774970
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="primary"
+        style="margin-top:20px"
+        onclick="logout()"
+      >
+        🚪 ĐĂNG XUẤT
+      </button>
+
+
+      <button
+        class="game-button"
+        style="margin-top:9px"
+        onclick="
+          window.open(
+            'https://zalo.me/0983774970',
+            '_blank'
+          )
+        "
+      >
+        💬 LIÊN HỆ ZALO
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- ==================================================
+       NAV
+  ================================================== -->
+
+  <nav class="nav">
+
+    <button
+      id="navHome"
+      class="active"
+      onclick="
+        showPage('home')
+      "
+    >
+      <i>🏠</i>
+      TRANG CHỦ
+    </button>
+
+
+    <button
+      id="navControl"
+      onclick="
+        showPage('control')
+      "
+    >
+      <i>🎛️</i>
+      ĐIỀU KHIỂN
+    </button>
+
+
+    <button
+      id="navProfile"
+      onclick="
+        showPage('profile')
+      "
+    >
+      <i>👤</i>
+      HỒ SƠ
+    </button>
+
+  </nav>
+
+</div>
+
+
+<!-- ==================================================
+     FEATURE MODAL
+================================================== -->
+
+<div
+  id="featureModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2 id="featureTitle">
+        FEATURE
+      </h2>
+
+      <button
+        class="close"
+        onclick="
+          closeModal('featureModal')
+        "
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="control">
+
+      <div>
+
+        <strong id="featureName">
+          FEATURE
+        </strong>
+
+        <small>
+          Công tắc giao diện
+        </small>
+
+      </div>
+
+
+      <label class="switch">
+
+        <input
+          id="featureSwitch"
+          type="checkbox"
+          onchange="
+            featureSwitchChanged(
+              this.checked
+            )
+          "
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <p class="note">
+      Công tắc này chỉ thay đổi trạng thái
+      hiển thị trong bảng điều khiển.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     SENSITIVITY MODAL
+================================================== -->
+
+<div
+  id="sensitivityModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        🎚️ ĐỘ NHẠY
+      </h2>
+
+      <button
+        class="close"
+        onclick="
+          closeModal(
+            'sensitivityModal'
+          )
+        "
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="section-head">
+
+      <h3>
+        THIẾT BỊ
+      </h3>
+
+      <span>
+        DEVICE
+      </span>
+
+    </div>
+
+
+    <div class="phone-grid">
+
+
+      <button
+        class="phone active"
+        onclick="
+          selectPhone(
+            this,
+            'iPhone'
+          )
+        "
+      >
+        🍎 iPhone
+      </button>
+
+
+      <button
+        class="phone"
+        onclick="
+          selectPhone(
+            this,
+            'Samsung'
+          )
+        "
+      >
+        📱 Samsung
+      </button>
+
+
+      <button
+        class="phone"
+        onclick="
+          selectPhone(
+            this,
+            'Xiaomi'
+          )
+        "
+      >
+        📱 Xiaomi
+      </button>
+
+
+      <button
+        class="phone"
+        onclick="
+          selectPhone(
+            this,
+            'OPPO'
+          )
+        "
+      >
+        📱 OPPO
+      </button>
+
+
+      <button
+        class="phone"
+        onclick="
+          selectPhone(
+            this,
+            'Vivo'
+          )
+        "
+      >
+        📱 Vivo
+      </button>
+
+
+      <button
+        class="phone"
+        onclick="
+          selectPhone(
+            this,
+            'Realme'
+          )
+        "
+      >
+        📱 Realme
+      </button>
+
+
+      <button
+        class="phone"
+        onclick="
+          selectPhone(
+            this,
+            'Android khác'
+          )
+        "
+      >
+        📱 Android khác
+      </button>
+
+    </div>
+
+
+    <div class="preset">
+
+      <strong>
+        GIÁ TRỊ HIỆN TẠI
+      </strong>
+
+      <span id="sensitivityValue">
+        100
+      </span>
+
+    </div>
+
+
+    <div>
+
+      <div class="range-head">
+
+        <span>
+          ĐỘ NHẠY
+        </span>
+
+        <span
+          id="rangeValue"
+          class="range-value"
+        >
+          100 / 200
+        </span>
+
+      </div>
+
+
+      <input
+        id="range"
+        type="range"
+        min="0"
+        max="200"
+        value="100"
+        oninput="
+          updateSensitivity(
+            this.value
+          )
+        "
+      >
+
+    </div>
+
+
+    <p class="note">
+      Giá trị này được lưu ở giao diện trình duyệt.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     CHECK FILE MODAL
+================================================== -->
+
+<div
+  id="fileModal"
+  class="modal"
+>
+
+  <div class="modal-box scan-box">
+
+    <div class="modal-head">
+
+      <h2>
+        🔍 CHECK FILE
+      </h2>
+
+      <button
+        class="close"
+        onclick="
+          closeModal('fileModal')
+        "
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="scanner">
+
+
+      <div
+        id="scanPercent"
+        class="scan-percent"
+      >
+        0%
+      </div>
+
+
+      <div class="scan-label">
+        [PROCESS]
+      </div>
+
+
+      <div class="scan-progress">
+
+        <div
+          id="scanProgress"
+          class="scan-progress-inner"
+        ></div>
+
+      </div>
+
+
+      <div
+        id="scanComplete"
+        class="scan-complete"
+      >
+        [WAITING] Chưa có file...
+      </div>
+
+
+      <div class="scan-line"></div>
+
+
+      <div class="result-title">
+        📊 KẾT QUẢ PHÂN TÍCH
+      </div>
+
+
+      <div class="scan-line"></div>
+
+
+      <div id="scanResult">
+
+        <div class="result-row yellow">
+
+          [TÁC DỤNG]
+
+          <span>
+            ⚠️ CHƯA PHÂN TÍCH
+          </span>
+
+        </div>
+
+
+        <div class="result-row yellow">
+
+          [AN TOÀN]
+
+          <span>
+            🟠 CHƯA KIỂM TRA
+          </span>
+
+        </div>
+
+
+        <div class="result-row red-result">
+
+          [VIRUS]
+
+          <span>
+            ⚠️ CHƯA KIỂM TRA
+          </span>
+
+        </div>
+
+
+        <div class="result-row cyan">
+
+          [SIGNATURE]
+
+          <span>
+            0/5 dấu hiệu
+          </span>
+
+        </div>
+
+
+        <div class="rating">
+
+          ĐÁNH GIÁ TỔNG:
+
+          <span class="rating-stars">
+            ☆☆☆☆☆
+          </span>
+
+          <b class="rating-score">
+            (0/5)
+          </b>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <label class="scan-button">
+
+      🔎 QUÉT FILE NGAY
+
+      <input
+        id="fileInput"
+        type="file"
+        hidden
+        onchange="
+          startFileScan(
+            this.files[0]
+          )
+        "
+      >
+
+    </label>
+
+
+    <div class="scan-note">
+
+      Phân tích tĩnh • Không chạy file
+      • Không tải file lên server
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     DEVICE MODAL
+================================================== -->
+
+<div
+  id="deviceModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        📱 THÔNG TIN MÁY
+      </h2>
+
+      <button
+        class="close"
+        onclick="
+          closeModal('deviceModal')
+        "
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="info-list">
+
+
+      <div class="info">
+
+        <span>
+          Device ID
+        </span>
+
+        <span id="deviceIdModal">
+          -
+        </span>
+
+      </div>
+
+
+      <div class="info">
+
+        <span>
+          Trình duyệt
+        </span>
+
+        <span id="browserModal">
+          -
+        </span>
+
+      </div>
+
+
+      <div class="info">
+
+        <span>
+          Nền tảng
+        </span>
+
+        <span id="platformModal">
+          -
+        </span>
+
+      </div>
+
+
+      <div class="info">
+
+        <span>
+          Ngôn ngữ
+        </span>
+
+        <span id="languageModal">
+          -
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     HISTORY MODAL
+================================================== -->
+
+<div
+  id="historyModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        📜 LỊCH SỬ
+      </h2>
+
+      <button
+        class="close"
+        onclick="
+          closeModal('historyModal')
+        "
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div id="historyList"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     PROTECTION MODAL
+================================================== -->
+
+<div
+  id="protectionModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        🛡️ BẢO VỆ
+      </h2>
+
+      <button
+        class="close"
+        onclick="
+          closeModal('protectionModal')
+        "
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="control">
+
+      <div>
+
+        <strong>
+          BẢO VỆ GIAO DIỆN
+        </strong>
+
+        <small>
+          Trạng thái bảng điều khiển
+        </small>
+
+      </div>
+
+      <span class="green">
+        ● ON
+      </span>
+
+    </div>
+
+
+    <div class="control">
+
+      <div>
+
+        <strong>
+          KEY SERVER
+        </strong>
+
+        <small>
+          Cloudflare Worker
+        </small>
+
+      </div>
+
+      <span
+        id="serverStatus"
+        class="green"
+      >
+        ● ONLINE
+      </span>
+
+    </div>
+
+
+    <p class="note">
+      Trang không thực thi file người dùng chọn.
+      Kiểm tra file chỉ là phân tích tĩnh phía trình duyệt.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+
+<script>
+
+/* ==================================================
+   CONFIG
+================================================== */
+
+const API_URL =
+  "https://quan-key-admin.baoquyen2737.workers.dev";
+
+
+/* ==================================================
+   DEVICE ID
+================================================== */
+
+function getDeviceId(){
+
+  let id =
+    localStorage.getItem(
+      "mq_device_id"
+    );
+
+
+  if(!id){
+
+    id =
+      "MQ-" +
+      crypto.randomUUID()
+      .replaceAll("-","")
+      .slice(0,20)
+      .toUpperCase();
+
+
+    localStorage.setItem(
+      "mq_device_id",
+      id
+    );
+
+  }
+
+
+  return id;
+}
+
+
+const DEVICE_ID =
+  getDeviceId();
+
+
+/* ==================================================
+   SOUND
+================================================== */
+
+function playSound(){
+
+  if(
+    localStorage.getItem(
+      "mq_sound"
+    ) === "false"
+  ){
+    return;
+  }
+
+
+  try{
+
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+
+    if(!AudioContext){
+      return;
+    }
+
+
+    const ctx =
+      new AudioContext();
+
+
+    const oscillator =
+      ctx.createOscillator();
+
+
+    const gain =
+      ctx.createGain();
+
+
+    oscillator.frequency.value =
+      620;
+
+
+    gain.gain.setValueAtTime(
+      .0001,
+      ctx.currentTime
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+      .05,
+      ctx.currentTime + .01
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+      .0001,
+      ctx.currentTime + .08
+    );
+
+
+    oscillator.connect(gain);
+
+    gain.connect(
+      ctx.destination
+    );
+
+
+    oscillator.start();
+
+    oscillator.stop(
+      ctx.currentTime + .08
+    );
+
+  }catch(e){}
+
+}
+
+
+/* ==================================================
+   TOAST
+================================================== */
+
+let toastTimer = null;
+
+
+function showToast(message){
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
+
+  toast.textContent =
+    message;
+
+
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      ()=>{
+        toast.classList.remove(
+          "show"
+        );
+      },
+      2200
+    );
+
+}
+
+
+/* ==================================================
+   ESCAPE
+================================================== */
+
+function escapeHtml(value){
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+/* ==================================================
+   HISTORY
+================================================== */
+
+function addHistory(action){
+
+  const history =
+    JSON.parse(
+      localStorage.getItem(
+        "mq_history"
+      ) || "[]"
+    );
+
+
+  history.unshift({
+
+    action:action,
+
+    time:
+      new Date()
+      .toLocaleString(
+        "vi-VN"
+      )
+
+  });
+
+
+  localStorage.setItem(
+
+    "mq_history",
+
+    JSON.stringify(
+      history.slice(
+        0,
+        30
+      )
+    )
+
+  );
+
+}
+
+
+function openHistory(){
+
+  playSound();
+
+
+  const history =
+    JSON.parse(
+      localStorage.getItem(
+        "mq_history"
+      ) || "[]"
+    );
+
+
+  const box =
+    document.getElementById(
+      "historyList"
+    );
+
+
+  if(!history.length){
+
+    box.innerHTML = `
+      <div class="history">
+        <b>Chưa có hoạt động</b>
+      </div>
+    `;
+
+  }else{
+
+    box.innerHTML =
+      history.map(
+        item => `
+
+          <div class="history">
+
+            <b>
+              ${escapeHtml(
+                item.action
+              )}
+            </b>
+
+            <small>
+              ${escapeHtml(
+                item.time
+              )}
+            </small>
+
+          </div>
+
+        `
+      ).join("");
+
+  }
+
+
+  document
+    .getElementById(
+      "historyModal"
+    )
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+/* ==================================================
+   LOGIN
+================================================== */
+
+async function login(){
+
+  playSound();
+
+
+  const username =
+    document
+      .getElementById(
+        "username"
+      )
+      .value
+      .trim();
+
+
+  const key =
+    document
+      .getElementById(
+        "key"
+      )
+      .value
+      .trim();
+
+
+  const error =
+    document.getElementById(
+      "loginError"
+    );
+
+
+  error.textContent = "";
+
+
+  if(!username){
+
+    error.textContent =
+      "Vui lòng nhập tên người dùng.";
+
+    return;
+
+  }
+
+
+  if(!key){
+
+    error.textContent =
+      "Vui lòng nhập Key.";
+
+    return;
+
+  }
+
+
+  error.textContent =
+    "Đang kiểm tra Key...";
+
+
+  try{
+
+    const response =
+      await fetch(
+        API_URL +
+        "/api/login",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+              key:key,
+              deviceId:
+                DEVICE_ID
+            })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!data.success){
+
+      error.textContent =
+        data.message ||
+        "Key không hợp lệ.";
+
+      return;
+
+    }
+
+
+    localStorage.setItem(
+      "mq_username",
+      username
+    );
+
+
+    localStorage.setItem(
+      "mq_key",
+      key
+    );
+
+
+    localStorage.setItem(
+      "mq_expires_at",
+      String(
+        data.expires_at
+      )
+    );
+
+
+    addHistory(
+      "Đăng nhập thành công"
+    );
+
+
+    showApp();
+
+
+    showToast(
+      "Đăng nhập thành công"
+    );
+
+
+  }catch(errorObject){
+
+    error.textContent =
+      "Không kết nối được Key Server.";
+
+  }
+
+}
+
+
+/* ==================================================
+   SESSION
+================================================== */
+
+async function restoreSession(){
+
+  const username =
+    localStorage.getItem(
+      "mq_username"
+    );
+
+
+  const key =
+    localStorage.getItem(
+      "mq_key"
+    );
+
+
+  if(!username || !key){
+
+    showLogin();
+
+    return;
+
+  }
+
+
+  try{
+
+    /*
+      Revalidate với server.
+      Không chỉ tin localStorage.
+    */
+
+    const response =
+      await fetch(
+        API_URL +
+        "/api/login",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+              key:key,
+              deviceId:
+                DEVICE_ID
+            })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!data.success){
+
+      clearSession();
+
+      showLogin();
+
+      return;
+
+    }
+
+
+    localStorage.setItem(
+      "mq_expires_at",
+      String(
+        data.expires_at
+      )
+    );
+
+
+    showApp();
+
+
+  }catch(e){
+
+    /*
+      Server không phản hồi:
+      đưa về login thay vì giả sử Key còn hợp lệ.
+    */
+
+    showLogin();
+
+  }
+
+}
+
+
+function showLogin(){
+
+  document.getElementById(
+    "loading"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "loginPage"
+  ).style.display =
+    "flex";
+
+
+  document.getElementById(
+    "app"
+  ).style.display =
+    "none";
+
+}
+
+
+function showApp(){
+
+  document.getElementById(
+    "loading"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "loginPage"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "app"
+  ).style.display =
+    "block";
+
+
+  updateAll();
+
+}
+
+
+/* ==================================================
+   LOGOUT
+================================================== */
+
+function clearSession(){
+
+  localStorage.removeItem(
+    "mq_username"
+  );
+
+  localStorage.removeItem(
+    "mq_key"
+  );
+
+  localStorage.removeItem(
+    "mq_expires_at"
+  );
+
+}
+
+
+function logout(){
+
+  playSound();
+
+  addHistory(
+    "Đăng xuất"
+  );
+
+  clearSession();
+
+  showLogin();
+
+  document.getElementById(
+    "username"
+  ).value = "";
+
+  document.getElementById(
+    "key"
+  ).value = "";
+
+}
+
+
+/* ==================================================
+   KEY TIME
+================================================== */
+
+function getExpiry(){
+
+  const value =
+    Number(
+      localStorage.getItem(
+        "mq_expires_at"
+      )
+    );
+
+
+  return Number.isFinite(value)
+    ? value
+    : 0;
+
+}
+
+
+function formatExpiryDate(timestamp){
+
+  if(!timestamp){
+
+    return "Không xác định";
+
+  }
+
+
+  return new Intl.DateTimeFormat(
+    "vi-VN",
+    {
+      dateStyle:"medium",
+      timeStyle:"short"
+    }
+  ).format(
+    new Date(
+      timestamp * 1000
+    )
+  );
+
+}
+
+
+function formatRemaining(timestamp){
+
+  if(!timestamp){
+
+    return "Không xác định";
+
+  }
+
+
+  const difference =
+    timestamp * 1000 -
+    Date.now();
+
+
+  if(difference <= 0){
+
+    return "ĐÃ HẾT HẠN";
+
+  }
+
+
+  const days =
+    Math.floor(
+      difference /
+      86400000
+    );
+
+
+  const hours =
+    Math.floor(
+      (
+        difference %
+        86400000
+      ) /
+      3600000
+    );
+
+
+  const minutes =
+    Math.floor(
+      (
+        difference %
+        3600000
+      ) /
+      60000
+    );
+
+
+  if(days > 0){
+
+    return (
+      days +
+      " ngày " +
+      hours +
+      " giờ " +
+      minutes +
+      " phút"
+    );
+
+  }
+
+
+  if(hours > 0){
+
+    return (
+      hours +
+      " giờ " +
+      minutes +
+      " phút"
+    );
+
+  }
+
+
+  return (
+    minutes +
+    " phút"
+  );
+
+}
+
+
+function maskKey(key){
+
+  if(!key){
+
+    return "-";
+
+  }
+
+
+  if(key.length <= 8){
+
+    return "••••••••";
+
+  }
+
+
+  return (
+    key.slice(0,4) +
+    "••••••••" +
+    key.slice(-4)
+  );
+
+}
+
+
+/* ==================================================
+   UPDATE PROFILE
+================================================== */
+
+function updateAll(){
+
+  const username =
+    localStorage.getItem(
+      "mq_username"
+    ) || "User";
+
+
+  const key =
+    localStorage.getItem(
+      "mq_key"
+    ) || "";
+
+
+  const expiry =
+    getExpiry();
+
+
+  const remaining =
+    formatRemaining(
+      expiry
+    );
+
+
+  const expiryDate =
+    formatExpiryDate(
+      expiry
+    );
+
+
+  document.getElementById(
+    "helloName"
+  ).textContent =
+    username;
+
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    username;
+
+
+  document.getElementById(
+    "infoName"
+  ).textContent =
+    username;
+
+
+  document.getElementById(
+    "infoKey"
+  ).textContent =
+    maskKey(key);
+
+
+  document.getElementById(
+    "infoRemaining"
+  ).textContent =
+    remaining;
+
+
+  document.getElementById(
+    "infoExpiry"
+  ).textContent =
+    expiryDate;
+
+
+  document.getElementById(
+    "infoDevice"
+  ).textContent =
+    DEVICE_ID;
+
+
+  document.getElementById(
+    "remaining"
+  ).textContent =
+    remaining;
+
+
+  document.getElementById(
+    "expiry"
+  ).textContent =
+    "Hết hạn: " +
+    expiryDate;
+
+
+  const status =
+    document.getElementById(
+      "infoStatus"
+    );
+
+
+  const keyStatus =
+    document.getElementById(
+      "keyStatus"
+    );
+
+
+  if(
+    expiry &&
+    expiry * 1000 <= Date.now()
+  ){
+
+    status.textContent =
+      "ĐÃ HẾT HẠN";
+
+    status.className =
+      "red-text";
+
+
+    keyStatus.textContent =
+      "● EXPIRED";
+
+    keyStatus.className =
+      "active-status red-text";
+
+  }else{
+
+    status.textContent =
+      "ĐANG HOẠT ĐỘNG";
+
+    status.className =
+      "green";
+
+
+    keyStatus.textContent =
+      "● ACTIVE";
+
+    keyStatus.className =
+      "active-status";
+
+  }
+
+}
+
+
+/* ==================================================
+   NAVIGATION
+================================================== */
+
+function showPage(page){
+
+  playSound();
+
+
+  document
+    .querySelectorAll(
+      ".page"
+    )
+    .forEach(
+      pageElement => {
+        pageElement
+          .classList
+          .add("hidden");
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      ".nav button"
+    )
+    .forEach(
+      button => {
+        button
+          .classList
+          .remove("active");
+      }
+    );
+
+
+  if(page === "home"){
+
+    document
+      .getElementById(
+        "homePage"
+      )
+      .classList
+      .remove("hidden");
+
+
+    document
+      .getElementById(
+        "navHome"
+      )
+      .classList
+      .add("active");
+
+  }
+
+
+  if(page === "control"){
+
+    document
+      .getElementById(
+        "controlPage"
+      )
+      .classList
+      .remove("hidden");
+
+
+    document
+      .getElementById(
+        "navControl"
+      )
+      .classList
+      .add("active");
+
+  }
+
+
+  if(page === "profile"){
+
+    document
+      .getElementById(
+        "profilePage"
+      )
+      .classList
+      .remove("hidden");
+
+
+    document
+      .getElementById(
+        "navProfile"
+      )
+      .classList
+      .add("active");
+
+
+    updateAll();
+
+  }
+
+}
+
+
+/* ==================================================
+   FREE FIRE APP
+================================================== */
+
+function openFreeFire(){
+
+  playSound();
+
+
+  addHistory(
+    "Bấm MỞ FREE FIRE"
+  );
+
+
+  /*
+    Thử deep link của app.
+
+    Nếu phiên bản Free Fire trên máy không
+    đăng ký scheme này thì trình duyệt sẽ
+    không thể ép mở ứng dụng.
+  */
+
+  const appScheme =
+    "freefire://";
+
+
+  let leftBrowser =
+    false;
+
+
+  const onBlur =
+    () => {
+      leftBrowser = true;
+    };
+
+
+  window.addEventListener(
+    "blur",
+    onBlur,
+    {
+      once:true
+    }
+  );
+
+
+  window.location.href =
+    appScheme;
+
+
+  setTimeout(
+    () => {
+
+      window.removeEventListener(
+        "blur",
+        onBlur
+      );
+
+
+      if(!leftBrowser){
+
+        showToast(
+          "Thiết bị không hỗ trợ mở app trực tiếp"
+        );
+
+      }
+
+    },
+    1200
+  );
+
+}
+
+
+/* ==================================================
+   FEATURES
+================================================== */
+
+let currentFeature =
+  "";
+
+
+function getFeatureStorage(name){
+
+  if(name === "AIMLOCK")
+    return "mq_aim";
+
+  if(name === "HEADLOCK")
+    return "mq_head";
+
+  return "mq_light";
+
+}
+
+
+function openFeature(name){
+
+  playSound();
+
+
+  currentFeature =
+    name;
+
+
+  document.getElementById(
+    "featureTitle"
+  ).textContent =
+    name;
+
+
+  document.getElementById(
+    "featureName"
+  ).textContent =
+    name;
+
+
+  const storage =
+    getFeatureStorage(
+      name
+    );
+
+
+  document.getElementById(
+    "featureSwitch"
+  ).checked =
+    localStorage.getItem(
+      storage
+    ) === "true";
+
+
+  document
+    .getElementById(
+      "featureModal"
+    )
+    .classList
+    .add("show");
+
+}
+
+
+function featureSwitchChanged(
+  checked
+){
+
+  playSound();
+
+
+  const storage =
+    getFeatureStorage(
+      currentFeature
+    );
+
+
+  localStorage.setItem(
+    storage,
+    checked
+  );
+
+
+  syncFeatureSwitches();
+
+
+  addHistory(
+    currentFeature +
+    ": " +
+    (
+      checked
+      ? "ON"
+      : "OFF"
+    )
+  );
+
+
+  showToast(
+    currentFeature +
+    " " +
+    (
+      checked
+      ? "ON"
+      : "OFF"
+    )
+  );
+
+}
+
+
+function toggleFeature(
+  name,
+  checked
+){
+
+  playSound();
+
+
+  localStorage.setItem(
+    getFeatureStorage(
+      name
+    ),
+    checked
+  );
+
+
+  syncFeatureSwitches();
+
+
+  addHistory(
+    name +
+    ": " +
+    (
+      checked
+      ? "ON"
+      : "OFF"
+    )
+  );
+
+
+  showToast(
+    name +
+    " " +
+    (
+      checked
+      ? "ON"
+      : "OFF"
+    )
+  );
+
+}
+
+
+function syncFeatureSwitches(){
+
+  document.getElementById(
+    "aimToggle"
+  ).checked =
+    localStorage.getItem(
+      "mq_aim"
+    ) === "true";
+
+
+  document.getElementById(
+    "headToggle"
+  ).checked =
+    localStorage.getItem(
+      "mq_head"
+    ) === "true";
+
+
+  document.getElementById(
+    "lightToggle"
+  ).checked =
+    localStorage.getItem(
+      "mq_light"
+    ) === "true";
+
+}
+
+
+/* ==================================================
+   SENSITIVITY
+================================================== */
+
+function openSensitivity(){
+
+  playSound();
+
+
+  document
+    .getElementById(
+      "sensitivityModal"
+    )
+    .classList
+    .add("show");
+
+
+  const value =
+    Number(
+      localStorage.getItem(
+        "mq_sensitivity"
+      ) || 100
+    );
+
+
+  document.getElementById(
+    "range"
+  ).value =
+    value;
+
+
+  updateSensitivity(
+    value
+  );
+
+
+  const phone =
+    localStorage.getItem(
+      "mq_phone"
+    );
+
+
+  if(phone){
+
+    document
+      .querySelectorAll(
+        ".phone"
+      )
+      .forEach(
+        button => {
+
+          button
+            .classList
+            .toggle(
+              "active",
+              button.textContent
+                .toLowerCase()
+                .includes(
+                  phone.toLowerCase()
+                )
+            );
+
+        }
+      );
+
+  }
+
+}
+
+
+function updateSensitivity(
+  value
+){
+
+  document.getElementById(
+    "sensitivityValue"
+  ).textContent =
+    value;
+
+
+  document.getElementById(
+    "rangeValue"
+  ).textContent =
+    value +
+    " / 200";
+
+
+  localStorage.setItem(
+    "mq_sensitivity",
+    value
+  );
+
+}
+
+
+function selectPhone(
+  button,
+  name
+){
+
+  playSound();
+
+
+  document
+    .querySelectorAll(
+      ".phone"
+    )
+    .forEach(
+      item => {
+        item
+          .classList
+          .remove("active");
+      }
+    );
+
+
+  button
+    .classList
+    .add("active");
+
+
+  localStorage.setItem(
+    "mq_phone",
+    name
+  );
+
+
+  addHistory(
+    "Chọn thiết bị: " +
+    name
+  );
+
+
+  showToast(
+    "Đã chọn " +
+    name
+  );
+
+}
+
+
+/* ==================================================
+   CHECK FILE
+================================================== */
+
+function openFileCheck(){
+
+  playSound();
+
+
+  document
+    .getElementById(
+      "fileModal"
+    )
+    .classList
+    .add("show");
+
+}
+
+
+async function startFileScan(
+  file
+){
+
+  if(!file)
+    return;
+
+
+  playSound();
+
+
+  const percent =
+    document.getElementById(
+      "scanPercent"
+    );
+
+
+  const progress =
+    document.getElementById(
+      "scanProgress"
+    );
+
+
+  const complete =
+    document.getElementById(
+      "scanComplete"
+    );
+
+
+  const result =
+    document.getElementById(
+      "scanResult"
+    );
+
+
+  percent.textContent =
+    "0%";
+
+
+  progress.style.width =
+    "0%";
+
+
+  complete.textContent =
+    "[PROCESS] Đang quét file...";
+
+
+  result.innerHTML = `
+
+    <div class="result-row yellow">
+      [TÁC DỤNG]
+      <span>
+        ⏳ ĐANG PHÂN TÍCH
+      </span>
+    </div>
+
+    <div class="result-row yellow">
+      [AN TOÀN]
+      <span>
+        ⏳ ĐANG KIỂM TRA
+      </span>
+    </div>
+
+    <div class="result-row red-result">
+      [VIRUS]
+      <span>
+        ⏳ ĐANG KIỂM TRA
+      </span>
+    </div>
+
+    <div class="result-row cyan">
+      [SIGNATURE]
+      <span>
+        SCANNING...
+      </span>
+    </div>
+
+  `;
+
+
+  /* ==========================
+     STATIC ANALYSIS
+  ========================== */
+
+  const name =
+    file.name.toLowerCase();
+
+
+  const extension =
+    name.includes(".")
+      ? name
+          .split(".")
+          .pop()
+      : "";
+
+
+  const executableExtensions = [
+    "exe",
+    "dll",
+    "bat",
+    "cmd",
+    "scr",
+    "ps1",
+    "vbs",
+    "apk",
+    "jar",
+    "msi"
+  ];
+
+
+  const keywords = [
+
+    "aimlock",
+    "headlock",
+    "recoil",
+
+    "inject",
+    "injection",
+
+    "memory",
+    "bypass",
+
+    "cheat",
+    "hack",
+
+    "modmenu",
+
+    "freefire"
+
+  ];
+
+
+  const foundKeywords = [];
+
+
+  for(
+    const keyword
+    of keywords
+  ){
+
+    if(
+      name.includes(
+        keyword
+      )
+    ){
+
+      foundKeywords.push(
+        keyword
+      );
+
+    }
+
+  }
+
+
+  let hash =
+    "Không tính được";
+
+
+  try{
+
+    const buffer =
+      await file.arrayBuffer();
+
+
+    const digest =
+      await crypto.subtle.digest(
+        "SHA-256",
+        buffer
+      );
+
+
+    hash =
+      Array
+        .from(
+          new Uint8Array(
+            digest
+          )
+        )
+        .map(
+          byte =>
+            byte
+              .toString(16)
+              .padStart(
+                2,
+                "0"
+              )
+        )
+        .join("");
+
+  }catch(error){
+
+    hash =
+      "Không tính được";
+
+  }
+
+
+  /* ==========================
+     SCAN ANIMATION
+  ========================== */
+
+  for(
+    let i = 0;
+    i <= 100;
+    i++
+  ){
+
+    percent.textContent =
+      i + "%";
+
+
+    progress.style.width =
+      i + "%";
+
+
+    if(i < 25){
+
+      complete.textContent =
+        "[PROCESS] Reading file...";
+
+    }else if(i < 50){
+
+      complete.textContent =
+        "[PROCESS] Checking extension...";
+
+    }else if(i < 75){
+
+      complete.textContent =
+        "[PROCESS] Checking signature...";
+
+    }else if(i < 95){
+
+      complete.textContent =
+        "[PROCESS] Analyzing metadata...";
+
+    }else{
+
+      complete.textContent =
+        "[PROCESS] Finalizing scan...";
+
+    }
+
+
+    await new Promise(
+      resolve =>
+        setTimeout(
+          resolve,
+          12
+        )
+    );
+
+  }
+
+
+  complete.textContent =
+    "[COMPLETE] Scan finished!";
+
+
+  /* ==========================
+     RESULT
+  ========================== */
+
+  let effect;
+  let safety;
+  let virus;
+  let stars;
+  let score;
+
+
+  if(
+    foundKeywords.length > 0
+  ){
+
+    effect =
+      "⚠️ CÓ DẤU HIỆU LIÊN QUAN";
+
+
+    safety =
+      "🟠 CẦN KIỂM TRA THÊM";
+
+
+    virus =
+      "⚠️ KHÔNG THỂ XÁC NHẬN";
+
+
+    stars =
+      "★★☆☆☆";
+
+
+    score =
+      "2/5";
+
+  }else if(
+    executableExtensions
+      .includes(
+        extension
+      )
+  ){
+
+    effect =
+      "⚠️ FILE CÓ KHẢ NĂNG THỰC THI";
+
+
+    safety =
+      "🟠 CẦN THẬN TRỌNG";
+
+
+    virus =
+      "⚠️ CHƯA XÁC ĐỊNH";
+
+
+    stars =
+      "★★☆☆☆";
+
+
+    score =
+      "2/5";
+
+  }else{
+
+    effect =
+      "ℹ️ CHƯA PHÁT HIỆN DẤU HIỆU RÕ";
+
+
+    safety =
+      "🟢 CHƯA THẤY DẤU HIỆU BẤT THƯỜNG";
+
+
+    virus =
+      "🟢 CHƯA PHÁT HIỆN QUA KIỂM TRA TĨNH";
+
+
+    stars =
+      "★★★☆☆";
+
+
+    score =
+      "3/5";
+
+  }
+
+
+  result.innerHTML = `
+
+    <div class="result-row yellow">
+
+      [TÁC DỤNG]
+
+      <span>
+        ${escapeHtml(
+          effect
+        )}
+      </span>
+
+    </div>
+
+
+    <div class="result-row yellow">
+
+      [AN TOÀN]
+
+      <span>
+        ${escapeHtml(
+          safety
+        )}
+      </span>
+
+    </div>
+
+
+    <div class="result-row red-result">
+
+      [VIRUS]
+
+      <span>
+        ${escapeHtml(
+          virus
+        )}
+      </span>
+
+    </div>
+
+
+    <div class="result-row cyan">
+
+      [SIGNATURE]
+
+      <span>
+        ${foundKeywords.length}/5 dấu hiệu
+      </span>
+
+    </div>
+
+
+    <div class="rating">
+
+      ĐÁNH GIÁ TỔNG:
+
+      <span class="rating-stars">
+        ${stars}
+      </span>
+
+      <b class="rating-score">
+        (${score})
+      </b>
+
+    </div>
+
+
+    <div class="file-line">
+
+      📄 FILE:
+
+      ${escapeHtml(
+        file.name
+      )}
+
+    </div>
+
+
+    <div class="file-line">
+
+      📦 SIZE:
+
+      ${formatBytes(
+        file.size
+      )}
+
+    </div>
+
+
+    <div class="file-line">
+
+      📌 TYPE:
+
+      ${escapeHtml(
+        file.type ||
+        "Không xác định"
+      )}
+
+    </div>
+
+
+    <div class="file-line">
+
+      🔐 SHA-256:
+
+      ${hash}
+
+    </div>
+
+
+    ${
+      foundKeywords.length
+
+      ?
+
+      `
+      <div class="scan-warning">
+
+        ⚠️ TỪ KHÓA ĐÁNG CHÚ Ý:
+
+        <br><br>
+
+        ${foundKeywords
+          .map(
+            escapeHtml
+          )
+          .join(" • ")}
+
+      </div>
+      `
+
+      :
+
+      `
+      <div
+        class="scan-warning"
+        style="
+          color:#42f59b;
+          background:rgba(50,240,150,.07);
+          border-color:rgba(50,240,150,.16)
+        "
+      >
+
+        ✓ CHƯA PHÁT HIỆN
+        TỪ KHÓA ĐÁNG CHÚ Ý
+
+      </div>
+      `
+
+    }
+
+
+    <div class="note">
+
+      Kết quả trên là phân tích tĩnh.
+      Không chạy file và không thể chứng minh
+      tuyệt đối file có hoặc không có virus.
+      File được mã hóa hoặc nhị phân có thể
+      cần công cụ phân tích chuyên dụng.
+
+    </div>
+
+  `;
+
+
+  addHistory(
+    "Quét file: " +
+    file.name
+  );
+
+}
+
+
+function formatBytes(
+  bytes
+){
+
+  if(bytes === 0)
+    return "0 B";
+
+
+  const units = [
+    "B",
+    "KB",
+    "MB",
+    "GB"
+  ];
+
+
+  const index =
+    Math.floor(
+      Math.log(
+        bytes
+      ) /
+      Math.log(
+        1024
+      )
+    );
+
+
+  return (
+    (
+      bytes /
+      Math.pow(
+        1024,
+        index
+      )
+    ).toFixed(2) +
+    " " +
+    units[index]
+  );
+
+}
+
+
+/* ==================================================
+   DEVICE
+================================================== */
+
+function openDevice(){
+
+  playSound();
+
+
+  document.getElementById(
+    "deviceIdModal"
+  ).textContent =
+    DEVICE_ID;
+
+
+  document.getElementById(
+    "browserModal"
+  ).textContent =
+    navigator.userAgent;
+
+
+  document.getElementById(
+    "platformModal"
+  ).textContent =
+    navigator.platform ||
+    "Không xác định";
+
+
+  document.getElementById(
+    "languageModal"
+  ).textContent =
+    navigator.language ||
+    "Không xác định";
+
+
+  document
+    .getElementById(
+      "deviceModal"
+    )
+    .classList
+    .add("show");
+
+
+  addHistory(
+    "Xem thông tin máy"
+  );
+
+}
+
+
+/* ==================================================
+   PROTECTION
+================================================== */
+
+function openProtection(){
+
+  playSound();
+
+
+  document
+    .getElementById(
+      "protectionModal"
+    )
+    .classList
+    .add("show");
+
+
+  addHistory(
+    "Xem bảo vệ"
+  );
+
+}
+
+
+/* ==================================================
+   CLOSE MODAL
+================================================== */
+
+function closeModal(
+  id
+){
+
+  playSound();
+
+
+  document
+    .getElementById(
+      id
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
+}
+
+
+document
+  .querySelectorAll(
+    ".modal"
+  )
+  .forEach(
+    modal => {
+
+      modal.addEventListener(
+        "click",
+        event => {
+
+          if(
+            event.target ===
+            modal
+          ){
+
+            modal.classList
+              .remove(
+                "show"
+              );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+/* ==================================================
+   INITIAL SETTINGS
+================================================== */
+
+function loadSettings(){
+
+  syncFeatureSwitches();
+
+
+  const soundSetting =
+    localStorage.getItem(
+      "mq_sound"
+    );
+
+
+  if(
+    soundSetting ===
+    "false"
+  ){
+
+    document.getElementById(
+      "soundToggle"
+    ).checked =
+      false;
+
+  }
+
+
+  const sensitivity =
+    Number(
+      localStorage.getItem(
+        "mq_sensitivity"
+      ) || 100
+    );
+
+
+  document.getElementById(
+    "range"
+  ).value =
+    sensitivity;
+
+
+  updateSensitivity(
+    sensitivity
+  );
+
+}
+
+
+loadSettings();
+
+
+/* ==================================================
+   START
+================================================== */
+
+setTimeout(
+  () => {
+
+    restoreSession();
+
+  },
+  1600
+);
+
+
+/* ==================================================
+   LIVE KEY TIMER
+================================================== */
+
+setInterval(
+  () => {
+
+    if(
+      document.getElementById(
+        "app"
+      ).style.display ===
+      "block"
+    ){
+
+      updateAll();
+
+    }
+
+  },
+  30000
+);
+
+</script>
+
+</body>
+</html>

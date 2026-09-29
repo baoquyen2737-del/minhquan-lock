@@ -1,0 +1,754 @@
+<script>
+const API = 'https://quan-key-admin.baoquyen2737.workers.dev';
+
+let audio;
+let keyType = 'BASIC';
+
+/* =========================
+   ÂM THANH
+========================= */
+function sound(){
+  try{
+    audio ??= new (window.AudioContext || window.webkitAudioContext)();
+
+    const o = audio.createOscillator();
+    const g = audio.createGain();
+
+    o.frequency.value = 620;
+    g.gain.setValueAtTime(.0001, audio.currentTime);
+    g.gain.exponentialRampToValueAtTime(.03, audio.currentTime + .01);
+    g.gain.exponentialRampToValueAtTime(.0001, audio.currentTime + .08);
+
+    o.connect(g);
+    g.connect(audio.destination);
+
+    o.start();
+    o.stop(audio.currentTime + .09);
+  }catch{}
+}
+
+/* =========================
+   DEVICE ID
+========================= */
+function device(){
+  let x = localStorage.getItem('mq_device_id');
+
+  if(!x){
+    x = 'MQ-' + crypto.randomUUID();
+    localStorage.setItem('mq_device_id', x);
+  }
+
+  return x;
+}
+
+/* =========================
+   FETCH TIMEOUT
+========================= */
+async function fetchT(url,opt={},ms=5000){
+  const c = new AbortController();
+  const t = setTimeout(() => c.abort(), ms);
+
+  try{
+    return await fetch(url,{
+      ...opt,
+      signal:c.signal
+    });
+  }finally{
+    clearTimeout(t);
+  }
+}
+
+/* =========================
+   KEY TYPE
+========================= */
+function setKeyType(type){
+  keyType = String(type || 'BASIC').toUpperCase();
+
+  if(keyType !== 'VIP'){
+    keyType = 'BASIC';
+  }
+
+  localStorage.setItem('mq_type', keyType);
+
+  updatePermissionUI();
+}
+
+function isVIP(){
+  return keyType === 'VIP';
+}
+
+/*
+ BASIC:
+ - nhẹ tâm
+ - check file
+ - bảo vệ
+
+ VIP:
+ - tất cả
+*/
+function canUse(feature){
+
+  const basicFeatures = [
+    'light',
+    'checkFile',
+    'protection'
+  ];
+
+  if(basicFeatures.includes(feature)){
+    return true;
+  }
+
+  if(isVIP()){
+    return true;
+  }
+
+  alert('🔒 Chức năng này chỉ dành cho Key VIP.');
+  return false;
+}
+
+/* =========================
+   CẬP NHẬT GIAO DIỆN QUYỀN
+========================= */
+function updatePermissionUI(){
+
+  const vip = isVIP();
+
+  document.querySelectorAll('[data-vip]').forEach(el => {
+
+    if(vip){
+      el.style.opacity = '1';
+      el.style.pointerEvents = 'auto';
+    }else{
+      el.style.opacity = '.55';
+    }
+
+  });
+
+  const typeEl = document.getElementById('keyType');
+
+  if(typeEl){
+    typeEl.textContent = vip ? 'VIP' : 'BASIC';
+    typeEl.className = vip ? 'value purple' : 'value cyan';
+  }
+
+  const profileType = document.getElementById('ptype');
+
+  if(profileType){
+    profileType.textContent = vip ? 'VIP' : 'BASIC';
+    profileType.className = vip ? 'purple' : 'cyan';
+  }
+}
+
+/* =========================
+   THỜI GIAN
+========================= */
+function remain(x){
+
+  if(x <= 0) return 'Hết hạn';
+
+  let d = Math.floor(x / 86400);
+
+  x %= 86400;
+
+  let h = Math.floor(x / 3600);
+
+  x %= 3600;
+
+  let m = Math.floor(x / 60);
+
+  let s = x % 60;
+
+  return `${d}d ${h}h ${m}m ${s}s`;
+}
+
+/* =========================
+   LOGIN / APP
+========================= */
+function loginView(){
+
+  document.getElementById('loader')?.classList.add('hidden');
+  document.getElementById('app')?.classList.add('hidden');
+  document.getElementById('login')?.classList.remove('hidden');
+
+}
+
+function appView(){
+
+  document.getElementById('loader')?.classList.add('hidden');
+  document.getElementById('login')?.classList.add('hidden');
+  document.getElementById('app')?.classList.remove('hidden');
+
+  profile();
+  countdown();
+  networkCheck();
+  updatePermissionUI();
+
+}
+
+/* =========================
+   PROFILE
+========================= */
+function profile(){
+
+  const k =
+    localStorage.getItem('mq_login_key') || '';
+
+  const e =
+    Number(localStorage.getItem('mq_expires_at')) || 0;
+
+  const type =
+    localStorage.getItem('mq_type') || 'BASIC';
+
+  const pkey =
+    document.getElementById('pkey');
+
+  const pdev =
+    document.getElementById('pdev');
+
+  const pexp =
+    document.getElementById('pexp');
+
+  const ptype =
+    document.getElementById('ptype');
+
+  if(pkey){
+
+    pkey.textContent =
+      k.length > 8
+      ? k.slice(0,4) + '••••' + k.slice(-4)
+      : '••••••';
+
+  }
+
+  if(pdev){
+    pdev.textContent =
+      device().slice(0,16) + '…';
+  }
+
+  if(pexp){
+
+    pexp.textContent =
+      e
+      ? new Date(e * 1000).toLocaleString('vi-VN')
+      : 'Không xác định';
+
+  }
+
+  if(ptype){
+
+    ptype.textContent =
+      type === 'VIP' ? 'VIP' : 'BASIC';
+
+    ptype.className =
+      type === 'VIP'
+      ? 'purple'
+      : 'cyan';
+
+  }
+
+}
+
+/* =========================
+   COUNTDOWN
+========================= */
+function countdown(){
+
+  const e =
+    Number(localStorage.getItem('mq_expires_at')) || 0;
+
+  clearInterval(window.ct);
+
+  const f = () => {
+
+    const el =
+      document.getElementById('count');
+
+    if(!el) return;
+
+    el.textContent =
+      e
+      ? remain(Math.floor(e - Date.now()/1000))
+      : 'Không xác định';
+
+  };
+
+  f();
+
+  window.ct =
+    setInterval(f,1000);
+
+}
+
+/* =========================
+   NETWORK
+========================= */
+async function networkCheck(){
+
+  const n =
+    document.getElementById('network');
+
+  if(!n) return;
+
+  n.textContent =
+    'Đang kiểm tra';
+
+  try{
+
+    const r =
+      await fetchT(API+'/',{},4000);
+
+    n.textContent =
+      r.ok
+      ? (navigator.connection?.effectiveType || 'ONLINE').toUpperCase()
+      : 'OFFLINE';
+
+  }catch{
+
+    n.textContent =
+      'Không xác định';
+
+  }
+
+}
+
+/* =========================
+   ĐĂNG NHẬP
+========================= */
+async function doLogin(){
+
+  const input =
+    document.getElementById('key');
+
+  const error =
+    document.getElementById('err');
+
+  const button =
+    document.getElementById('loginBtn');
+
+  const k =
+    input.value.trim();
+
+  error.textContent = '';
+
+  if(!k){
+
+    error.textContent =
+      'Vui lòng nhập Key';
+
+    return;
+
+  }
+
+  button.disabled = true;
+
+  button.textContent =
+    'ĐANG KIỂM TRA…';
+
+  try{
+
+    const r =
+      await fetchT(
+        API + '/api/login',
+        {
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({
+            key:k,
+            deviceId:device()
+          })
+        },
+        5000
+      );
+
+    const d =
+      await r.json();
+
+    if(!r.ok || !d.success){
+
+      throw new Error(
+        d.message || 'Key không hợp lệ'
+      );
+
+    }
+
+    /*
+      QUAN TRỌNG:
+      Worker phải trả:
+      type: "VIP"
+      hoặc
+      type: "BASIC"
+    */
+
+    const type =
+      String(d.type || 'BASIC').toUpperCase();
+
+    localStorage.setItem(
+      'mq_login_key',
+      k
+    );
+
+    localStorage.setItem(
+      'mq_expires_at',
+      d.expires_at || ''
+    );
+
+    localStorage.setItem(
+      'mq_name',
+      d.name || 'MINHQUAN USER'
+    );
+
+    setKeyType(type);
+
+    appView();
+
+  }catch(e){
+
+    error.textContent =
+      e.name === 'AbortError'
+      ? 'Máy chủ phản hồi quá lâu'
+      : e.message;
+
+  }finally{
+
+    button.disabled = false;
+
+    button.textContent =
+      'ĐĂNG NHẬP';
+
+  }
+
+}
+
+/* =========================
+   KIỂM TRA QUYỀN NÚT
+========================= */
+
+function protectButton(button, feature){
+
+  if(!button) return;
+
+  button.addEventListener('click', function(e){
+
+    if(!canUse(feature)){
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      return false;
+
+    }
+
+  }, true);
+
+}
+
+/*
+  Nếu giao diện cũ của bạn có các ID này,
+  hệ thống sẽ tự áp quyền.
+*/
+
+protectButton(
+  document.getElementById('light'),
+  'light'
+);
+
+protectButton(
+  document.getElementById('checkFile'),
+  'checkFile'
+);
+
+protectButton(
+  document.getElementById('protection'),
+  'protection'
+);
+
+/* =========================
+   CÁC HÀM QUYỀN DÙNG CHUNG
+========================= */
+
+function openLight(){
+
+  if(!canUse('light')) return;
+
+  alert('🌙 Nhẹ Tâm đã được mở.');
+
+}
+
+function openCheckFile(){
+
+  if(!canUse('checkFile')) return;
+
+  alert('🔍 Check File đã được mở.');
+
+}
+
+function openProtection(){
+
+  if(!canUse('protection')) return;
+
+  alert('🛡️ Bảo Vệ đã được mở.');
+
+}
+
+/* VIP ONLY */
+function openVIPFeature(name){
+
+  if(!canUse('vip')) return;
+
+  alert('⭐ ' + name + ' đã được mở.');
+
+}
+
+/* =========================
+   TAB
+========================= */
+document
+  .querySelectorAll('.tabs button')
+  .forEach(b => {
+
+    b.onclick = () => {
+
+      sound();
+
+      document
+        .querySelectorAll('.tabs button')
+        .forEach(x =>
+          x.classList.remove('active')
+        );
+
+      b.classList.add('active');
+
+      document
+        .querySelectorAll('.panel')
+        .forEach(x =>
+          x.classList.remove('active')
+        );
+
+      const page =
+        document.getElementById(
+          b.dataset.go
+        );
+
+      if(page){
+        page.classList.add('active');
+      }
+
+      scrollTo(0,0);
+
+    };
+
+  });
+
+/* =========================
+   TOGGLE
+========================= */
+document
+  .querySelectorAll('.toggle')
+  .forEach(t => {
+
+    t.onclick = () => {
+
+      sound();
+
+      const name =
+        t.getAttribute('aria-label') ||
+        t.closest('.feature')
+         ?.querySelector('.fname')
+         ?.textContent ||
+        '';
+
+      const n =
+        name.toLowerCase();
+
+      /*
+        BASIC chỉ được:
+        Nhẹ Tâm
+        Check File
+        Bảo Vệ
+      */
+
+      if(
+        n.includes('nhẹ tâm') ||
+        n.includes('check file') ||
+        n.includes('bảo vệ')
+      ){
+
+        if(
+          n.includes('nhẹ tâm') &&
+          !canUse('light')
+        ) return;
+
+        if(
+          n.includes('check file') &&
+          !canUse('checkFile')
+        ) return;
+
+        if(
+          n.includes('bảo vệ') &&
+          !canUse('protection')
+        ) return;
+
+      }else{
+
+        if(!canUse('vip')) return;
+
+      }
+
+      t.classList.toggle('on');
+
+    };
+
+  });
+
+/* =========================
+   LOGIN EVENTS
+========================= */
+const loginBtn =
+  document.getElementById('loginBtn');
+
+const keyInput =
+  document.getElementById('key');
+
+if(loginBtn){
+  loginBtn.onclick = doLogin;
+}
+
+if(keyInput){
+
+  keyInput.onkeydown =
+    e => {
+
+      if(e.key === 'Enter'){
+        doLogin();
+      }
+
+    };
+
+}
+
+/* =========================
+   CHECK NETWORK
+========================= */
+const checkBtn =
+  document.getElementById('check');
+
+if(checkBtn){
+  checkBtn.onclick = networkCheck;
+}
+
+/* =========================
+   LOGOUT
+========================= */
+const logout =
+  document.getElementById('logout');
+
+if(logout){
+
+  logout.onclick = () => {
+
+    localStorage.removeItem(
+      'mq_login_key'
+    );
+
+    localStorage.removeItem(
+      'mq_expires_at'
+    );
+
+    localStorage.removeItem(
+      'mq_type'
+    );
+
+    localStorage.removeItem(
+      'mq_name'
+    );
+
+    loginView();
+
+  };
+
+}
+
+/* =========================
+   LOAD SAVED KEY
+========================= */
+setTimeout(async () => {
+
+  const saved =
+    localStorage.getItem('mq_login_key');
+
+  const savedType =
+    localStorage.getItem('mq_type');
+
+  if(savedType){
+    setKeyType(savedType);
+  }
+
+  if(!saved){
+
+    loginView();
+    return;
+
+  }
+
+  try{
+
+    const r =
+      await fetchT(
+        API + '/api/login',
+        {
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({
+            key:saved,
+            deviceId:device()
+          })
+        },
+        4000
+      );
+
+    const d =
+      await r.json();
+
+    if(r.ok && d.success){
+
+      /*
+        Lấy lại type từ Worker
+        để tránh VIP bị hiện thành BASIC.
+      */
+
+      setKeyType(
+        String(
+          d.type || 'BASIC'
+        ).toUpperCase()
+      );
+
+      localStorage.setItem(
+        'mq_expires_at',
+        d.expires_at || ''
+      );
+
+      localStorage.setItem(
+        'mq_name',
+        d.name || 'MINHQUAN USER'
+      );
+
+      appView();
+
+    }else{
+
+      loginView();
+
+    }
+
+  }catch{
+
+    loginView();
+
+  }
+
+},1600);
+</script>

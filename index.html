@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#070b12;
+    color:white;
+    min-height:100vh;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
+
+/* LOGIN */
+
+.login-box{
+    margin-top:80px;
+    background:#101722;
+    border:1px solid #263449;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 0 30px rgba(0,0,0,.5);
+}
+
+.logo{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.sub{
+    text-align:center;
+    color:#8e9bad;
+    margin-bottom:25px;
+}
+
+input,select{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    border-radius:12px;
+    border:1px solid #29384d;
+    background:#0a1019;
+    color:white;
+    outline:none;
+}
+
+button{
+    width:100%;
+    border:0;
+    border-radius:12px;
+    padding:14px;
+    margin-top:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn{
+    background:#00d9ff;
+    color:#001018;
+}
+
+.btn:hover{
+    opacity:.85;
+}
+
+.status{
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    font-size:14px;
+}
+
+.error{
+    background:#35151b;
+    color:#ff7885;
+}
+
+.success{
+    background:#12351f;
+    color:#70ff9b;
+}
+
+/* APP */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+}
+
+.header-title{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.type-badge{
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.type-basic{
+    background:#263243;
+    color:#c9d4e2;
+}
+
+.type-vip{
+    background:#332500;
+    color:#ffd65c;
+}
+
+.info{
+    background:#101722;
+    border:1px solid #263449;
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:15px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+    color:#9ba7b8;
+}
+
+.info-row b{
+    color:white;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.card{
+    background:#101722;
+    border:1px solid #263449;
+    border-radius:16px;
+    padding:18px;
+    min-height:120px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-2px);
+    border-color:#00d9ff;
+}
+
+.card.locked{
+    opacity:.45;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.card-title{
+    font-weight:bold;
+}
+
+.card-desc{
+    color:#8996a8;
+    font-size:12px;
+    margin-top:5px;
+}
+
+.vip-tag{
+    display:inline-block;
+    margin-top:9px;
+    padding:4px 7px;
+    border-radius:7px;
+    background:#3a2b00;
+    color:#ffd84f;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.basic-tag{
+    display:inline-block;
+    margin-top:9px;
+    padding:4px 7px;
+    border-radius:7px;
+    background:#20303b;
+    color:#9edfff;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.logout{
+    background:#27151a;
+    color:#ff7c88;
+    margin-bottom:30px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.modal-box{
+    width:100%;
+    max-width:420px;
+    background:#101722;
+    border:1px solid #29384d;
+    border-radius:18px;
+    padding:22px;
+}
+
+.modal-box h2{
+    margin-bottom:10px;
+}
+
+.close{
+    background:#202b3a;
+    color:white;
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translateX(-50%);
+    background:#182230;
+    border:1px solid #33445c;
+    padding:12px 18px;
+    border-radius:12px;
+    display:none;
+    z-index:99;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGIN -->
+
+    <div id="loginScreen" class="login-box">
+
+        <div class="logo">
+            MINHQUAN LOCK
+        </div>
+
+        <div class="sub">
+            Đăng nhập bằng KEY
+        </div>
+
+        <input
+            id="username"
+            placeholder="Tên người dùng"
+            autocomplete="off"
+        >
+
+        <input
+            id="keyInput"
+            placeholder="Nhập KEY"
+            autocomplete="off"
+        >
+
+        <button
+            class="btn"
+            onclick="login()"
+        >
+            ĐĂNG NHẬP
+        </button>
+
+        <div id="loginStatus"></div>
+
+    </div>
+
+
+    <!-- APP -->
+
+    <div id="appScreen" class="hidden">
+
+        <div class="header">
+
+            <div class="header-title">
+                MINHQUAN LOCK
+            </div>
+
+            <div
+                id="typeBadge"
+                class="type-badge"
+            >
+                BASIC
+            </div>
+
+        </div>
+
+
+        <div class="info">
+
+            <div class="info-row">
+                <span>Tài khoản</span>
+                <b id="showUsername">---</b>
+            </div>
+
+            <div class="info-row">
+                <span>Loại KEY</span>
+                <b id="showType">---</b>
+            </div>
+
+            <div class="info-row">
+                <span>Hạn sử dụng</span>
+                <b id="showExpire">---</b>
+            </div>
+
+        </div>
+
+
+        <div class="grid">
+
+            <!-- BASIC -->
+
+            <div
+                class="card basic-feature"
+                onclick="feature('light')"
+            >
+                <div class="icon">🌙</div>
+
+                <div class="card-title">
+                    NHẸ TÂM
+                </div>
+
+                <div class="card-desc">
+                    Chức năng BASIC
+                </div>
+
+                <span class="basic-tag">
+                    BASIC
+                </span>
+            </div>
+
+
+            <!-- VIP -->
+
+            <div
+                class="card vip-feature"
+                onclick="feature('aimlock')"
+            >
+                <div class="icon">🎯</div>
+
+                <div class="card-title">
+                    AIMLOCK
+                </div>
+
+                <div class="card-desc">
+                    Chức năng VIP
+                </div>
+
+                <span class="vip-tag">
+                    VIP
+                </span>
+            </div>
+
+
+            <div
+                class="card vip-feature"
+                onclick="feature('headlock')"
+            >
+                <div class="icon">🎯</div>
+
+                <div class="card-title">
+                    HEADLOCK
+                </div>
+
+                <div class="card-desc">
+                    Chức năng VIP
+                </div>
+
+                <span class="vip-tag">
+                    VIP
+                </span>
+            </div>
+
+
+            <div
+                class="card vip-feature"
+                onclick="feature('sensitivity')"
+            >
+                <div class="icon">⚙️</div>
+
+                <div class="card-title">
+                    ĐỘ NHẠY
+                </div>
+
+                <div class="card-desc">
+                    Cài đặt độ nhạy
+                </div>
+
+                <span class="vip-tag">
+                    VIP
+                </span>
+            </div>
+
+
+            <div
+                class="card vip-feature"
+                onclick="feature('scanner')"
+            >
+                <div class="icon">🔎</div>
+
+                <div class="card-title">
+                    CHECK FILE
+                </div>
+
+                <div class="card-desc">
+                    Kiểm tra file
+                </div>
+
+                <span class="vip-tag">
+                    VIP
+                </span>
+            </div>
+
+
+            <div
+                class="card vip-feature"
+                onclick="feature('protection')"
+            >
+                <div class="icon">🛡️</div>
+
+                <div class="card-title">
+                    BẢO VỆ
+                </div>
+
+                <div class="card-desc">
+                    Trung tâm bảo vệ
+                </div>
+
+                <span class="vip-tag">
+                    VIP
+                </span>
+            </div>
+
+        </div>
+
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            ĐĂNG XUẤT
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+    id="modal"
+    class="modal hidden"
+>
+
+    <div class="modal-box">
+
+        <h2 id="modalTitle">
+            MINHQUAN LOCK
+        </h2>
+
+        <p
+            id="modalText"
+            style="color:#9ba7b8;margin-top:10px"
+        >
+        </p>
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ĐÓNG
+        </button>
+
+    </div>
+
+</div>
+
+
+<div
+    id="toast"
+    class="toast"
+>
+</div>
+
+
+<script>
+
+/* =========================
+   API
+========================= */
+
+const API =
+    "https://quan-key-admin.baoquyen2737.workers.dev";
+
+
+/* =========================
+   STORAGE
+========================= */
+
+function save(name,value){
+    localStorage.setItem(name,value);
+}
+
+function get(name){
+    return localStorage.getItem(name);
+}
+
+function remove(name){
+    localStorage.removeItem(name);
+}
+
+
+/* =========================
+   DEVICE ID
+========================= */
+
+function getDeviceId(){
+
+    let id =
+        localStorage.getItem("mq_device_id");
+
+    if(!id){
+
+        id =
+            "MQ-" +
+            crypto.randomUUID();
+
+        localStorage.setItem(
+            "mq_device_id",
+            id
+        );
+    }
+
+    return id;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showLoginStatus(
+    message,
+    type="error"
+){
+
+    const box =
+        document.getElementById(
+            "loginStatus"
+        );
+
+    box.className =
+        "status " + type;
+
+    box.textContent =
+        message;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login(){
+
+    const username =
+        document
+        .getElementById("username")
+        .value
+        .trim();
+
+    const key =
+        document
+        .getElementById("keyInput")
+        .value
+        .trim();
+
+    if(!username){
+
+        showLoginStatus(
+            "Vui lòng nhập tên người dùng."
+        );
+
+        return;
+    }
+
+    if(!key){
+
+        showLoginStatus(
+            "Vui lòng nhập KEY."
+        );
+
+        return;
+    }
+
+    showLoginStatus(
+        "Đang kiểm tra KEY...",
+        "success"
+    );
+
+    try{
+
+        const response =
+            await fetch(
+                API + "/api/login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        key:key,
+
+                        deviceId:
+                            getDeviceId()
+
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            showLoginStatus(
+                data.message ||
+                "KEY không hợp lệ."
+            );
+
+            return;
+        }
+
+
+        /*
+          Worker phải trả:
+          type: BASIC hoặc VIP
+        */
+
+        const type =
+            String(
+                data.type || "BASIC"
+            ).toUpperCase();
+
+
+        if(
+            type !== "BASIC" &&
+            type !== "VIP"
+        ){
+
+            showLoginStatus(
+                "Loại KEY không hợp lệ."
+            );
+
+            return;
+        }
+
+
+        save(
+            "mq_username",
+            username
+        );
+
+        save(
+            "mq_key",
+            key
+        );
+
+        save(
+            "mq_key_type",
+            type
+        );
+
+        save(
+            "mq_expires",
+            data.expires_at || ""
+        );
+
+
+        openApp();
+
+    }catch(error){
+
+        console.error(error);
+
+        showLoginStatus(
+            "Không kết nối được Worker."
+        );
+    }
+}
+
+
+/* =========================
+   AUTO LOGIN
+========================= */
+
+async function validateSavedKey(){
+
+    const key =
+        get("mq_key");
+
+    if(!key){
+
+        showLoginScreen();
+
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                API + "/api/login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        key:key,
+
+                        deviceId:
+                            getDeviceId()
+
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            logout();
+
+            return;
+        }
+
+
+        const type =
+            String(
+                data.type || "BASIC"
+            ).toUpperCase();
+
+
+        save(
+            "mq_key_type",
+            type
+        );
+
+        save(
+            "mq_expires",
+            data.expires_at || ""
+        );
+
+
+        openApp();
+
+    }catch(error){
+
+        console.error(error);
+
+        /*
+          Không tự mở app nếu
+          không xác minh được KEY.
+        */
+
+        showLoginScreen();
+    }
+}
+
+
+/* =========================
+   OPEN APP
+========================= */
+
+function openApp(){
+
+    document
+        .getElementById("loginScreen")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("appScreen")
+        .classList
+        .remove("hidden");
+
+
+    const username =
+        get("mq_username") ||
+        "User";
+
+    const type =
+        getKeyType();
+
+    const expires =
+        get("mq_expires") ||
+        "---";
+
+
+    document
+        .getElementById("showUsername")
+        .textContent =
+        username;
+
+    document
+        .getElementById("showType")
+        .textContent =
+        type;
+
+    document
+        .getElementById("showExpire")
+        .textContent =
+        formatDate(expires);
+
+
+    applyPermissions();
+
+}
+
+
+/* =========================
+   KEY TYPE
+========================= */
+
+function getKeyType(){
+
+    return (
+        get("mq_key_type") ||
+        "BASIC"
+    ).toUpperCase();
+
+}
+
+function isVIP(){
+
+    return getKeyType() === "VIP";
+
+}
+
+
+/* =========================
+   PERMISSION
+========================= */
+
+function applyPermissions(){
+
+    const vip =
+        isVIP();
+
+    const cards =
+        document.querySelectorAll(
+            ".vip-feature"
+        );
+
+
+    cards.forEach(card => {
+
+        if(vip){
+
+            card.classList.remove(
+                "locked"
+            );
+
+        }else{
+
+            card.classList.add(
+                "locked"
+            );
+
+        }
+
+    });
+
+
+    const badge =
+        document
+        .getElementById("typeBadge");
+
+
+    badge.textContent =
+        vip ? "VIP" : "BASIC";
+
+
+    badge.className =
+        "type-badge " +
+        (
+            vip
+            ? "type-vip"
+            : "type-basic"
+        );
+
+}
+
+
+/* =========================
+   FEATURE
+========================= */
+
+function feature(name){
+
+    /*
+      BASIC chỉ được NHẸ TÂM
+    */
+
+    if(
+        name !== "light" &&
+        !isVIP()
+    ){
+
+        toast(
+            "🔒 Chức năng này chỉ dành cho VIP."
+        );
+
+        return;
+    }
+
+
+    const names = {
+
+        light:
+            "NHẸ TÂM",
+
+        aimlock:
+            "AIMLOCK",
+
+        headlock:
+            "HEADLOCK",
+
+        sensitivity:
+            "ĐỘ NHẠY",
+
+        scanner:
+            "CHECK FILE",
+
+        protection:
+            "BẢO VỆ"
+
+    };
+
+
+    const title =
+        names[name] ||
+        "MINHQUAN LOCK";
+
+
+    document
+        .getElementById("modalTitle")
+        .textContent =
+        title;
+
+
+    document
+        .getElementById("modalText")
+        .textContent =
+        "Đã mở chức năng " +
+        title +
+        ". Đây là giao diện chức năng của ứng dụng.";
+
+
+    document
+        .getElementById("modal")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function closeModal(){
+
+    document
+        .getElementById("modal")
+        .classList
+        .add("hidden");
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function toast(message){
+
+    const el =
+        document
+        .getElementById("toast");
+
+    el.textContent =
+        message;
+
+    el.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        el.style.display =
+            "none";
+
+    },2500);
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(date){
+
+    if(!date)
+        return "---";
+
+    const d =
+        new Date(date);
+
+    if(
+        Number.isNaN(
+            d.getTime()
+        )
+    )
+        return date;
+
+
+    return d.toLocaleString(
+        "vi-VN"
+    );
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    remove("mq_username");
+    remove("mq_key");
+    remove("mq_key_type");
+    remove("mq_expires");
+
+    document
+        .getElementById("appScreen")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("loginScreen")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("keyInput")
+        .value = "";
+
+    showLoginStatus(
+        ""
+    );
+
+    document
+        .getElementById("loginStatus")
+        .className = "";
+
+}
+
+
+/* =========================
+   LOGIN SCREEN
+========================= */
+
+function showLoginScreen(){
+
+    document
+        .getElementById("appScreen")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("loginScreen")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        validateSavedKey();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{
+  box-sizing:border-box
+}
+
+body{
+  margin:0;
+  background:#070910;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+
+button,input{
+  font:inherit
+}
+
+.hidden{
+  display:none!important
+}
+
+.screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px
+}
+
+.box{
+  width:min(430px,100%);
+  text-align:center
+}
+
+.avatar{
+  width:140px;
+  height:140px;
+  object-fit:cover;
+  border-radius:50%;
+  border:3px solid #a855f7;
+  box-shadow:0 0 20px #a855f7,0 0 55px #7c3aed66;
+  display:block;
+  margin:0 auto 20px
+}
+
+.brand{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:3px
+}
+
+.sub{
+  color:#8c95aa;
+  font-size:10px;
+  letter-spacing:4px
+}
+
+.progress{
+  height:5px;
+  background:#202636;
+  border-radius:20px;
+  margin:25px 0 10px;
+  overflow:hidden
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,#a855f7,#22d3ee);
+  animation:load 1.5s forwards
+}
+
+@keyframes load{
+  from{width:0}
+  to{width:100%}
+}
+
+.status{
+  color:#8c95aa;
+  font-size:13px
+}
+
+.login{
+  background:#0d111b;
+  border:1px solid #252c3b;
+  border-radius:22px;
+  padding:26px
+}
+
+.login h1{
+  margin:0 0 6px
+}
+
+.login p{
+  color:#8c95aa;
+  font-size:13px
+}
+
+.input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #293143;
+  background:#080b12;
+  color:white;
+  text-align:center;
+  outline:0
+}
+
+.primary,
+.game,
+.net{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  margin-top:11px;
+  font-weight:800;
+  color:white
+}
+
+.primary{
+  background:linear-gradient(135deg,#8b3eea,#586cff)
+}
+
+.err{
+  color:#ff6480;
+  font-size:12px;
+  min-height:20px;
+  margin-top:8px
+}
+
+#app{
+  padding-bottom:92px
+}
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:#070910e8;
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid #252c3b;
+  padding:13px 15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.mini{
+  display:flex;
+  gap:9px;
+  align-items:center
+}
+
+.mini img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #a855f7
+}
+
+.mini b{
+  display:block;
+  font-size:13px;
+  letter-spacing:1px
+}
+
+.mini small{
+  color:#8c95aa;
+  font-size:8px;
+  letter-spacing:2px
+}
+
+.online{
+  color:#31e981;
+  font-size:10px;
+  border:1px solid #31e98155;
+  background:#31e98112;
+  border-radius:20px;
+  padding:7px
+}
+
+.wrap{
+  width:min(720px,100%);
+  margin:auto;
+  padding:18px 14px
+}
+
+.panel{
+  display:none
+}
+
+.panel.active{
+  display:block
+}
+
+.title{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:6px
+}
+
+.desc{
+  font-size:12px;
+  color:#8c95aa;
+  margin-bottom:14px
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+
+.card{
+  background:linear-gradient(145deg,#111625,#0c1019);
+  border:1px solid #252c3b;
+  border-radius:16px;
+  padding:15px
+}
+
+.full{
+  grid-column:1/-1
+}
+
+.label{
+  font-size:9px;
+  color:#8c95aa;
+  letter-spacing:1.4px
+}
+
+.value{
+  font-size:15px;
+  font-weight:800;
+  margin-top:7px
+}
+
+.green{
+  color:#31e981
+}
+
+.cyan{
+  color:#22d3ee
+}
+
+.purple{
+  color:#c084fc
+}
+
+.feature{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px
+}
+
+.fname{
+  font-size:13px;
+  font-weight:800;
+  margin-top:7px
+}
+
+.fsub{
+  font-size:10px;
+  color:#8c95aa;
+  margin-top:3px
+}
+
+.toggle{
+  width:44px;
+  height:25px;
+  border-radius:20px;
+  background:#272e3d;
+  border:1px solid #384153;
+  position:relative;
+  flex:none
+}
+
+.toggle i{
+  position:absolute;
+  width:19px;
+  height:19px;
+  left:2px;
+  top:2px;
+  border-radius:50%;
+  background:#8c95aa;
+  transition:.2s
+}
+
+.toggle.on{
+  background:#a855f744;
+  border-color:#a855f7
+}
+
+.toggle.on i{
+  left:21px;
+  background:#c084fc
+}
+
+.toggle:disabled{
+  opacity:.35;
+  cursor:not-allowed
+}
+
+.percent{
+  font-size:25px;
+  font-weight:900;
+  color:#c084fc
+}
+
+.meter{
+  height:9px;
+  margin-top:12px;
+  background:#202636;
+  border-radius:99px;
+  overflow:hidden
+}
+
+.meter i{
+  display:block;
+  width:50%;
+  height:100%;
+  background:linear-gradient(90deg,#a855f7,#22d3ee)
+}
+
+.game{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  background:linear-gradient(135deg,#7c3aed,#2563eb)
+}
+
+.net{
+  background:#151b28;
+  border:1px solid #293143
+}
+
+.profile div{
+  display:flex;
+  justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid #252c3b;
+  font-size:13px
+}
+
+.profile span{
+  color:#8c95aa
+}
+
+.logout{
+  background:#29151d
+}
+
+.tabs{
+  position:fixed;
+  z-index:20;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(680px,calc(100% - 18px));
+  padding:6px;
+  background:#0d111bf2;
+  backdrop-filter:blur(18px);
+  border:1px solid #252c3b;
+  border-radius:17px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px
+}
+
+.tabs button{
+  background:transparent;
+  color:#8c95aa;
+  border:0;
+  border-radius:11px;
+  padding:9px 3px;
+  font-size:17px
+}
+
+.tabs button span{
+  display:block;
+  font-size:8px;
+  letter-spacing:1px;
+  margin-top:2px
+}
+
+.tabs button.active{
+  background:#171d2b;
+  color:white
+}
+
+/* BASIC / VIP */
+
+.vip-card{
+  position:relative
+}
+
+.vip-card.locked{
+  opacity:.42
+}
+
+.vip-card.locked::after{
+  content:"🔒 VIP";
+  position:absolute;
+  right:12px;
+  top:12px;
+  font-size:10px;
+  color:#ffd45c;
+  background:#302600;
+  padding:5px 7px;
+  border-radius:8px
+}
+
+.key-type{
+  display:inline-block;
+  margin-top:8px;
+  padding:5px 9px;
+  border-radius:8px;
+  font-size:9px;
+  font-weight:900
+}
+
+.key-basic{
+  color:#22d3ee;
+  background:#22d3ee18;
+  border:1px solid #22d3ee44
+}
+
+.key-vip{
+  color:#ffd45c;
+  background:#ffd45c18;
+  border:1px solid #ffd45c44
+}
+
+@media(max-width:420px){
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .full{
+    grid-column:auto
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+
+<section id="loader" class="screen">
+
+  <div class="box">
+
+    <img
+      class="avatar"
+      src="./avatar.png"
+    >
+
+    <div class="brand">
+      MINHQUAN LOCK
+    </div>
+
+    <div class="sub">
+      NETWORK CONTROL
+    </div>
+
+    <div class="progress">
+      <i></i>
+    </div>
+
+    <div class="status">
+      Đang khởi động hệ thống…
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LOGIN -->
+
+<section id="login" class="screen hidden">
+
+  <div class="box login">
+
+    <img
+      class="avatar"
+      src="./avatar.png"
+    >
+
+    <h1>
+      MINHQUAN LOCK
+    </h1>
+
+    <p>
+      Nhập Key để truy cập hệ thống
+    </p>
+
+    <input
+      id="key"
+      class="input"
+      placeholder="MQ-XXXXXXXXXXXXXXXX"
+      autocomplete="off"
+    >
+
+    <button
+      id="loginBtn"
+      class="primary"
+    >
+      ĐĂNG NHẬP
+    </button>
+
+    <div id="err" class="err"></div>
+
+  </div>
+
+</section>
+
+
+<!-- APP -->
+
+<div id="app" class="hidden">
+
+<header class="top">
+
+  <div class="mini">
+
+    <img
+      src="./avatar.png"
+    >
+
+    <div>
+
+      <b>
+        MINHQUAN LOCK
+      </b>
+
+      <small>
+        NETWORK CONTROL
+      </small>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="typeBadge"
+    class="key-type key-basic"
+  >
+    BASIC
+  </div>
+
+</header>
+
+
+<main class="wrap">
+
+
+<!-- TAB ĐIỀU KHIỂN -->
+
+<section
+  id="control"
+  class="panel active"
+>
+
+  <div class="title">
+    ⚙️ ĐIỀU KHIỂN
+  </div>
+
+  <div class="desc">
+    Trạng thái hệ thống và kết nối
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="label">
+        HỆ THỐNG
+      </div>
+
+      <div class="value green">
+        ONLINE
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="label">
+        MẠNG
+      </div>
+
+      <div
+        id="network"
+        class="value cyan"
+      >
+        Đang kiểm tra
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="label">
+        THIẾT BỊ
+      </div>
+
+      <div
+        id="device"
+        class="value purple"
+      >
+        Đã nhận diện
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="label">
+        KEY
+      </div>
+
+      <div class="value green">
+        ACTIVE
+      </div>
+
+    </div>
+
+
+    <div class="card full">
+
+      <div class="label">
+        LOẠI KEY
+      </div>
+
+      <div
+        id="controlType"
+        class="value"
+      >
+        BASIC
+      </div>
+
+    </div>
+
+
+    <div class="card full">
+
+      <div class="label">
+        THỜI HẠN KEY
+      </div>
+
+      <div
+        id="count"
+        class="value"
+      >
+        Đang tải…
+      </div>
+
+      <button
+        id="check"
+        class="net"
+      >
+        ↻ KIỂM TRA KẾT NỐI
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TAB TÍNH NĂNG -->
+
+<section
+  id="features"
+  class="panel"
+>
+
+  <div class="title">
+    🎛️ TÍNH NĂNG
+  </div>
+
+  <div class="desc">
+    Các mục hiển thị trong ứng dụng
+  </div>
+
+
+  <div class="grid">
+
+
+    <!-- AIMLOCK -->
+
+    <div
+      class="card vip-card"
+      data-vip="true"
+    >
+
+      <div class="feature">
+
+        <div>
+
+          <div class="label">
+            FEATURE
+          </div>
+
+          <div class="fname">
+            AIMLOCK
+          </div>
+
+          <div class="fsub">
+            Trạng thái giao diện
+          </div>
+
+        </div>
+
+        <button
+          class="toggle vip-toggle"
+          type="button"
+          aria-label="AIMLOCK"
+        >
+          <i></i>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- HEADLOCK -->
+
+    <div
+      class="card vip-card"
+      data-vip="true"
+    >
+
+      <div class="feature">
+
+        <div>
+
+          <div class="label">
+            FEATURE
+          </div>
+
+          <div class="fname">
+            HEADLOCK
+          </div>
+
+          <div class="fsub">
+            Trạng thái giao diện
+          </div>
+
+        </div>
+
+        <button
+          class="toggle vip-toggle"
+          type="button"
+          aria-label="HEADLOCK"
+        >
+          <i></i>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- NHẸ TÂM - BASIC -->
+
+    <div class="card full">
+
+      <div class="feature">
+
+        <div>
+
+          <div class="label">
+            SENSITIVITY
+          </div>
+
+          <div class="fname">
+            NHẸ TÂM
+          </div>
+
+          <div class="fsub">
+            Có sẵn cho BASIC và VIP
+          </div>
+
+          <span
+            id="lightTag"
+            class="key-type key-basic"
+          >
+            BASIC
+          </span>
+
+        </div>
+
+        <div class="percent">
+          50%
+        </div>
+
+      </div>
+
+
+      <div class="meter">
+        <i></i>
+      </div>
+
+    </div>
+
+
+    <!-- GAME -->
+
+    <div
+      class="card full vip-card"
+      data-vip="true"
+    >
+
+      <div class="label">
+        GAME
+      </div>
+
+      <div class="fname">
+        Free Fire
+      </div>
+
+      <div class="fsub">
+        Mở trang chính thức của game
+      </div>
+
+      <a
+        class="game"
+        href="https://ff.garena.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        🎮 MỞ GAME
+      </a>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<!-- TAB HỒ SƠ -->
+
+<section
+  id="profile"
+  class="panel"
+>
+
+  <div class="title">
+    👤 HỒ SƠ
+  </div>
+
+  <div class="desc">
+    Thông tin tài khoản
+  </div>
+
+
+  <div class="card profile">
+
+
+    <div>
+
+      <span>
+        Tài khoản
+      </span>
+
+      <b>
+        MINHQUAN USER
+      </b>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        Key
+      </span>
+
+      <b id="pkey">
+        ••••••
+      </b>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        Loại Key
+      </span>
+
+      <b id="ptype">
+        BASIC
+      </b>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        Thiết bị
+      </span>
+
+      <b id="pdev">
+        …
+      </b>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        Trạng thái
+      </span>
+
+      <b class="green">
+        ACTIVE
+      </b>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        Hết hạn
+      </span>
+
+      <b id="pexp">
+        …
+      </b>
+
+    </div>
+
+
+    <button
+      id="logout"
+      class="net logout"
+    >
+      ĐĂNG XUẤT
+    </button>
+
+  </div>
+
+
+  <div
+    class="card"
+    style="margin-top:10px"
+  >
+
+    <div class="label">
+      ZALO HỖ TRỢ
+    </div>
+
+    <a
+      class="game"
+      href="https://zalo.me/0983774970"
+      target="_blank"
+      rel="noopener"
+    >
+      💬 LIÊN HỆ ZALO
+    </a>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+<!-- TAB BAR -->
+
+<nav class="tabs">
+
+  <button
+    class="active"
+    data-go="control"
+  >
+    ⚙️
+    <span>
+      ĐIỀU KHIỂN
+    </span>
+  </button>
+
+
+  <button
+    data-go="features"
+  >
+    🎛️
+    <span>
+      TÍNH NĂNG
+    </span>
+  </button>
+
+
+  <button
+    data-go="profile"
+  >
+    👤
+    <span>
+      HỒ SƠ
+    </span>
+  </button>
+
+</nav>
+
+</div>
+
+
+<script>
+
+/* ================================
+   API
+================================ */
+
+const API =
+  "https://quan-key-admin.baoquyen2737.workers.dev";
+
+
+let audio;
+
+
+/* ================================
+   ÂM THANH
+================================ */
+
+function sound(){
+
+  try{
+
+    audio ??=
+      new(
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
+
+    let o =
+      audio.createOscillator();
+
+    let g =
+      audio.createGain();
+
+    o.frequency.value =
+      620;
+
+    g.gain.setValueAtTime(
+      .0001,
+      audio.currentTime
+    );
+
+    g.gain.exponentialRampToValueAtTime(
+      .03,
+      audio.currentTime + .01
+    );
+
+    g.gain.exponentialRampToValueAtTime(
+      .0001,
+      audio.currentTime + .08
+    );
+
+    o.connect(g);
+
+    g.connect(
+      audio.destination
+    );
+
+    o.start();
+
+    o.stop(
+      audio.currentTime + .09
+    );
+
+  }catch{}
+
+}
+
+
+/* ================================
+   DEVICE
+================================ */
+
+function device(){
+
+  let x =
+    localStorage.getItem(
+      "mq_device_id"
+    );
+
+  if(!x){
+
+    x =
+      "MQ-" +
+      crypto.randomUUID();
+
+    localStorage.setItem(
+      "mq_device_id",
+      x
+    );
+
+  }
+
+  return x;
+
+}
+
+
+/* ================================
+   FETCH TIMEOUT
+================================ */
+
+async function fetchT(
+  url,
+  opt={},
+  ms=5000
+){
+
+  let c =
+    new AbortController();
+
+  let t =
+    setTimeout(
+      () => c.abort(),
+      ms
+    );
+
+  try{
+
+    return await fetch(
+      url,
+      {
+        ...opt,
+        signal:c.signal
+      }
+    );
+
+  }finally{
+
+    clearTimeout(t);
+
+  }
+
+}
+
+
+/* ================================
+   THỜI GIAN
+================================ */
+
+function remain(x){
+
+  if(x <= 0)
+    return "Hết hạn";
+
+  let d =
+    Math.floor(
+      x / 86400
+    );
+
+  x %= 86400;
+
+  let h =
+    Math.floor(
+      x / 3600
+    );
+
+  x %= 3600;
+
+  let m =
+    Math.floor(
+      x / 60
+    );
+
+  let s =
+    x % 60;
+
+  return `${d}d ${h}h ${m}m ${s}s`;
+
+}
+
+
+/* ================================
+   LOGIN VIEW
+================================ */
+
+function loginView(){
+
+  loader.classList.add(
+    "hidden"
+  );
+
+  app.classList.add(
+    "hidden"
+  );
+
+  login.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* ================================
+   APP VIEW
+================================ */
+
+function appView(){
+
+  loader.classList.add(
+    "hidden"
+  );
+
+  login.classList.add(
+    "hidden"
+  );
+
+  app.classList.remove(
+    "hidden"
+  );
+
+  profile();
+
+  countdown();
+
+  networkCheck();
+
+  applyPermissions();
+
+}
+
+
+/* ================================
+   KEY TYPE
+================================ */
+
+function getKeyType(){
+
+  return (
+    localStorage.getItem(
+      "mq_key_type"
+    ) || "BASIC"
+  ).toUpperCase();
+
+}
+
+
+function isVIP(){
+
+  return getKeyType() === "VIP";
+
+}
+
+
+/* ================================
+   PHÂN QUYỀN BASIC / VIP
+================================ */
+
+function applyPermissions(){
+
+  const type =
+    getKeyType();
+
+  const vip =
+    type === "VIP";
+
+
+  /* Badge trên đầu */
+
+  const badge =
+    document.getElementById(
+      "typeBadge"
+    );
+
+  badge.textContent =
+    type;
+
+
+  badge.className =
+    "key-type " +
+    (
+      vip
+      ? "key-vip"
+      : "key-basic"
+    );
+
+
+  /* Tab điều khiển */
+
+  const controlType =
+    document.getElementById(
+      "controlType"
+    );
+
+  controlType.textContent =
+    type;
+
+  controlType.className =
+    "value " +
+    (
+      vip
+      ? "purple"
+      : "cyan"
+    );
+
+
+  /* Hồ sơ */
+
+  const ptype =
+    document.getElementById(
+      "ptype"
+    );
+
+  ptype.textContent =
+    type;
+
+  ptype.className =
+    vip
+    ? "purple"
+    : "cyan";
+
+
+  /*
+    BASIC:
+    khóa toàn bộ card VIP
+  */
+
+  document
+    .querySelectorAll(
+      "[data-vip='true']"
+    )
+    .forEach(card => {
+
+      if(vip){
+
+        card.classList.remove(
+          "locked"
+        );
+
+      }else{
+
+        card.classList.add(
+          "locked"
+        );
+
+      }
+
+    });
+
+
+  /*
+    BASIC không thể bật
+    AIMLOCK / HEADLOCK
+  */
+
+  document
+    .querySelectorAll(
+      ".vip-toggle"
+    )
+    .forEach(toggle => {
+
+      toggle.disabled =
+        !vip;
+
+      if(!vip){
+
+        toggle.classList.remove(
+          "on"
+        );
+
+      }
+
+    });
+
+}
+
+
+/* ================================
+   PROFILE
+================================ */
+
+function profile(){
+
+  let k =
+    localStorage.getItem(
+      "mq_login_key"
+    ) || "";
+
+  let e =
+    +localStorage.getItem(
+      "mq_expires_at"
+    ) || 0;
+
+
+  document
+    .getElementById("pkey")
+    .textContent =
+      k.length > 8
+      ? k.slice(0,4) +
+        "••••" +
+        k.slice(-4)
+      : "••••••";
+
+
+  document
+    .getElementById("pdev")
+    .textContent =
+      device().slice(0,16) +
+      "…";
+
+
+  document
+    .getElementById("device")
+    .textContent =
+      device().slice(-8);
+
+
+  document
+    .getElementById("pexp")
+    .textContent =
+      e
+      ? new Date(
+          e * 1000
+        ).toLocaleString(
+          "vi-VN"
+        )
+      : "Không xác định";
+
+}
+
+
+/* ================================
+   COUNTDOWN
+================================ */
+
+function countdown(){
+
+  let e =
+    +localStorage.getItem(
+      "mq_expires_at"
+    ) || 0;
+
+  clearInterval(
+    window.ct
+  );
+
+
+  let f = () => {
+
+    document
+      .getElementById(
+        "count"
+      )
+      .textContent =
+        e
+        ? remain(
+            e -
+            Math.floor(
+              Date.now() / 1000
+            )
+          )
+        : "Không xác định";
+
+  };
+
+
+  f();
+
+  window.ct =
+    setInterval(
+      f,
+      1000
+    );
+
+}
+
+
+/* ================================
+   NETWORK
+================================ */
+
+async function networkCheck(){
+
+  let n =
+    document.getElementById(
+      "network"
+    );
+
+  n.textContent =
+    "Đang kiểm tra";
+
+
+  try{
+
+    let r =
+      await fetchT(
+        API + "/",
+        {},
+        4000
+      );
+
+    n.textContent =
+      r.ok
+      ? (
+          navigator
+            .connection
+            ?.effectiveType ||
+          "ONLINE"
+        ).toUpperCase()
+      : "OFFLINE";
+
+  }catch{
+
+    n.textContent =
+      "Không xác định";
+
+  }
+
+}
+
+
+/* ================================
+   LOGIN
+================================ */
+
+async function doLogin(){
+
+  let k =
+    key.value.trim();
+
+  err.textContent =
+    "";
+
+
+  if(!k){
+
+    err.textContent =
+      "Vui lòng nhập Key";
+
+    return;
+
+  }
+
+
+  loginBtn.disabled =
+    true;
+
+  loginBtn.textContent =
+    "ĐANG KIỂM TRA…";
+
+
+  try{
+
+    let r =
+      await fetchT(
+        API + "/api/login",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            key:k,
+
+            deviceId:
+              device()
+
+          })
+
+        },
+        5000
+      );
+
+
+    let d =
+      await r.json();
+
+
+    if(
+      !r.ok ||
+      !d.success
+    ){
+
+      throw Error(
+        d.message ||
+        "Key không hợp lệ"
+      );
+
+    }
+
+
+    /*
+      LẤY BASIC / VIP TỪ WORKER
+    */
+
+    let type =
+      String(
+        d.type ||
+        "BASIC"
+      ).toUpperCase();
+
+
+    if(
+      type !== "BASIC" &&
+      type !== "VIP"
+    ){
+
+      type =
+        "BASIC";
+
+    }
+
+
+    localStorage.setItem(
+      "mq_login_key",
+      k
+    );
+
+
+    localStorage.setItem(
+      "mq_expires_at",
+      d.expires_at
+    );
+
+
+    localStorage.setItem(
+      "mq_key_type",
+      type
+    );
+
+
+    appView();
+
+
+  }catch(e){
+
+    err.textContent =
+      e.name === "AbortError"
+      ? "Máy chủ phản hồi quá lâu"
+      : e.message;
+
+  }finally{
+
+    loginBtn.disabled =
+      false;
+
+    loginBtn.textContent =
+      "ĐĂNG NHẬP";
+
+  }
+
+}
+
+
+/* ================================
+   CLICK SOUND
+================================ */
+
+document.addEventListener(
+  "click",
+  e => {
+
+    if(
+      e.target.closest(
+        "button,a,.toggle"
+      )
+    ){
+
+      sound();
+
+    }
+
+  }
+);
+
+
+/* ================================
+   TAB
+================================ */
+
+document
+  .querySelectorAll(
+    ".tabs button"
+  )
+  .forEach(b => {
+
+    b.onclick = () => {
+
+      document
+        .querySelectorAll(
+          ".tabs button"
+        )
+        .forEach(
+          x =>
+            x.classList.remove(
+              "active"
+            )
+        );
+
+
+      b.classList.add(
+        "active"
+      );
+
+
+      document
+        .querySelectorAll(
+          ".panel"
+        )
+        .forEach(
+          x =>
+            x.classList.remove(
+              "active"
+            )
+        );
+
+
+      document
+        .getElementById(
+          b.dataset.go
+        )
+        .classList.add(
+          "active"
+        );
+
+
+      scrollTo(
+        0,
+        0
+      );
+
+    };
+
+  });
+
+
+/* ================================
+   TOGGLE
+================================ */
+
+document
+  .querySelectorAll(
+    ".toggle"
+  )
+  .forEach(t => {
+
+    t.onclick = () => {
+
+      /*
+        BASIC không được
+        bật chức năng VIP
+      */
+
+      if(
+        t.classList.contains(
+          "vip-toggle"
+        ) &&
+        !isVIP()
+      ){
+
+        return;
+
+      }
+
+
+      t.classList.toggle(
+        "on"
+      );
+
+    };
+
+  });
+
+
+/* ================================
+   EVENTS
+================================ */
+
+loginBtn.onclick =
+  doLogin;
+
+
+key.onkeydown =
+  e => {
+
+    if(
+      e.key === "Enter"
+    ){
+
+      doLogin();
+
+    }
+
+  };
+
+
+check.onclick =
+  networkCheck;
+
+
+logout.onclick =
+  () => {
+
+    localStorage.removeItem(
+      "mq_login_key"
+    );
+
+    localStorage.removeItem(
+      "mq_expires_at"
+    );
+
+    localStorage.removeItem(
+      "mq_key_type"
+    );
+
+    loginView();
+
+  };
+
+
+/* ================================
+   AUTO LOGIN
+================================ */
+
+setTimeout(
+  () => {
+
+    let saved =
+      localStorage.getItem(
+        "mq_login_key"
+      );
+
+
+    if(!saved){
+
+      loginView();
+
+      return;
+
+    }
+
+
+    key.value =
+      saved;
+
+
+    fetchT(
+      API + "/api/login",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
+
+        body:JSON.stringify({
+
+          key:saved,
+
+          deviceId:
+            device()
+
+        })
+
+      },
+      4000
+    )
+
+    .then(
+      async r => {
+
+        let d =
+          await r.json();
+
+
+        if(
+          r.ok &&
+          d.success
+        ){
+
+          let type =
+            String(
+              d.type ||
+              "BASIC"
+            ).toUpperCase();
+
+
+          if(
+            type !== "BASIC" &&
+            type !== "VIP"
+          ){
+
+            type =
+              "BASIC";
+
+          }
+
+
+          localStorage.setItem(
+            "mq_expires_at",
+            d.expires_at
+          );
+
+
+          localStorage.setItem(
+            "mq_key_type",
+            type
+          );
+
+
+          appView();
+
+
+        }else{
+
+          localStorage.removeItem(
+            "mq_login_key"
+          );
+
+          localStorage.removeItem(
+            "mq_key_type"
+          );
+
+          loginView();
+
+        }
+
+      }
+    )
+
+    .catch(
+      () => {
+
+        loginView();
+
+      }
+    );
+
+
+  },
+  1600
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MINHQUAN LOCK - KEY ADMIN</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:14px;background:radial-gradient(circle at top,#172554,#05070b 70%);color:#fff;font-family:Arial,sans-serif}
+main{max-width:800px;margin:auto}
+header{text-align:center;padding:16px 0 24px}
+h1,h2{color:#00eaff}
+header p,.info{color:#94a3b8;font-size:12px}
+.card{background:#101827;border:1px solid #29374c;border-radius:15px;padding:17px;margin-bottom:15px}
+h2{font-size:17px;margin-top:0}
+label{display:block;margin:12px 0 6px;color:#aab4c5;font-size:13px}
+input,select{width:100%;height:45px;padding:10px;border:1px solid #334155;border-radius:9px;background:#080e19;color:white;font-size:14px}
+button{border:0;border-radius:9px;padding:12px;font-weight:bold;cursor:pointer;margin-top:10px}
+.primary{width:100%;background:#00eaff;color:#001014}
+.secondary{background:#263449;color:white}
+.danger{background:#dc2626;color:white}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.status{padding:12px;margin-top:12px;border-radius:9px;background:#080e19;border:1px solid #29374c;font-size:13px;overflow-wrap:anywhere}
+.ok{color:#6ee7b7;border-color:#059669}
+.err{color:#fca5a5;border-color:#dc2626}
+.item{padding:13px;margin-top:12px;border:1px solid #29374c;border-radius:10px;background:#080e19;overflow-wrap:anywhere}
+.key{color:#00eaff;font-weight:bold;word-break:break-all;margin:10px 0}
+.basic{color:#facc15;font-weight:bold}
+.vip{color:#c4b5fd;font-weight:bold}
+.actions{display:flex;gap:8px}
+.actions button{flex:1}
+.footer{text-align:center;color:#64748b;font-size:11px;padding:10px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}body{padding:9px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>🔐 MINHQUAN LOCK</h1>
+<p>KEY ADMIN PANEL</p>
+</header>
+
+<section class="card">
+<h2>🔑 XÁC THỰC ADMIN</h2>
+<label>ADMIN_SECRET</label>
+<input id="secret" type="password" placeholder="Nhập mật khẩu Admin">
+<button class="primary" id="loginBtn">XÁC THỰC & TẢI KEY</button>
+<div id="status" class="status">Chưa xác thực</div>
+</section>
+
+<section class="card">
+<h2>⚡ TẠO KEY</h2>
+<label>Tên người dùng</label>
+<input id="username" maxlength="60" placeholder="Tên người dùng">
+
+<div class="grid">
+<div>
+<label>Thời hạn (ngày)</label>
+<input id="days" type="number" min="1" max="3650" value="30">
+</div>
+<div>
+<label>Số thiết bị tối đa</label>
+<input id="devices" type="number" min="1" max="100" value="1">
+</div>
+</div>
+
+<label>Loại key</label>
+<select id="type">
+<option value="BASIC">BASIC — Tính năng giới hạn</option>
+<option value="VIP">VIP — Tất cả tính năng</option>
+</select>
+
+<button class="primary" id="createBtn">⚡ TẠO KEY</button>
+<div id="result"></div>
+</section>
+
+<section class="card">
+<h2>📋 QUẢN LÝ KEY</h2>
+<input id="search" placeholder="Tìm tên hoặc key...">
+<button class="secondary" id="refreshBtn" style="width:100%">↻ TẢI LẠI DANH SÁCH</button>
+<div id="keys"><div class="status">Hãy xác thực Admin trước.</div></div>
+</section>
+
+<div class="footer">MINHQUAN LOCK • KEY ADMIN</div>
+</main>
+
+<script>
+"use strict";
+
+const API="https://quan-key-admin.baoquyen2737.workers.dev";
+let secret="",keys=[];
+
+const $=id=>document.getElementById(id);
+
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function status(msg,type=""){
+ $("status").className="status "+type;
+ $("status").textContent=msg;
+}
+
+function headers(){
+ return {
+  "Content-Type":"application/json",
+  "x-admin-secret":secret
+ };
+}
+
+function metadata(){
+ try{
+  return JSON.parse(localStorage.getItem("mq_admin_metadata")||"{}");
+ }catch{
+  return {};
+ }
+}
+
+function saveMeta(key,info){
+ let m=metadata();
+ m[key]=info;
+ localStorage.setItem("mq_admin_metadata",JSON.stringify(m));
+}
+
+async function request(path,options={}){
+ const r=await fetch(API+path,{
+  ...options,
+  headers:{...headers(),...(options.headers||{})}
+ });
+
+ let d;
+ try{
+  d=await r.json();
+ }catch{
+  throw Error("Worker không trả JSON (HTTP "+r.status+")");
+ }
+
+ if(!r.ok||d.success===false){
+  throw Error(d.error||d.message||("HTTP "+r.status));
+ }
+
+ return d;
+}
+
+async function login(){
+ secret=$("secret").value.trim();
+
+ if(!secret){
+  status("Vui lòng nhập mật khẩu Admin.","err");
+  return;
+ }
+
+ $("loginBtn").disabled=true;
+ status("Đang kết nối Worker...");
+
+ try{
+  await loadKeys();
+ }catch(e){
+  status("Lỗi: "+e.message,"err");
+ }finally{
+  $("loginBtn").disabled=false;
+ }
+}
+
+async function loadKeys(){
+ if(!secret){
+  status("Hãy nhập mật khẩu Admin trước.","err");
+  return;
+ }
+
+ try{
+  const d=await request("/api/admin/keys");
+  keys=Array.isArray(d.keys)?d.keys:[];
+  renderKeys();
+  status("Đã tải "+keys.length+" key.","ok");
+ }catch(e){
+  status("Không tải được key: "+e.message,"err");
+  throw e;
+ }
+}
+
+async function createKey(){
+ if(!secret){
+  status("Hãy xác thực Admin trước.","err");
+  return;
+ }
+
+ const name=$("username").value.trim();
+ const days=Number($("days").value);
+ const maxDevices=Number($("devices").value);
+ const type=$("type").value;
+
+ if(!name){
+  $("result").innerHTML='<div class="status err">Nhập tên người dùng.</div>';
+  return;
+ }
+
+ if(!Number.isInteger(days)||days<1||days>3650){
+  $("result").innerHTML='<div class="status err">Số ngày phải từ 1 đến 3650.</div>';
+  return;
+ }
+
+ if(!Number.isInteger(maxDevices)||maxDevices<1||maxDevices>100){
+  $("result").innerHTML='<div class="status err">Số thiết bị phải từ 1 đến 100.</div>';
+  return;
+ }
+
+ $("createBtn").disabled=true;
+ $("result").innerHTML='<div class="status">Đang tạo key...</div>';
+
+ try{
+  const d=await request("/api/admin/create-key",{
+   method:"POST",
+   body:JSON.stringify({name,days,maxDevices,type})
+  });
+
+  if(!d.key) throw Error("Worker không trả về key");
+
+  saveMeta(d.key,{name,type});
+
+  $("result").innerHTML=
+   '<div class="item">'+
+   '<b style="color:#6ee7b7">TẠO KEY THÀNH CÔNG</b>'+
+   '<div class="key">'+esc(d.key)+'</div>'+
+   '<div class="'+(type==="VIP"?"vip":"basic")+'">'+type+'</div>'+
+   '<div class="info">Tên: '+esc(name)+
+   '<br>Thời hạn: '+days+' ngày'+
+   '<br>Thiết bị tối đa: '+maxDevices+'</div>'+
+   '<button class="primary" id="copyNew">COPY KEY</button>'+
+   '</div>';
+
+  $("copyNew").onclick=()=>copyKey(d.key);
+
+  status("Đã tạo key. Cần Worker hỗ trợ lưu loại BASIC/VIP.","ok");
+  await loadKeys();
+
+ }catch(e){
+  $("result").innerHTML='<div class="status err">'+esc(e.message)+'</div>';
+  status("Không tạo được key: "+e.message,"err");
+ }finally{
+  $("createBtn").disabled=false;
+ }
+}
+
+function renderKeys(){
+ const q=$("search").value.trim().toLowerCase();
+ const m=metadata();
+
+ const list=keys.filter(k=>
+  String(k.key||"").toLowerCase().includes(q)||
+  String(m[k.key]?.name||k.name||"").toLowerCase().includes(q)
+ );
+
+ if(!list.length){
+  $("keys").innerHTML='<div class="status">Không có key phù hợp.</div>';
+  return;
+ }
+
+ $("keys").innerHTML=list.map(k=>{
+  const meta=m[k.key]||{};
+  const type=String(k.type||meta.type||"BASIC").toUpperCase();
+  const dev=Array.isArray(k.devices)?k.devices.length:(Number(k.devices)||0);
+  const exp=k.expires_at
+   ?new Date(Number(k.expires_at)).toLocaleString("vi-VN")
+   :"Chưa rõ";
+
+  return '<div class="item">'+
+   '<b>'+esc(meta.name||k.name||"Chưa lưu tên")+'</b>'+
+   '<div class="'+(type==="VIP"?"vip":"basic")+'">'+esc(type)+'</div>'+
+   '<div class="key">'+esc(k.key)+'</div>'+
+   '<div class="info">Hết hạn: '+esc(exp)+
+   '<br>Thiết bị đã dùng: '+esc(dev)+
+   '<br>Giới hạn: '+esc(k.maxDevices??"?")+
+   '<br>Trạng thái: '+(k.revoked?"Đã thu hồi":"Hoạt động")+
+   '</div>'+
+   '<div class="actions">'+
+   '<button class="secondary copy" data-key="'+esc(k.key)+'">COPY</button>'+
+   '<button class="danger revoke" data-key="'+esc(k.key)+'">THU HỒI</button>'+
+   '</div></div>';
+ }).join("");
+
+ document.querySelectorAll(".copy").forEach(b=>{
+  b.onclick=()=>copyKey(b.dataset.key);
+ });
+
+ document.querySelectorAll(".revoke").forEach(b=>{
+  b.onclick=()=>revokeKey(b.dataset.key);
+ });
+}
+
+async function copyKey(key){
+ try{
+  await navigator.clipboard.writeText(key);
+  status("Đã copy key.","ok");
+ }catch{
+  const t=document.createElement("textarea");
+  t.value=key;
+  document.body.appendChild(t);
+  t.select();
+  const ok=document.execCommand("copy");
+  t.remove();
+  status(ok?"Đã copy key.":"Không copy được.",ok?"ok":"err");
+ }
+}
+
+async function revokeKey(key){
+ if(!confirm("Bạn chắc chắn muốn thu hồi key này?")) return;
+
+ try{
+  await request("/api/admin/revoke-key",{
+   method:"POST",
+   body:JSON.stringify({key})
+  });
+
+  status("Đã thu hồi key.","ok");
+  await loadKeys();
+ }catch(e){
+  status("Thu hồi thất bại: "+e.message,"err");
+ }
+}
+
+$("loginBtn").onclick=login;
+$("createBtn").onclick=createKey;
+$("refreshBtn").onclick=loadKeys;
+$("search").oninput=renderKeys;
+$("secret").onkeydown=e=>{
+ if(e.key==="Enter") login();
+};
+</script>
+</body>
+</html>

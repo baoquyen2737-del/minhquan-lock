@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>AIMLOCK SUPER</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+  --red:#ff1744;
+  --red2:#ff526f;
+  --bg:#07070b;
+  --card:#111118;
+  --card2:#181820;
+  --line:#292934;
+  --text:#fff;
+  --muted:#8d8d9b;
+  --green:#39ff9a;
+}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 50% -10%,#3b0714 0,#07070b 38%);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  padding-bottom:90px;
+}
+
+/* LOADING */
+#loading{
+  position:fixed;
+  inset:0;
+  z-index:99;
+  background:#050509;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:1000;
+  letter-spacing:2px;
+  color:#ff284f;
+  text-shadow:0 0 20px #ff1744;
+}
+
+.loadingbar{
+  width:180px;
+  height:4px;
+  background:#25252d;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:20px;
+}
+
+.loadingbar i{
+  display:block;
+  width:0%;
+  height:100%;
+  background:#ff1744;
+  animation:load 1.7s forwards;
+}
+
+@keyframes load{
+  to{width:100%}
+}
+
+/* LOGIN */
+#login{
+  min-height:100vh;
+  padding:30px 20px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.loginbox{
+  width:100%;
+  background:#101017;
+  border:1px solid #2c2c38;
+  border-radius:22px;
+  padding:25px;
+  box-shadow:0 20px 70px #000;
+}
+
+.login-title{
+  font-size:27px;
+  font-weight:900;
+  color:#ff3155;
+}
+
+input,select{
+  width:100%;
+  background:#191920;
+  border:1px solid #30303b;
+  color:#fff;
+  border-radius:11px;
+  padding:14px;
+  outline:none;
+  margin-top:8px;
+}
+
+input:focus,select:focus{
+  border-color:#ff3155;
+}
+
+label{
+  display:block;
+  margin-top:16px;
+  font-size:13px;
+  color:#aaa;
+}
+
+button{
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:14px;
+  color:#fff;
+  background:#e9163e;
+  font-weight:800;
+  margin-top:15px;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.secondary{
+  background:#24242d;
+}
+
+.green{
+  color:var(--green)!important;
+}
+
+/* HEADER */
+.header{
+  padding:20px 17px 13px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header-logo{
+  font-size:21px;
+  font-weight:1000;
+  color:#ff3155;
+}
+
+.version{
+  font-size:10px;
+  color:#777;
+}
+
+/* CONTENT */
+.content{
+  padding:0 15px;
+}
+
+.card{
+  background:linear-gradient(145deg,#15151d,#0e0e14);
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:16px;
+  margin-bottom:13px;
+}
+
+.card-title{
+  font-size:14px;
+  font-weight:900;
+  margin-bottom:13px;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.value{
+  color:#ff526f;
+  font-weight:900;
+}
+
+/* STATUS */
+.status{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#39ff9a;
+  box-shadow:0 0 12px #39ff9a;
+}
+
+/* TILES */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.tile{
+  background:#181820;
+  border:1px solid #292934;
+  border-radius:14px;
+  padding:15px;
+}
+
+.tile b{
+  display:block;
+  font-size:19px;
+  margin-bottom:5px;
+}
+
+/* RANGE */
+.range{
+  accent-color:#ff1744;
+  padding:0;
+  border:0;
+  background:transparent;
+}
+
+/* CROSSHAIR */
+.preview{
+  height:190px;
+  border-radius:15px;
+  background:
+    linear-gradient(#101014,#08080c);
+  border:1px solid #292934;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+
+.preview:before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:1px;
+  background:#22222a;
+}
+
+.preview:after{
+  content:"";
+  position:absolute;
+  height:100%;
+  width:1px;
+  background:#22222a;
+}
+
+.cross{
+  width:42px;
+  height:42px;
+  position:relative;
+  z-index:2;
+  filter:drop-shadow(0 0 7px #ff1744);
+}
+
+.cross span{
+  position:absolute;
+  background:#ff1744;
+  border-radius:2px;
+}
+
+.cross .v{
+  width:3px;
+  height:42px;
+  left:19px;
+}
+
+.cross .h{
+  width:42px;
+  height:3px;
+  top:19px;
+}
+
+.cross .center{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  left:17px;
+  top:17px;
+}
+
+/* SWITCH */
+.switch{
+  width:48px;
+  height:27px;
+  border-radius:20px;
+  background:#292932;
+  padding:3px;
+  transition:.2s;
+}
+
+.switch i{
+  display:block;
+  width:21px;
+  height:21px;
+  background:#777;
+  border-radius:50%;
+  transition:.2s;
+}
+
+.switch.on{
+  background:#c91538;
+}
+
+.switch.on i{
+  transform:translateX(21px);
+  background:#fff;
+}
+
+/* PAGES */
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* BOTTOM NAV */
+.nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  height:72px;
+  background:rgba(12,12,18,.96);
+  border-top:1px solid #292934;
+  display:flex;
+  z-index:20;
+  backdrop-filter:blur(12px);
+}
+
+.nav button{
+  margin:0;
+  background:transparent;
+  color:#777;
+  border-radius:0;
+  font-size:11px;
+}
+
+.nav button.active{
+  color:#ff3155;
+}
+
+.nav-icon{
+  display:block;
+  font-size:20px;
+  margin-bottom:4px;
+}
+
+/* HISTORY */
+.history{
+  padding:11px 0;
+  border-bottom:1px solid #25252d;
+}
+
+.history:last-child{
+  border-bottom:0;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  display:none;
+  align-items:flex-end;
+  z-index:50;
+}
+
+.modalbox{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  background:#13131a;
+  border:1px solid #33333d;
+  border-radius:22px 22px 0 0;
+  padding:20px;
+}
+
+/* NOTIFICATION */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:85px;
+  transform:translateX(-50%) translateY(20px);
+  background:#20202a;
+  border:1px solid #3b3b48;
+  padding:12px 17px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:100;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="logo">AIMLOCK SUPER</div>
+  <div style="color:#777;font-size:11px;margin-top:8px">
+    FREE FIRE GAMING PANEL
+  </div>
+  <div class="loadingbar"><i></i></div>
+</div>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="loginbox">
+    <div class="login-title">AIMLOCK SUPER</div>
+    <div class="muted" style="margin-top:6px">
+      Gaming Control Panel
+    </div>
+
+    <label>Tên người dùng</label>
+    <input id="loginName" placeholder="Nhập tên">
+
+    <label>Key</label>
+    <input id="loginKey" placeholder="Nhập key">
+
+    <button onclick="login()">ĐĂNG NHẬP</button>
+
+    <div id="loginMsg"
+         style="text-align:center;color:#ff526f;font-size:12px;margin-top:12px">
+    </div>
+
+    <p class="muted" style="margin-top:18px;text-align:center">
+      Demo HTML — không can thiệp vào game.
+    </p>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app" style="display:none">
+
+  <header class="header">
+    <div>
+      <div class="header-logo">AIMLOCK SUPER</div>
+      <div class="muted">FREE FIRE CONTROL PANEL</div>
+    </div>
+    <div class="version">v5.0</div>
+  </header>
+
+  <main class="content">
+
+    <!-- HOME -->
+    <section id="home" class="page active">
+
+      <div class="card">
+        <div class="row">
+          <div>
+            <div style="font-weight:900">HỆ THỐNG</div>
+            <div class="muted">Trạng thái ứng dụng</div>
+          </div>
+          <div class="status">
+            <span class="dot"></span>
+            <span class="green">ONLINE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="tile">
+          <b id="ping">--</b>
+          <span class="muted">PING DEMO</span>
+        </div>
+
+        <div class="tile">
+          <b>60 FPS</b>
+          <span class="muted">HIỂN THỊ</span>
+        </div>
+
+        <div class="tile">
+          <b id="device">iPhone</b>
+          <span class="muted">THIẾT BỊ</span>
+        </div>
+
+        <div class="tile">
+          <b class="green">SAFE</b>
+          <span class="muted">APP STATUS</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">TÂM NGẮM DEMO</div>
+
+        <div class="preview">
+          <div class="cross" id="cross">
+            <span class="v"></span>
+            <span class="h"></span>
+            <span class="center"></span>
+          </div>
+        </div>
+
+        <label>Kích thước</label>
+        <input class="range"
+               id="crossSize"
+               type="range"
+               min="15"
+               max="80"
+               value="42"
+               oninput="updateCross()">
+
+        <div class="row">
+          <span class="muted">Kích thước hiện tại</span>
+          <span class="value" id="sizeValue">42</span>
+        </div>
+
+        <label>Độ mờ</label>
+        <input class="range"
+               id="crossOpacity"
+               type="range"
+               min="20"
+               max="100"
+               value="100"
+               oninput="updateCross()">
+
+        <div class="row">
+          <span class="muted">Opacity</span>
+          <span class="value" id="opacityValue">100%</span>
+        </div>
+
+        <button onclick="toggleCross()" id="crossBtn">
+          TẮT TÂM NGẮM
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">TRAINING</div>
+
+        <div class="row">
+          <div>
+            <b>Reaction Test</b>
+            <div class="muted">
+              Luyện phản xạ bằng mini game
+            </div>
+          </div>
+          <button style="width:130px" onclick="startTraining()">
+            START
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="page">
+
+      <div class="card">
+        <div class="card-title">ĐỘ NHẠY</div>
+
+        <label>General</label>
+        <input id="general" class="range"
+               type="range" min="0" max="200" value="100"
+               oninput="updateSensitivity()">
+
+        <div class="row">
+          <span class="muted">General</span>
+          <span class="value" id="generalVal">100</span>
+        </div>
+
+        <label>Red Dot</label>
+        <input id="redDot" class="range"
+               type="range" min="0" max="200" value="90"
+               oninput="updateSensitivity()">
+
+        <div class="row">
+          <span class="muted">Red Dot</span>
+          <span class="value" id="redDotVal">90</span>
+        </div>
+
+        <label>2X Scope</label>
+        <input id="scope2" class="range"
+               type="range" min="0" max="200" value="85"
+               oninput="updateSensitivity()">
+
+        <div class="row">
+          <span class="muted">2X Scope</span>
+          <span class="value" id="scope2Val">85</span>
+        </div>
+
+        <label>4X Scope</label>
+        <input id="scope4" class="range"
+               type="range" min="0" max="200" value="75"
+               oninput="updateSensitivity()">
+
+        <div class="row">
+          <span class="muted">4X Scope</span>
+          <span class="value" id="scope4Val">75</span>
+        </div>
+
+        <label>Sniper</label>
+        <input id="sniper" class="range"
+               type="range" min="0" max="200" value="55"
+               oninput="updateSensitivity()">
+
+        <div class="row">
+          <span class="muted">Sniper</span>
+          <span class="value" id="sniperVal">55</span>
+        </div>
+
+        <button onclick="saveSensitivity()">
+          LƯU ĐỘ NHẠY
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">GIAO DIỆN TÂM NGẮM</div>
+
+        <label>Màu</label>
+        <select id="crossColor" onchange="updateCross()">
+          <option value="#ff1744">Đỏ Neon</option>
+          <option value="#00e5ff">Cyan</option>
+          <option value="#39ff14">Xanh lá</option>
+          <option value="#ffffff">Trắng</option>
+          <option value="#ff00dd">Hồng</option>
+        </select>
+
+        <label>Hiệu ứng</label>
+        <select id="crossGlow" onchange="updateCross()">
+          <option value="8">Mạnh</option>
+          <option value="4">Nhẹ</option>
+          <option value="0">Tắt</option>
+        </select>
+
+        <button class="secondary" onclick="resetAll()">
+          KHÔI PHỤC MẶC ĐỊNH
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">TÙY CHỌN</div>
+
+        <div class="row" style="margin-bottom:15px">
+          <div>
+            <b>Âm thanh</b>
+            <div class="muted">Âm thanh giao diện</div>
+          </div>
+          <div class="switch on" id="soundSwitch"
+               onclick="toggleSwitch(this)">
+            <i></i>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <b>Rung</b>
+            <div class="muted">Phản hồi khi bấm nút</div>
+          </div>
+          <div class="switch on" id="vibrateSwitch"
+               onclick="toggleSwitch(this)">
+            <i></i>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- HISTORY -->
+    <section id="history" class="page">
+
+      <div class="card">
+        <div class="card-title">LỊCH SỬ</div>
+
+        <div class="history">
+          <div class="row">
+            <b>Đăng nhập</b>
+            <span class="green">OK</span>
+          </div>
+          <div class="muted">Phiên hiện tại</div>
+        </div>
+
+        <div class="history">
+          <div class="row">
+            <b>Độ nhạy</b>
+            <span class="green">SAVED</span>
+          </div>
+          <div class="muted">Cài đặt cục bộ</div>
+        </div>
+
+        <div class="history">
+          <div class="row">
+            <b>Tâm ngắm</b>
+            <span class="green">READY</span>
+          </div>
+          <div class="muted">Preview mode</div>
+        </div>
+      </div>
+
+      <button class="secondary" onclick="clearHistory()">
+        XÓA LỊCH SỬ
+      </button>
+
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="page">
+
+      <div class="card">
+        <div class="card-title">HỒ SƠ</div>
+
+        <div style="
+          width:70px;height:70px;border-radius:50%;
+          background:#25101a;
+          border:2px solid #ff3155;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:28px;
+          margin-bottom:15px;
+        ">MQ</div>
+
+        <div class="row">
+          <span class="muted">Tên</span>
+          <b id="profileName">Gamer</b>
+        </div>
+
+        <div class="row" style="margin-top:13px">
+          <span class="muted">Gói</span>
+          <span class="value">DEMO</span>
+        </div>
+
+        <div class="row" style="margin-top:13px">
+          <span class="muted">Phiên bản</span>
+          <span>5.0</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">THÔNG TIN THIẾT BỊ</div>
+
+        <div class="row">
+          <span class="muted">Platform</span>
+          <span id="platform">iOS / Mobile</span>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <span class="muted">Màn hình</span>
+          <span id="screen">--</span>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <span class="muted">Browser</span>
+          <span id="browser">--</span>
+        </div>
+      </div>
+
+      <button onclick="logout()">
+        ĐĂNG XUẤT
+      </button>
+
+    </section>
+
+  </main>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <button class="active" onclick="page('home',this)">
+      <span class="nav-icon">⌂</span>
+      Home
+    </button>
+
+    <button onclick="page('settings',this)">
+      <span class="nav-icon">⚙</span>
+      Settings
+    </button>
+
+    <button onclick="page('history',this)">
+      <span class="nav-icon">◷</span>
+      History
+    </button>
+
+    <button onclick="page('profile',this)">
+      <span class="nav-icon">●</span>
+      Profile
+    </button>
+  </nav>
+
+</div>
+
+<!-- TRAINING MODAL -->
+<div class="modal" id="trainingModal">
+  <div class="modalbox">
+
+    <div class="row">
+      <div>
+        <b>REACTION TEST</b>
+        <div class="muted">Bấm nút khi màn hình chuyển xanh</div>
+      </div>
+      <button style="width:70px;margin:0"
+              class="secondary"
+              onclick="closeTraining()">X</button>
+    </div>
+
+    <div id="reactionArea"
+         style="
+           height:180px;
+           margin-top:15px;
+           border-radius:15px;
+           background:#20202a;
+           display:flex;
+           align-items:center;
+           justify-content:center;
+           font-weight:900;
+           font-size:20px;
+         "
+         onclick="reactionClick()">
+      CHỜ...
+    </div>
+
+    <div id="reactionResult"
+         style="text-align:center;margin-top:12px;color:#ff526f">
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* =========================
+   APP STATE
+========================= */
+
+let crossEnabled = true;
+let reactionStart = 0;
+let reactionReady = false;
+let reactionTimer = null;
+
+/* =========================
+   LOADING
+========================= */
+
+setTimeout(()=>{
+  document.getElementById("loading").style.display="none";
+  document.getElementById("login").style.display="flex";
+},1800);
+
+/* =========================
+   LOGIN
+========================= */
+
+function login(){
+
+  const name =
+    document.getElementById("loginName").value.trim();
+
+  const key =
+    document.getElementById("loginKey").value.trim();
+
+  if(!name || !key){
+    document.getElementById("loginMsg").textContent =
+      "Hãy nhập tên và key.";
+    return;
+  }
+
+  document.getElementById("login").style.display="none";
+  document.getElementById("app").style.display="block";
+
+  document.getElementById("profileName").textContent=name;
+
+  toast("Đăng nhập thành công");
+
+  loadSettings();
+  deviceInfo();
+  updatePing();
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function page(id,btn){
+
+  document.querySelectorAll(".page")
+    .forEach(x=>x.classList.remove("active"));
+
+  document.getElementById(id)
+    .classList.add("active");
+
+  document.querySelectorAll(".nav button")
+    .forEach(x=>x.classList.remove("active"));
+
+  btn.classList.add("active");
+
+  if(navigator.vibrate){
+    navigator.vibrate(10);
+  }
+}
+
+/* =========================
+   CROSSHAIR
+========================= */
+
+function updateCross(){
+
+  const size =
+    Number(document.getElementById("crossSize").value);
+
+  const opacity =
+    Number(document.getElementById("crossOpacity").value)/100;
+
+  const color =
+    document.getElementById("crossColor").value;
+
+  const glow =
+    Number(document.getElementById("crossGlow").value);
+
+  const cross =
+    document.getElementById("cross");
+
+  cross.style.width=size+"px";
+  cross.style.height=size+"px";
+  cross.style.opacity=opacity;
+  cross.style.filter=
+    `drop-shadow(0 0 ${glow}px ${color})`;
+
+  cross.querySelector(".v").style.background=color;
+  cross.querySelector(".h").style.background=color;
+  cross.querySelector(".center").style.background=color;
+
+  cross.querySelector(".v").style.height=size+"px";
+  cross.querySelector(".v").style.left=
+    ((size-3)/2)+"px";
+
+  cross.querySelector(".h").style.width=size+"px";
+  cross.querySelector(".h").style.top=
+    ((size-3)/2)+"px";
+
+  const centerSize=Math.max(5,size*.17);
+
+  cross.querySelector(".center").style.width=centerSize+"px";
+  cross.querySelector(".center").style.height=centerSize+"px";
+  cross.querySelector(".center").style.left=
+    ((size-centerSize)/2)+"px";
+  cross.querySelector(".center").style.top=
+    ((size-centerSize)/2)+"px";
+
+  document.getElementById("sizeValue").textContent=size;
+  document.getElementById("opacityValue").textContent=
+    Math.round(opacity*100)+"%";
+
+  cross.style.display =
+    crossEnabled ? "block":"none";
+}
+
+function toggleCross(){
+
+  crossEnabled=!crossEnabled;
+
+  document.getElementById("crossBtn").textContent =
+    crossEnabled
+      ? "TẮT TÂM NGẮM"
+      : "BẬT TÂM NGẮM";
+
+  updateCross();
+}
+
+/* =========================
+   SENSITIVITY
+========================= */
+
+function updateSensitivity(){
+
+  const ids=[
+    ["general","generalVal"],
+    ["redDot","redDotVal"],
+    ["scope2","scope2Val"],
+    ["scope4","scope4Val"],
+    ["sniper","sniperVal"]
+  ];
+
+  ids.forEach(x=>{
+    document.getElementById(x[1]).textContent =
+      document.getElementById(x[0]).value;
+  });
+}
+
+function saveSensitivity(){
+
+  const data={
+    general:document.getElementById("general").value,
+    redDot:document.getElementById("redDot").value,
+    scope2:document.getElementById("scope2").value,
+    scope4:document.getElementById("scope4").value,
+    sniper:document.getElementById("sniper").value
+  };
+
+  localStorage.setItem(
+    "aimlockSensitivity",
+    JSON.stringify(data)
+  );
+
+  toast("Đã lưu độ nhạy");
+}
+
+function loadSettings(){
+
+  try{
+
+    const data =
+      JSON.parse(
+        localStorage.getItem("aimlockSensitivity")
+      );
+
+    if(data){
+
+      document.getElementById("general").value=data.general;
+      document.getElementById("redDot").value=data.redDot;
+      document.getElementById("scope2").value=data.scope2;
+      document.getElementById("scope4").value=data.scope4;
+      document.getElementById("sniper").value=data.sniper;
+
+      updateSensitivity();
+    }
+
+  }catch(e){}
+
+  updateCross();
+}
+
+/* =========================
+   RESET
+========================= */
+
+function resetAll(){
+
+  document.getElementById("general").value=100;
+  document.getElementById("redDot").value=90;
+  document.getElementById("scope2").value=85;
+  document.getElementById("scope4").value=75;
+  document.getElementById("sniper").value=55;
+
+  document.getElementById("crossSize").value=42;
+  document.getElementById("crossOpacity").value=100;
+  document.getElementById("crossColor").value="#ff1744";
+  document.getElementById("crossGlow").value=8;
+
+  crossEnabled=true;
+
+  updateSensitivity();
+  updateCross();
+
+  localStorage.removeItem("aimlockSensitivity");
+
+  toast("Đã khôi phục mặc định");
+}
+
+/* =========================
+   SWITCH
+========================= */
+
+function toggleSwitch(el){
+
+  el.classList.toggle("on");
+
+  if(navigator.vibrate){
+    navigator.vibrate(10);
+  }
+}
+
+/* =========================
+   PING DEMO
+========================= */
+
+function updatePing(){
+
+  const ping =
+    Math.floor(20+Math.random()*45);
+
+  document.getElementById("ping").textContent =
+    ping+" ms";
+}
+
+setInterval(updatePing,3000);
+
+/* =========================
+   DEVICE INFO
+========================= */
+
+function deviceInfo(){
+
+  document.getElementById("screen").textContent =
+    screen.width+" × "+screen.height;
+
+  let ua=navigator.userAgent;
+
+  let browser="Unknown";
+
+  if(ua.includes("CriOS"))
+    browser="Chrome iOS";
+  else if(ua.includes("Safari"))
+    browser="Safari";
+  else if(ua.includes("Firefox"))
+    browser="Firefox";
+
+  document.getElementById("browser").textContent=browser;
+
+  if(/iPhone/i.test(ua))
+    document.getElementById("device").textContent="iPhone";
+  else if(/Android/i.test(ua))
+    document.getElementById("device").textContent="Android";
+  else
+    document.getElementById("device").textContent="Mobile";
+}
+
+/* =========================
+   TRAINING
+========================= */
+
+function startTraining(){
+
+  document.getElementById("trainingModal")
+    .style.display="flex";
+
+  const area =
+    document.getElementById("reactionArea");
+
+  const result =
+    document.getElementById("reactionResult");
+
+  area.style.background="#20202a";
+  area.textContent="CHỜ...";
+  result.textContent="";
+
+  reactionReady=false;
+
+  const delay =
+    1500+Math.random()*3000;
+
+  clearTimeout(reactionTimer);
+
+  reactionTimer=setTimeout(()=>{
+
+    area.style.background="#16a66b";
+    area.textContent="BẤM NGAY!";
+    reactionReady=true;
+    reactionStart=performance.now();
+
+  },delay);
+}
+
+function reactionClick(){
+
+  if(!reactionReady){
+
+    document.getElementById("reactionResult")
+      .textContent="Chưa đến lúc!";
+
+    return;
+  }
+
+  const time =
+    Math.round(performance.now()-reactionStart);
+
+  reactionReady=false;
+
+  document.getElementById("reactionArea").textContent=
+    time+" ms";
+
+  document.getElementById("reactionResult").textContent=
+    time<250
+      ? "Phản xạ rất nhanh!"
+      : time<400
+      ? "Khá tốt!"
+      : "Thử lại nhé!";
+}
+
+function closeTraining(){
+
+  clearTimeout(reactionTimer);
+
+  document.getElementById("trainingModal")
+    .style.display="none";
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+function clearHistory(){
+
+  toast("Đã xóa lịch sử");
+
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+  document.getElementById("app").style.display="none";
+  document.getElementById("login").style.display="flex";
+
+  document.getElementById("loginKey").value="";
+
+  toast("Đã đăng xuất");
+}
+
+/* =========================
+   TOAST
+========================= */
+
+function toast(message){
+
+  const t=document.getElementById("toast");
+
+  t.textContent=message;
+  t.classList.add("show");
+
+  setTimeout(()=>{
+    t.classList.remove("show");
+  },1800);
+}
+
+/* =========================
+   START
+========================= */
+
+updateSensitivity();
+updateCross();
+deviceInfo();
+
+</script>
+
+</body>
+</html>

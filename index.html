@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINHQUAN STORE 🎮</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#090611;color:white;
+ font-family:Arial,sans-serif;
+}
+header{
+ padding:20px;text-align:center;
+ background:#160b25;border-bottom:1px solid #a855f7;
+}
+header h2{margin:0;color:#d8a4ff}
+.hero{text-align:center;padding:55px 15px}
+.hero h1{font-size:35px;color:#d8a4ff}
+.hero p{color:#c5b5d5}
+.container{max-width:900px;margin:auto;padding:15px}
+.products{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:18px;
+}
+.card{
+ background:#191126;border:1px solid #7336a8;
+ border-radius:16px;padding:22px;text-align:center;
+ box-shadow:0 0 15px #7025a522;
+}
+.card .emoji{font-size:45px}
+.card h3{color:#e4b5ff}
+button{
+ background:linear-gradient(90deg,#7c3aed,#c026d3);
+ color:white;border:0;padding:12px 22px;
+ border-radius:10px;font-weight:bold;cursor:pointer;
+}
+.contact{text-align:center;padding:35px 10px}
+footer{text-align:center;padding:20px;color:#9d8eaa}
+</style>
+</head>
+<body>
+
+<header>
+<h2>MINHQUAN STORE 🎮</h2>
+<p>GAMING DIGITAL STORE</p>
+</header>
+
+<section class="hero">
+<h1>WELCOME TO MY STORE</h1>
+<p>Khám phá các sản phẩm và tài liệu dành cho game thủ.</p>
+</section>
+
+<div class="container">
+<h2>🔥 SẢN PHẨM CỦA SHOP</h2>
+
+<div class="products">
+
+<div class="card">
+<div class="emoji">🎯</div>
+<h3>File cấu hình Aimlock</h3>
+<p>Tài liệu và thiết lập tham khảo hợp pháp.</p>
+<button onclick="contact()">Liên hệ mua</button>
+</div>
+
+<div class="card">
+<div class="emoji">📁</div>
+<h3>File 3015</h3>
+<p>Thông tin và mô tả sản phẩm.</p>
+<button onclick="contact()">Liên hệ mua</button>
+</div>
+
+<div class="card">
+<div class="emoji">💜</div>
+<h3>Menu Sophia</h3>
+<p>Thông tin sản phẩm và hỗ trợ khách hàng.</p>
+<button onclick="contact()">Liên hệ mua</button>
+</div>
+
+</div>
+</div>
+
+<section class="contact">
+<h2>💬 LIÊN HỆ SHOP</h2>
+<p>MINHQUAN STORE luôn sẵn sàng hỗ trợ!</p>
+<button onclick="contact()">Liên hệ ngay</button>
+</section>
+
+<footer>
+© 2026 MINHQUAN STORE 🎮
+</footer>
+
+<script>
+function contact(){
+ alert("Vui lòng cập nhật link Zalo hoặc Facebook của shop!");
+}
+</script>
+
+</body>
+</html>

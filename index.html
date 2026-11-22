@@ -1,0 +1,2938 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
+    background:
+        radial-gradient(circle at 10% 10%,#063844 0,transparent 30%),
+        radial-gradient(circle at 90% 25%,#24103e 0,transparent 32%),
+        linear-gradient(145deg,#02050a,#080812 55%,#10030e);
+}
+
+body{
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+#loadingScreen{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#03050a;
+}
+
+.loadingBox{
+    text-align:center;
+}
+
+.loadingLogo{
+    width:92px;
+    height:92px;
+    border-radius:27px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#00d9ff,#6847ff);
+    font-size:38px;
+    font-weight:900;
+    box-shadow:
+        0 0 25px #00eaff66,
+        0 0 80px #714cff33;
+}
+
+.loadingBox h1{
+    margin:18px 0 5px;
+    font-size:25px;
+}
+
+.loadingBox p{
+    margin:0;
+    color:#00eaff;
+}
+
+.loader{
+    width:180px;
+    height:4px;
+    margin:24px auto 0;
+    border-radius:10px;
+    overflow:hidden;
+    background:#18202c;
+}
+
+.loader span{
+    display:block;
+    width:40%;
+    height:100%;
+    border-radius:10px;
+    background:#00eaff;
+    animation:loading 1.2s infinite;
+}
+
+@keyframes loading{
+    from{transform:translateX(-100%)}
+    to{transform:translateX(350%)}
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginScreen{
+    min-height:100vh;
+    padding:30px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.loginCard{
+    width:100%;
+    max-width:430px;
+    padding:28px 22px;
+    border:1px solid #263047;
+    border-radius:25px;
+    background:#080b14ee;
+    box-shadow:0 25px 70px #0009;
+}
+
+.loginAvatar{
+    width:112px;
+    height:112px;
+    border-radius:50%;
+    display:block;
+    object-fit:cover;
+    margin:0 auto 18px;
+    border:3px solid #00eaff;
+    box-shadow:0 0 28px #00eaff66;
+}
+
+.loginTitle{
+    text-align:center;
+    margin:0;
+    font-size:27px;
+}
+
+.loginSub{
+    text-align:center;
+    color:#8994aa;
+    margin:7px 0 25px;
+}
+
+.field{
+    margin-bottom:14px;
+}
+
+.field label{
+    display:block;
+    color:#8d98ac;
+    margin-bottom:7px;
+    font-size:14px;
+}
+
+.field input{
+    width:100%;
+    padding:15px;
+    border-radius:13px;
+    border:1px solid #29334b;
+    background:#03060d;
+    color:#fff;
+    outline:none;
+    font-size:16px;
+}
+
+.field input:focus{
+    border-color:#00eaff;
+    box-shadow:0 0 15px #00eaff20;
+}
+
+.primaryBtn{
+    width:100%;
+    border:0;
+    padding:15px;
+    border-radius:13px;
+    background:linear-gradient(90deg,#00aeca,#00eaff);
+    color:#001014;
+    font-size:16px;
+    font-weight:900;
+    box-shadow:0 10px 25px #00eaff22;
+}
+
+.primaryBtn:active{
+    transform:scale(.98);
+}
+
+.loginError{
+    min-height:20px;
+    text-align:center;
+    color:#ff6178;
+    margin-top:13px;
+    font-size:14px;
+}
+
+/* =========================
+   APP
+========================= */
+
+#app{
+    min-height:100vh;
+    padding-bottom:105px;
+}
+
+.topbar{
+    padding:22px 18px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #141a27;
+    background:#02050ae8;
+    backdrop-filter:blur(15px);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.brandLogo{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#00cfff,#7050ff);
+    font-size:23px;
+    font-weight:900;
+    box-shadow:0 0 25px #00d9ff44;
+}
+
+.brand h1{
+    margin:0;
+    font-size:20px;
+}
+
+.online{
+    margin-top:4px;
+    color:#25e995;
+    font-size:13px;
+}
+
+.onlineDot{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#25e995;
+    box-shadow:0 0 10px #25e995;
+}
+
+.topAvatar{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #754fff;
+}
+
+.page{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:22px 18px;
+}
+
+/* =========================
+   HOME
+========================= */
+
+.profileHero{
+    padding:30px 18px;
+    text-align:center;
+    border-radius:28px;
+    border:1px solid #25283a;
+    background:#080a13dd;
+    box-shadow:0 20px 55px #0007;
+}
+
+.heroAvatar{
+    width:145px;
+    height:145px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #00eaff;
+    box-shadow:
+        0 0 25px #00eaff66,
+        0 0 60px #713cff33;
+}
+
+.heroName{
+    margin:18px 0 10px;
+    font-size:37px;
+    font-weight:900;
+}
+
+.activeBadge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 20px;
+    border-radius:30px;
+    background:#05251f;
+    color:#25e995;
+}
+
+.activeBadge span{
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:#25e995;
+    box-shadow:0 0 12px #25e995;
+}
+
+.sectionTitle{
+    margin:28px 8px 14px;
+    font-size:23px;
+}
+
+.infoCard{
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid #23293a;
+    background:#090c15;
+}
+
+.infoRow{
+    min-height:67px;
+    padding:15px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #202635;
+    gap:15px;
+}
+
+.infoRow:last-child{
+    border-bottom:0;
+}
+
+.infoLabel{
+    color:#8792a7;
+}
+
+.infoValue{
+    text-align:right;
+    word-break:break-all;
+}
+
+.openGame{
+    width:100%;
+    margin-top:18px;
+    padding:16px;
+    border:1px solid #00d9ff55;
+    border-radius:15px;
+    background:#061b24;
+    color:#00eaff;
+    font-weight:900;
+    font-size:15px;
+}
+
+/* =========================
+   CONTROL
+========================= */
+
+.controlGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.controlCard{
+    padding:17px;
+    border:1px solid #242b3e;
+    border-radius:20px;
+    background:#090c15;
+}
+
+.controlIcon{
+    font-size:29px;
+}
+
+.controlName{
+    margin-top:9px;
+    font-weight:900;
+}
+
+.controlDesc{
+    margin-top:5px;
+    color:#7f8a9f;
+    font-size:12px;
+}
+
+.controlButton{
+    width:100%;
+    margin-top:14px;
+    padding:11px;
+    border:0;
+    border-radius:11px;
+    background:#141b2b;
+    color:#fff;
+    font-weight:bold;
+}
+
+.controlButton.active{
+    background:#063e3c;
+    color:#25e995;
+}
+
+.sensitivityCard{
+    margin-top:14px;
+    padding:18px;
+    border-radius:20px;
+    border:1px solid #242b3e;
+    background:#090c15;
+}
+
+.rangeValue{
+    text-align:center;
+    font-size:30px;
+    font-weight:900;
+    color:#00eaff;
+    margin:8px;
+}
+
+input[type="range"]{
+    width:100%;
+    accent-color:#00eaff;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:500;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:#000b;
+    backdrop-filter:blur(8px);
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modalBox{
+    width:100%;
+    max-width:450px;
+    max-height:88vh;
+    overflow:auto;
+    padding:22px;
+    border-radius:23px;
+    border:1px solid #293249;
+    background:#080b14;
+    box-shadow:0 25px 80px #000;
+}
+
+.modalBox h2{
+    margin-top:0;
+}
+
+.modalText{
+    color:#929db2;
+    line-height:1.6;
+}
+
+.closeBtn{
+    width:100%;
+    padding:13px;
+    margin-top:15px;
+    border:0;
+    border-radius:12px;
+    background:#20283a;
+    color:#fff;
+    font-weight:bold;
+}
+
+/* SWITCH */
+
+.switchLine{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin:18px 0;
+}
+
+.switch{
+    width:55px;
+    height:30px;
+    position:relative;
+}
+
+.switch input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    border-radius:30px;
+    background:#252d40;
+    transition:.2s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:22px;
+    height:22px;
+    left:4px;
+    top:4px;
+    border-radius:50%;
+    background:#fff;
+    transition:.2s;
+}
+
+.switch input:checked + .slider{
+    background:#00bcd4;
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(25px);
+}
+
+/* =========================
+   CHECK FILE
+========================= */
+
+.fileInput{
+    width:100%;
+    padding:15px;
+    border:1px dashed #35415b;
+    border-radius:15px;
+    background:#050811;
+    color:#aeb8ca;
+}
+
+.scanResult{
+    margin-top:14px;
+    padding:15px;
+    border-radius:15px;
+    background:#050811;
+    border:1px solid #20293c;
+    line-height:1.7;
+    word-break:break-word;
+}
+
+.safe{
+    color:#25e995;
+}
+
+.warning{
+    color:#ffc857;
+}
+
+.danger{
+    color:#ff6376;
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+.historyItem{
+    padding:14px;
+    border-bottom:1px solid #202635;
+}
+
+.historyItem:last-child{
+    border-bottom:0;
+}
+
+.historyName{
+    font-weight:bold;
+}
+
+.historyTime{
+    margin-top:4px;
+    color:#6f7b91;
+    font-size:12px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.logout{
+    width:100%;
+    margin-top:18px;
+    padding:16px;
+    border-radius:15px;
+    border:1px solid #742035;
+    background:#210914;
+    color:#ff6378;
+    font-weight:900;
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottomNav{
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:10px;
+    z-index:200;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    padding:5px;
+    border:1px solid #252c3d;
+    border-radius:25px;
+    background:#090d16ee;
+    backdrop-filter:blur(20px);
+    box-shadow:0 12px 40px #000b;
+}
+
+.navBtn{
+    border:0;
+    border-radius:20px;
+    padding:11px 5px;
+    background:transparent;
+    color:#748097;
+    font-weight:bold;
+}
+
+.navIcon{
+    display:block;
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.navBtn.active{
+    background:#071e28;
+    color:#00eaff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:600px){
+
+    .controlGrid{
+        grid-template-columns:1fr;
+    }
+
+    .heroName{
+        font-size:32px;
+    }
+
+    .heroAvatar{
+        width:130px;
+        height:130px;
+    }
+
+    .topbar{
+        padding:17px 13px;
+    }
+
+    .page{
+        padding:18px 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     LOADING
+========================= -->
+
+<div id="loadingScreen">
+
+    <div class="loadingBox">
+
+        <div class="loadingLogo">
+            MQ
+        </div>
+
+        <h1>MINHQUAN LOCK</h1>
+
+        <p>SYSTEM LOADING...</p>
+
+        <div class="loader">
+            <span></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<div id="loginScreen" class="hidden">
+
+    <div class="loginCard">
+
+        <img
+            src="./avatar.png"
+            class="loginAvatar"
+            onerror="this.style.display='none'"
+        >
+
+        <h1 class="loginTitle">
+            MINHQUAN LOCK
+        </h1>
+
+        <p class="loginSub">
+            Đăng nhập bằng Key của bạn
+        </p>
+
+        <div class="field">
+
+            <label>Tên / Username</label>
+
+            <input
+                id="username"
+                type="text"
+                placeholder="Nhập tên"
+                autocomplete="off"
+            >
+
+        </div>
+
+        <div class="field">
+
+            <label>Key</label>
+
+            <input
+                id="keyInput"
+                type="text"
+                placeholder="MQ-XXXXXXXX"
+                autocomplete="off"
+            >
+
+        </div>
+
+        <button
+            class="primaryBtn"
+            onclick="login()"
+        >
+            🔐 ĐĂNG NHẬP
+        </button>
+
+        <div
+            id="loginError"
+            class="loginError"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     APP
+========================= -->
+
+<div id="app" class="hidden">
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brandLogo">
+                MQ
+            </div>
+
+            <div>
+
+                <h1>MINHQUAN LOCK</h1>
+
+                <div class="online">
+                    <span class="onlineDot"></span>
+                    SYSTEM ONLINE
+                </div>
+
+            </div>
+
+        </div>
+
+        <img
+            src="./avatar.png"
+            class="topAvatar"
+            onerror="this.style.display='none'"
+        >
+
+    </header>
+
+
+    <main class="page">
+
+
+        <!-- =====================
+             HOME
+        ====================== -->
+
+        <section id="homePage">
+
+            <div class="profileHero">
+
+                <img
+                    src="./avatar.png"
+                    class="heroAvatar"
+                    onerror="this.style.display='none'"
+                >
+
+                <div
+                    id="heroName"
+                    class="heroName"
+                >
+                    --
+                </div>
+
+                <div class="activeBadge">
+                    <span></span>
+                    KEY ACTIVE
+                </div>
+
+            </div>
+
+
+            <h2 class="sectionTitle">
+                👤 Hồ sơ
+            </h2>
+
+            <div class="infoCard">
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Tên
+                    </div>
+                    <div
+                        id="profileName"
+                        class="infoValue"
+                    >
+                        --
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Key
+                    </div>
+                    <div
+                        id="profileKey"
+                        class="infoValue"
+                    >
+                        --
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Còn lại
+                    </div>
+                    <div
+                        id="profileRemain"
+                        class="infoValue"
+                    >
+                        --
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Hết hạn
+                    </div>
+                    <div
+                        id="profileExpire"
+                        class="infoValue"
+                    >
+                        --
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Device ID
+                    </div>
+                    <div
+                        id="profileDevice"
+                        class="infoValue"
+                    >
+                        --
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Zalo
+                    </div>
+                    <div class="infoValue">
+                        0983774970
+                    </div>
+                </div>
+
+            </div>
+
+
+            <button
+                class="openGame"
+                onclick="openGame()"
+            >
+                🎮 MỞ FREE FIRE
+            </button>
+
+        </section>
+
+
+        <!-- =====================
+             CONTROL
+        ====================== -->
+
+        <section
+            id="controlPage"
+            class="hidden"
+        >
+
+            <h2 class="sectionTitle">
+                🎛️ Điều khiển
+            </h2>
+
+            <div class="controlGrid">
+
+                <div class="controlCard">
+
+                    <div class="controlIcon">
+                        🎯
+                    </div>
+
+                    <div class="controlName">
+                        AIMLOCK
+                    </div>
+
+                    <div class="controlDesc">
+                        Chế độ giao diện
+                    </div>
+
+                    <button
+                        id="aimBtn"
+                        class="controlButton"
+                        onclick="openFeature('aim')"
+                    >
+                        MỞ
+                    </button>
+
+                </div>
+
+
+                <div class="controlCard">
+
+                    <div class="controlIcon">
+                        🎯
+                    </div>
+
+                    <div class="controlName">
+                        HEADLOCK
+                    </div>
+
+                    <div class="controlDesc">
+                        Chế độ giao diện
+                    </div>
+
+                    <button
+                        id="headBtn"
+                        class="controlButton"
+                        onclick="openFeature('head')"
+                    >
+                        MỞ
+                    </button>
+
+                </div>
+
+
+                <div class="controlCard">
+
+                    <div class="controlIcon">
+                        ⚡
+                    </div>
+
+                    <div class="controlName">
+                        NHẸ TÂM
+                    </div>
+
+                    <div class="controlDesc">
+                        Chế độ giao diện
+                    </div>
+
+                    <button
+                        id="lightBtn"
+                        class="controlButton"
+                        onclick="openFeature('light')"
+                    >
+                        MỞ
+                    </button>
+
+                </div>
+
+
+                <div class="controlCard">
+
+                    <div class="controlIcon">
+                        📁
+                    </div>
+
+                    <div class="controlName">
+                        CHECK FILE
+                    </div>
+
+                    <div class="controlDesc">
+                        Kiểm tra file tĩnh
+                    </div>
+
+                    <button
+                        class="controlButton"
+                        onclick="openModal('fileModal')"
+                    >
+                        KIỂM TRA
+                    </button>
+
+                </div>
+
+
+                <div class="controlCard">
+
+                    <div class="controlIcon">
+                        🛡️
+                    </div>
+
+                    <div class="controlName">
+                        BẢO VỆ
+                    </div>
+
+                    <div class="controlDesc">
+                        Trạng thái hệ thống
+                    </div>
+
+                    <button
+                        class="controlButton active"
+                        onclick="showProtection()"
+                    >
+                        ĐANG BẬT
+                    </button>
+
+                </div>
+
+
+                <div class="controlCard">
+
+                    <div class="controlIcon">
+                        📱
+                    </div>
+
+                    <div class="controlName">
+                        THÔNG TIN MÁY
+                    </div>
+
+                    <div class="controlDesc">
+                        Thiết bị hiện tại
+                    </div>
+
+                    <button
+                        class="controlButton"
+                        onclick="openModal('deviceModal')"
+                    >
+                        XEM
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="sensitivityCard">
+
+                <h3>
+                    🎚️ ĐỘ NHẠY
+                </h3>
+
+                <div
+                    id="sensitivityValue"
+                    class="rangeValue"
+                >
+                    100
+                </div>
+
+                <input
+                    id="sensitivity"
+                    type="range"
+                    min="0"
+                    max="200"
+                    value="100"
+                    oninput="updateSensitivity(this.value)"
+                >
+
+                <p class="modalText">
+                    Thanh điều chỉnh giao diện từ 0 đến 200.
+                </p>
+
+            </div>
+
+
+            <div class="controlCard" style="margin-top:14px">
+
+                <div class="controlIcon">
+                    📜
+                </div>
+
+                <div class="controlName">
+                    LỊCH SỬ
+                </div>
+
+                <div class="controlDesc">
+                    Hoạt động gần đây
+                </div>
+
+                <button
+                    class="controlButton"
+                    onclick="openModal('historyModal')"
+                >
+                    XEM LỊCH SỬ
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             PROFILE
+        ====================== -->
+
+        <section
+            id="profilePage"
+            class="hidden"
+        >
+
+            <h2 class="sectionTitle">
+                👤 Hồ sơ
+            </h2>
+
+            <div class="infoCard">
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Tên
+                    </div>
+                    <div
+                        id="profileName2"
+                        class="infoValue"
+                    >
+                        --
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Key
+                    </div>
+                    <div
+                        id="profileKey2"
+                        class="infoValue"
+                    >
+                        --
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Trạng thái
+                    </div>
+                    <div
+                        class="infoValue"
+                        style="color:#25e995"
+                    >
+                        🟢 ACTIVE
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Device ID
+                    </div>
+                    <div
+                        id="profileDevice2"
+                        class="infoValue"
+                    >
+                        --
+                    </div>
+                </div>
+
+                <div class="infoRow">
+                    <div class="infoLabel">
+                        Zalo
+                    </div>
+                    <div class="infoValue">
+                        0983774970
+                    </div>
+                </div>
+
+            </div>
+
+
+            <button
+                class="logout"
+                onclick="logout()"
+            >
+                🚪 ĐĂNG XUẤT
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================
+         BOTTOM NAV
+    ====================== -->
+
+    <nav class="bottomNav">
+
+        <button
+            id="navHome"
+            class="navBtn active"
+            onclick="showPage('home')"
+        >
+            <span class="navIcon">⌂</span>
+            Trang chủ
+        </button>
+
+        <button
+            id="navControl"
+            class="navBtn"
+            onclick="showPage('control')"
+        >
+            <span class="navIcon">⚙️</span>
+            Điều khiển
+        </button>
+
+        <button
+            id="navProfile"
+            class="navBtn"
+            onclick="showPage('profile')"
+        >
+            <span class="navIcon">●</span>
+            Hồ sơ
+        </button>
+
+    </nav>
+
+</div>
+
+
+<!-- =========================
+     FEATURE MODAL
+========================= -->
+
+<div
+    id="featureModal"
+    class="modal"
+>
+
+    <div class="modalBox">
+
+        <h2 id="featureTitle">
+            🎯 Chức năng
+        </h2>
+
+        <p class="modalText">
+            Đây là công tắc giao diện. Nó không chỉnh sửa,
+            inject hoặc can thiệp vào dữ liệu của Free Fire.
+        </p>
+
+        <div class="switchLine">
+
+            <b id="featureSwitchText">
+                OFF
+            </b>
+
+            <label class="switch">
+
+                <input
+                    id="featureSwitch"
+                    type="checkbox"
+                    onchange="toggleFeature()"
+                >
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+        <button
+            class="closeBtn"
+            onclick="closeModal('featureModal')"
+        >
+            ĐÓNG
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     FILE MODAL
+========================= -->
+
+<div
+    id="fileModal"
+    class="modal"
+>
+
+    <div class="modalBox">
+
+        <h2>📁 CHECK FILE</h2>
+
+        <p class="modalText">
+            Chọn một file để kiểm tra thông tin tĩnh.
+            File không được chạy trong trình duyệt.
+        </p>
+
+        <input
+            id="fileInput"
+            class="fileInput"
+            type="file"
+            onchange="scanFile(this.files[0])"
+        >
+
+        <div
+            id="scanResult"
+            class="scanResult hidden"
+        ></div>
+
+        <button
+            class="closeBtn"
+            onclick="closeModal('fileModal')"
+        >
+            ĐÓNG
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     DEVICE MODAL
+========================= -->
+
+<div
+    id="deviceModal"
+    class="modal"
+>
+
+    <div class="modalBox">
+
+        <h2>📱 THÔNG TIN MÁY</h2>
+
+        <div class="infoCard">
+
+            <div class="infoRow">
+                <div class="infoLabel">
+                    Device ID
+                </div>
+                <div
+                    id="deviceIdText"
+                    class="infoValue"
+                >
+                    --
+                </div>
+            </div>
+
+            <div class="infoRow">
+                <div class="infoLabel">
+                    Thiết bị
+                </div>
+                <div
+                    id="deviceName"
+                    class="infoValue"
+                >
+                    --
+                </div>
+            </div>
+
+            <div class="infoRow">
+                <div class="infoLabel">
+                    Hệ điều hành
+                </div>
+                <div
+                    id="deviceOS"
+                    class="infoValue"
+                >
+                    --
+                </div>
+            </div>
+
+        </div>
+
+        <button
+            class="closeBtn"
+            onclick="closeModal('deviceModal')"
+        >
+            ĐÓNG
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     HISTORY MODAL
+========================= -->
+
+<div
+    id="historyModal"
+    class="modal"
+>
+
+    <div class="modalBox">
+
+        <h2>📜 LỊCH SỬ</h2>
+
+        <div
+            id="historyList"
+            class="infoCard"
+        ></div>
+
+        <button
+            class="closeBtn"
+            onclick="clearHistory()"
+        >
+            🗑️ XÓA LỊCH SỬ
+        </button>
+
+        <button
+            class="closeBtn"
+            onclick="closeModal('historyModal')"
+        >
+            ĐÓNG
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   CONFIG
+========================================= */
+
+const API =
+    "https://quan-key-admin.baoquyen2737.workers.dev";
+
+const FREE_FIRE_WEB =
+    "https://ff.garena.com/";
+
+
+/* =========================================
+   STATE
+========================================= */
+
+let currentKey = "";
+let currentName = "";
+let expiresAt = 0;
+
+let currentFeature = "";
+
+let featureState = {
+    aim:false,
+    head:false,
+    light:false
+};
+
+
+/* =========================================
+   SOUND
+========================================= */
+
+function beep(){
+
+    try{
+
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        if(!AudioContext){
+            return;
+        }
+
+        const ctx =
+            new AudioContext();
+
+        const osc =
+            ctx.createOscillator();
+
+        const gain =
+            ctx.createGain();
+
+        osc.frequency.value =
+            650;
+
+        gain.gain.value =
+            0.035;
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+
+        setTimeout(
+            () => {
+                osc.stop();
+                ctx.close();
+            },
+            70
+        );
+
+    }catch{}
+
+}
+
+
+/* =========================================
+   DEVICE ID
+========================================= */
+
+function getDeviceId(){
+
+    let id =
+        localStorage.getItem(
+            "mq_device_id"
+        );
+
+
+    if(!id){
+
+        const random =
+            Math.random()
+            .toString(36)
+            .substring(2,12)
+            .toUpperCase();
+
+        id =
+            "MQ-" +
+            random +
+            Date.now()
+            .toString(36)
+            .toUpperCase();
+
+        localStorage.setItem(
+            "mq_device_id",
+            id
+        );
+
+    }
+
+
+    return id;
+
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+setTimeout(
+    () => {
+
+        document
+        .getElementById("loadingScreen")
+        .classList
+        .add("hidden");
+
+
+        const savedKey =
+            localStorage.getItem(
+                "mq_key"
+            );
+
+
+        const savedName =
+            localStorage.getItem(
+                "mq_username"
+            );
+
+
+        if(
+            savedKey
+        ){
+
+            document
+            .getElementById("loginScreen")
+            .classList
+            .remove("hidden");
+
+            if(savedName){
+
+                document
+                .getElementById("username")
+                .value =
+                    savedName;
+
+            }
+
+            document
+            .getElementById("keyInput")
+            .value =
+                savedKey;
+
+            validateSavedKey();
+
+        }else{
+
+            document
+            .getElementById("loginScreen")
+            .classList
+            .remove("hidden");
+
+        }
+
+    },
+    1600
+);
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+async function login(){
+
+    beep();
+
+
+    const username =
+        document
+        .getElementById("username")
+        .value
+        .trim();
+
+
+    const key =
+        document
+        .getElementById("keyInput")
+        .value
+        .trim();
+
+
+    const error =
+        document
+        .getElementById("loginError");
+
+
+    error.textContent =
+        "Đang kiểm tra Key...";
+
+
+    if(!key){
+
+        error.textContent =
+            "❌ Vui lòng nhập Key.";
+
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                API + "/api/login",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        key:key,
+
+                        deviceId:
+                            getDeviceId()
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            error.textContent =
+                "❌ " +
+                (
+                    data.message ||
+                    "Key không hợp lệ."
+                );
+
+            return;
+        }
+
+
+        /*
+           QUAN TRỌNG:
+
+           Nếu Worker đã được sửa để trả:
+           data.name
+
+           thì app dùng tên Key.
+
+           Không còn lấy username
+           làm tên hiển thị.
+        */
+
+        currentKey =
+            key;
+
+
+        currentName =
+            (
+                data.name &&
+                String(data.name).trim()
+            )
+            ||
+            username
+            ||
+            "User";
+
+
+        expiresAt =
+            Number(
+                data.expires_at
+            );
+
+
+        localStorage.setItem(
+            "mq_key",
+            key
+        );
+
+        localStorage.setItem(
+            "mq_username",
+            currentName
+        );
+
+
+        addHistory(
+            "Đăng nhập thành công"
+        );
+
+
+        enterApp();
+
+
+    }catch(error){
+
+        error =
+            document
+            .getElementById("loginError");
+
+        error.textContent =
+            "❌ Không kết nối được server.";
+
+    }
+
+}
+
+
+/* =========================================
+   VALIDATE SAVED KEY
+========================================= */
+
+async function validateSavedKey(){
+
+    const key =
+        localStorage.getItem(
+            "mq_key"
+        );
+
+
+    if(!key){
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                API + "/api/login",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        key:key,
+
+                        deviceId:
+                            getDeviceId()
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            localStorage.removeItem(
+                "mq_key"
+            );
+
+            localStorage.removeItem(
+                "mq_username"
+            );
+
+            document
+            .getElementById("keyInput")
+            .value = "";
+
+            document
+            .getElementById("loginError")
+            .textContent =
+                "❌ " +
+                (
+                    data.message ||
+                    "Key không còn hợp lệ."
+                );
+
+            return;
+        }
+
+
+        currentKey =
+            key;
+
+
+        currentName =
+            (
+                data.name &&
+                String(data.name).trim()
+            )
+            ||
+            localStorage.getItem(
+                "mq_username"
+            )
+            ||
+            "User";
+
+
+        expiresAt =
+            Number(
+                data.expires_at
+            );
+
+
+        localStorage.setItem(
+            "mq_username",
+            currentName
+        );
+
+
+        enterApp();
+
+
+    }catch{
+
+        /*
+           Không tự cho đăng nhập
+           nếu server không xác minh được.
+        */
+
+        document
+        .getElementById("loginError")
+        .textContent =
+            "❌ Không thể xác minh Key.";
+
+    }
+
+}
+
+
+/* =========================================
+   ENTER APP
+========================================= */
+
+function enterApp(){
+
+    document
+    .getElementById("loginScreen")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("app")
+    .classList
+    .remove("hidden");
+
+
+    updateProfile();
+
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+function updateProfile(){
+
+    const masked =
+        maskKey(
+            currentKey
+        );
+
+
+    document
+    .getElementById("heroName")
+    .textContent =
+        currentName;
+
+
+    document
+    .getElementById("profileName")
+    .textContent =
+        currentName;
+
+
+    document
+    .getElementById("profileName2")
+    .textContent =
+        currentName;
+
+
+    document
+    .getElementById("profileKey")
+    .textContent =
+        masked;
+
+
+    document
+    .getElementById("profileKey2")
+    .textContent =
+        masked;
+
+
+    document
+    .getElementById("profileDevice")
+    .textContent =
+        getDeviceId();
+
+
+    document
+    .getElementById("profileDevice2")
+    .textContent =
+        getDeviceId();
+
+
+    updateTime();
+
+}
+
+
+/* =========================================
+   MASK KEY
+========================================= */
+
+function maskKey(key){
+
+    if(!key){
+        return "••••••••";
+    }
+
+
+    if(key.length <= 8){
+
+        return key
+            .substring(0,3)
+            + "••••••";
+
+    }
+
+
+    return (
+        key.substring(0,5)
+        + "••••••••"
+    );
+
+}
+
+
+/* =========================================
+   TIME
+========================================= */
+
+function updateTime(){
+
+    if(!expiresAt){
+        return;
+    }
+
+
+    const now =
+        Math.floor(
+            Date.now() / 1000
+        );
+
+
+    let seconds =
+        expiresAt - now;
+
+
+    if(seconds <= 0){
+
+        document
+        .getElementById("profileRemain")
+        .textContent =
+            "Hết hạn";
+
+        logout();
+
+        return;
+    }
+
+
+    document
+    .getElementById("profileRemain")
+    .textContent =
+        formatRemaining(
+            seconds
+        );
+
+
+    document
+    .getElementById("profileExpire")
+    .textContent =
+        new Date(
+            expiresAt * 1000
+        ).toLocaleString(
+            "vi-VN"
+        );
+
+}
+
+
+function formatRemaining(seconds){
+
+    const days =
+        Math.floor(
+            seconds / 86400
+        );
+
+
+    seconds %= 86400;
+
+
+    const hours =
+        Math.floor(
+            seconds / 3600
+        );
+
+
+    seconds %= 3600;
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    if(days > 0){
+
+        return (
+            days +
+            " ngày"
+        );
+
+    }
+
+
+    if(hours > 0){
+
+        return (
+            hours +
+            " giờ " +
+            minutes +
+            " phút"
+        );
+
+    }
+
+
+    return (
+        Math.max(0,minutes) +
+        " phút"
+    );
+
+}
+
+
+setInterval(
+    updateTime,
+    1000
+);
+
+
+/* =========================================
+   PAGE NAV
+========================================= */
+
+function showPage(page){
+
+    beep();
+
+
+    document
+    .getElementById("homePage")
+    .classList
+    .add("hidden");
+
+    document
+    .getElementById("controlPage")
+    .classList
+    .add("hidden");
+
+    document
+    .getElementById("profilePage")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("navHome")
+    .classList
+    .remove("active");
+
+    document
+    .getElementById("navControl")
+    .classList
+    .remove("active");
+
+    document
+    .getElementById("navProfile")
+    .classList
+    .remove("active");
+
+
+    if(page === "home"){
+
+        document
+        .getElementById("homePage")
+        .classList
+        .remove("hidden");
+
+        document
+        .getElementById("navHome")
+        .classList
+        .add("active");
+
+    }
+
+
+    if(page === "control"){
+
+        document
+        .getElementById("controlPage")
+        .classList
+        .remove("hidden");
+
+        document
+        .getElementById("navControl")
+        .classList
+        .add("active");
+
+    }
+
+
+    if(page === "profile"){
+
+        document
+        .getElementById("profilePage")
+        .classList
+        .remove("hidden");
+
+        document
+        .getElementById("navProfile")
+        .classList
+        .add("active");
+
+    }
+
+}
+
+
+/* =========================================
+   FEATURE
+========================================= */
+
+function openFeature(type){
+
+    beep();
+
+    currentFeature =
+        type;
+
+
+    const title =
+        document
+        .getElementById("featureTitle");
+
+    const switchInput =
+        document
+        .getElementById("featureSwitch");
+
+    const text =
+        document
+        .getElementById("featureSwitchText");
+
+
+    if(type === "aim"){
+
+        title.textContent =
+            "🎯 AIMLOCK";
+
+    }
+
+    if(type === "head"){
+
+        title.textContent =
+            "🎯 HEADLOCK";
+
+    }
+
+    if(type === "light"){
+
+        title.textContent =
+            "⚡ NHẸ TÂM";
+
+    }
+
+
+    switchInput.checked =
+        featureState[type];
+
+
+    text.textContent =
+        featureState[type]
+        ? "ON"
+        : "OFF";
+
+
+    openModal(
+        "featureModal"
+    );
+
+}
+
+
+/* =========================================
+   FEATURE TOGGLE
+========================================= */
+
+function toggleFeature(){
+
+    const state =
+        document
+        .getElementById("featureSwitch")
+        .checked;
+
+
+    featureState[
+        currentFeature
+    ] =
+        state;
+
+
+    document
+    .getElementById("featureSwitchText")
+    .textContent =
+        state
+        ? "ON"
+        : "OFF";
+
+
+    addHistory(
+        (
+            currentFeature +
+            " → " +
+            (state ? "ON" : "OFF")
+        )
+    );
+
+}
+
+
+/* =========================================
+   SENSITIVITY
+========================================= */
+
+function updateSensitivity(value){
+
+    document
+    .getElementById("sensitivityValue")
+    .textContent =
+        value;
+
+}
+
+
+/* =========================================
+   OPEN GAME
+========================================= */
+
+function openGame(){
+
+    beep();
+
+    addHistory(
+        "Mở Free Fire"
+    );
+
+    /*
+       Chỉ mở trang chính thức.
+       Không can thiệp vào game.
+    */
+
+    window.open(
+        FREE_FIRE_WEB,
+        "_blank"
+    );
+
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+function openModal(id){
+
+    document
+    .getElementById(id)
+    .classList
+    .add("show");
+
+}
+
+
+function closeModal(id){
+
+    document
+    .getElementById(id)
+    .classList
+    .remove("show");
+
+}
+
+
+/* =========================================
+   PROTECTION
+========================================= */
+
+function showProtection(){
+
+    beep();
+
+    alert(
+        "🛡️ BẢO VỆ\n\n" +
+        "Hệ thống đang hoạt động."
+    );
+
+    addHistory(
+        "Kiểm tra bảo vệ"
+    );
+
+}
+
+
+/* =========================================
+   DEVICE
+========================================= */
+
+function getDeviceName(){
+
+    const ua =
+        navigator.userAgent;
+
+
+    if(/iPhone/i.test(ua)){
+        return "iPhone";
+    }
+
+    if(/iPad/i.test(ua)){
+        return "iPad";
+    }
+
+    if(/Samsung/i.test(ua)){
+        return "Samsung";
+    }
+
+    if(/Xiaomi/i.test(ua)){
+        return "Xiaomi";
+    }
+
+    if(/OPPO/i.test(ua)){
+        return "OPPO";
+    }
+
+    if(/Vivo/i.test(ua)){
+        return "Vivo";
+    }
+
+    if(/Android/i.test(ua)){
+        return "Android";
+    }
+
+    return "Thiết bị khác";
+
+}
+
+
+function getOS(){
+
+    const ua =
+        navigator.userAgent;
+
+
+    if(/iPhone|iPad|iPod/i.test(ua)){
+        return "iOS";
+    }
+
+    if(/Android/i.test(ua)){
+        return "Android";
+    }
+
+    return "Không xác định";
+
+}
+
+
+document
+.getElementById("deviceIdText")
+.textContent =
+    getDeviceId();
+
+document
+.getElementById("deviceName")
+.textContent =
+    getDeviceName();
+
+document
+.getElementById("deviceOS")
+.textContent =
+    getOS();
+
+
+/* =========================================
+   FILE CHECK
+========================================= */
+
+async function scanFile(file){
+
+    if(!file){
+        return;
+    }
+
+
+    const box =
+        document
+        .getElementById("scanResult");
+
+
+    box.classList
+    .remove("hidden");
+
+
+    box.innerHTML =
+        "⏳ Đang phân tích file...";
+
+
+    try{
+
+        const buffer =
+            await file.arrayBuffer();
+
+
+        const hashBuffer =
+            await crypto.subtle.digest(
+                "SHA-256",
+                buffer
+            );
+
+
+        const hashArray =
+            Array.from(
+                new Uint8Array(
+                    hashBuffer
+                )
+            );
+
+
+        const hash =
+            hashArray
+            .map(
+                b =>
+                    b
+                    .toString(16)
+                    .padStart(2,"0")
+            )
+            .join("");
+
+
+        const suspiciousWords = [
+
+            "aimlock",
+            "headlock",
+            "recoil",
+            "inject",
+            "bypass",
+            "hack",
+            "cheat",
+            "modmenu",
+            "freefire",
+            "memory",
+            "hook"
+
+        ];
+
+
+        const lowerName =
+            file.name.toLowerCase();
+
+
+        const detected =
+            suspiciousWords
+            .filter(
+                word =>
+                    lowerName
+                    .includes(word)
+            );
+
+
+        let resultClass =
+            "safe";
+
+        let message =
+            "Không phát hiện dấu hiệu đáng chú ý trong tên file.";
+
+
+        if(detected.length){
+
+            resultClass =
+                "warning";
+
+            message =
+                "Tên file có chứa từ khóa: " +
+                detected.join(", ");
+
+        }
+
+
+        box.innerHTML = `
+
+            <div class="${resultClass}">
+                <b>● KẾT QUẢ</b>
+            </div>
+
+            <div>
+                📄 Tên:
+                ${escapeHtml(file.name)}
+            </div>
+
+            <div>
+                📦 Kích thước:
+                ${formatBytes(file.size)}
+            </div>
+
+            <div>
+                🧩 MIME:
+                ${escapeHtml(file.type || "Không xác định")}
+            </div>
+
+            <div>
+                🔐 SHA-256:
+                ${hash}
+            </div>
+
+            <div style="margin-top:10px">
+                ${escapeHtml(message)}
+            </div>
+
+            <div style="margin-top:10px;color:#7f8a9f">
+                Kiểm tra trên trình duyệt chỉ là phân tích tĩnh,
+                không thể đảm bảo file hoàn toàn không có virus
+                hoặc xác định chính xác chức năng của file.
+            </div>
+
+        `;
+
+
+        addHistory(
+            "Kiểm tra file: " +
+            file.name
+        );
+
+
+    }catch{
+
+        box.innerHTML =
+            `<span class="danger">
+                ❌ Không thể phân tích file.
+            </span>`;
+
+    }
+
+}
+
+
+function formatBytes(bytes){
+
+    if(bytes < 1024){
+
+        return bytes + " B";
+
+    }
+
+
+    if(bytes < 1024 * 1024){
+
+        return (
+            (bytes / 1024)
+            .toFixed(2) +
+            " KB"
+        );
+
+    }
+
+
+    return (
+        (bytes / 1024 / 1024)
+        .toFixed(2) +
+        " MB"
+    );
+
+}
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+function addHistory(text){
+
+    const list =
+        JSON.parse(
+            localStorage.getItem(
+                "mq_history"
+            ) || "[]"
+        );
+
+
+    list.unshift({
+
+        text:text,
+
+        time:
+            new Date()
+            .toLocaleString(
+                "vi-VN"
+            )
+
+    });
+
+
+    localStorage.setItem(
+        "mq_history",
+        JSON.stringify(
+            list.slice(0,30)
+        )
+    );
+
+}
+
+
+function renderHistory(){
+
+    const box =
+        document
+        .getElementById("historyList");
+
+
+    const list =
+        JSON.parse(
+            localStorage.getItem(
+                "mq_history"
+            ) || "[]"
+        );
+
+
+    if(!list.length){
+
+        box.innerHTML =
+            `<div class="empty">
+                Chưa có hoạt động.
+            </div>`;
+
+        return;
+    }
+
+
+    box.innerHTML =
+        list.map(
+            item => `
+
+                <div class="historyItem">
+
+                    <div class="historyName">
+                        ${escapeHtml(item.text)}
+                    </div>
+
+                    <div class="historyTime">
+                        ${escapeHtml(item.time)}
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+function clearHistory(){
+
+    localStorage.removeItem(
+        "mq_history"
+    );
+
+    renderHistory();
+
+}
+
+
+document
+.getElementById("historyModal")
+.addEventListener(
+    "click",
+    function(e){
+
+        if(e.target === this){
+
+            closeModal(
+                "historyModal"
+            );
+
+        }
+
+    }
+);
+
+
+document
+.getElementById("historyModal")
+.addEventListener(
+    "transitionend",
+    renderHistory
+);
+
+
+/* =========================================
+   ESCAPE
+========================================= */
+
+function escapeHtml(value){
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    beep();
+
+    addHistory(
+        "Đăng xuất"
+    );
+
+
+    localStorage.removeItem(
+        "mq_key"
+    );
+
+    localStorage.removeItem(
+        "mq_username"
+    );
+
+
+    currentKey =
+        "";
+
+    currentName =
+        "";
+
+    expiresAt =
+        0;
+
+
+    document
+    .getElementById("app")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("loginScreen")
+    .classList
+    .remove("hidden");
+
+
+    document
+    .getElementById("username")
+    .value =
+        "";
+
+    document
+    .getElementById("keyInput")
+    .value =
+        "";
+
+}
+
+
+/* =========================================
+   ENTER KEY
+========================================= */
+
+document
+.getElementById("keyInput")
+.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+            login();
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

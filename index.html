@@ -1,0 +1,3404 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
+>
+
+<meta name="theme-color" content="#050811">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MQUAN KN">
+
+<title>MQUAN KN</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  background:#050811;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#050811;
+  color:#eef5ff;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-10;
+  overflow:hidden;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(0,220,255,.13),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(130,70,255,.13),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 45% 100%,
+      rgba(255,40,180,.08),
+      transparent 32%
+    ),
+    #050811;
+}
+
+.grid{
+  position:absolute;
+  inset:0;
+  opacity:.18;
+  background-image:
+    linear-gradient(
+      rgba(0,225,255,.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(120,90,255,.08) 1px,
+      transparent 1px
+    );
+  background-size:42px 42px;
+}
+
+.glow{
+  position:absolute;
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.12;
+}
+
+.glow.a{
+  background:#00dfff;
+  left:-100px;
+  top:15%;
+}
+
+.glow.b{
+  background:#9a4dff;
+  right:-100px;
+  top:48%;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+#loading{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#050811;
+  transition:opacity .35s ease;
+}
+
+.loadingBox{
+  text-align:center;
+}
+
+.loadingLogo{
+  width:76px;
+  height:76px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:24px;
+  font-size:24px;
+  font-weight:1000;
+  background:
+    linear-gradient(
+      145deg,
+      #00cfe7,
+      #7658ff
+    );
+  box-shadow:
+    0 0 35px rgba(0,220,255,.22);
+}
+
+.loadingTitle{
+  margin-top:18px;
+  font-size:24px;
+  font-weight:1000;
+  letter-spacing:3px;
+}
+
+.loadingTitle span{
+  color:#00e5ff;
+}
+
+.loadingText{
+  margin-top:8px;
+  color:#65758c;
+  font-size:10px;
+  letter-spacing:1.5px;
+}
+
+.loadingBar{
+  width:150px;
+  height:3px;
+  margin:18px auto 0;
+  overflow:hidden;
+  border-radius:10px;
+  background:#17202e;
+}
+
+.loadingBar i{
+  display:block;
+  width:45%;
+  height:100%;
+  border-radius:10px;
+  background:#00e5ff;
+  animation:load 1.2s infinite;
+}
+
+@keyframes load{
+  from{
+    transform:translateX(-120px);
+  }
+  to{
+    transform:translateX(180px);
+  }
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginScreen{
+  min-height:100vh;
+  min-height:100dvh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:
+    calc(22px + env(safe-area-inset-top))
+    18px
+    calc(22px + env(safe-area-inset-bottom));
+}
+
+.loginCard{
+  width:min(430px,100%);
+  padding:27px 21px;
+  border-radius:28px;
+  background:rgba(8,13,23,.9);
+  border:1px solid rgba(0,225,255,.18);
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.5);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+.loginLogo{
+  width:76px;
+  height:76px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:23px;
+  color:white;
+  font-size:23px;
+  font-weight:1000;
+  background:
+    linear-gradient(
+      145deg,
+      #08bfd7,
+      #7057ff
+    );
+  box-shadow:
+    0 0 32px rgba(0,220,255,.2);
+}
+
+.loginTitle{
+  margin-top:18px;
+  text-align:center;
+  font-size:24px;
+  font-weight:1000;
+  letter-spacing:2px;
+}
+
+.loginTitle span{
+  color:#00e5ff;
+}
+
+.loginSub{
+  margin:7px 0 22px;
+  color:#65748a;
+  text-align:center;
+  font-size:9px;
+  letter-spacing:1.5px;
+}
+
+.input{
+  width:100%;
+  height:53px;
+  margin-top:10px;
+  padding:0 16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  outline:none;
+  background:#050912;
+  color:#fff;
+}
+
+.input::placeholder{
+  color:#4b586c;
+}
+
+.input:focus{
+  border-color:rgba(0,225,255,.55);
+  box-shadow:
+    0 0 0 3px rgba(0,225,255,.05);
+}
+
+.loginBtn{
+  width:100%;
+  height:55px;
+  margin-top:13px;
+  border:0;
+  border-radius:17px;
+  color:#fff;
+  font-weight:1000;
+  letter-spacing:1.7px;
+  background:
+    linear-gradient(
+      110deg,
+      #06bad1,
+      #5a62ff
+    );
+  box-shadow:
+    0 12px 30px rgba(0,140,255,.2);
+}
+
+.loginStatus{
+  min-height:18px;
+  margin-top:11px;
+  text-align:center;
+  color:#718097;
+  font-size:10px;
+}
+
+/* =========================
+   APP
+========================= */
+
+#app{
+  display:none;
+  max-width:760px;
+  margin:auto;
+  padding:
+    calc(18px + env(safe-area-inset-top))
+    15px
+    calc(145px + env(safe-area-inset-bottom));
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.logo{
+  width:55px;
+  height:55px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  border-radius:18px;
+  font-size:17px;
+  font-weight:1000;
+  background:
+    linear-gradient(
+      145deg,
+      #08c2da,
+      #6b57ff
+    );
+  box-shadow:
+    0 0 25px rgba(0,220,255,.15);
+}
+
+.brandTitle{
+  font-size:20px;
+  font-weight:1000;
+  letter-spacing:2px;
+}
+
+.brandTitle span{
+  color:#00e5ff;
+}
+
+.brandSub{
+  margin-top:4px;
+  color:#627188;
+  font-size:9px;
+  letter-spacing:.8px;
+}
+
+.online{
+  padding:9px 11px;
+  border-radius:14px;
+  background:rgba(7,17,23,.8);
+  border:1px solid rgba(0,225,255,.18);
+  text-align:center;
+}
+
+.online small{
+  display:block;
+  color:#65758b;
+  font-size:7px;
+  letter-spacing:1px;
+}
+
+.online b{
+  display:block;
+  margin-top:3px;
+  color:#45e9a5;
+  font-size:10px;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+  margin-bottom:12px;
+  padding:19px;
+  border:1px solid rgba(255,255,255,.065);
+  border-radius:23px;
+  background:rgba(9,14,23,.79);
+  box-shadow:
+    0 15px 45px rgba(0,0,0,.2);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+}
+
+.cardTitle{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:14px;
+  font-weight:1000;
+  letter-spacing:1.3px;
+}
+
+.cardTitle i{
+  width:7px;
+  height:25px;
+  display:block;
+  border-radius:10px;
+  background:
+    linear-gradient(
+      #00eaff,
+      #875bff
+    );
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:14px;
+}
+
+.stat{
+  min-width:0;
+  padding:15px;
+  border-radius:17px;
+  background:#050911;
+  border:1px solid rgba(255,255,255,.055);
+}
+
+.statLabel{
+  color:#65758a;
+  font-size:8px;
+  letter-spacing:1px;
+}
+
+.statValue{
+  margin-top:8px;
+  overflow:hidden;
+  color:#eef5ff;
+  font-size:14px;
+  font-weight:950;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* =========================
+   KEY
+========================= */
+
+.keyInput{
+  width:100%;
+  height:55px;
+  margin-top:14px;
+  padding:0 15px;
+  border:1px solid rgba(0,225,255,.16);
+  border-radius:16px;
+  outline:none;
+  background:#050911;
+  color:#fff;
+  font-size:12px;
+}
+
+.keyInput::placeholder{
+  color:#4d5b6f;
+}
+
+.primaryBtn{
+  width:100%;
+  height:56px;
+  margin-top:10px;
+  border:0;
+  border-radius:17px;
+  color:#fff;
+  font-weight:1000;
+  letter-spacing:1.6px;
+  background:
+    linear-gradient(
+      110deg,
+      #06bad1,
+      #5965ff
+    );
+}
+
+.info{
+  margin-top:11px;
+  padding:13px;
+  border-radius:15px;
+  background:rgba(0,225,255,.025);
+  color:#66768c;
+  font-size:10px;
+  line-height:1.65;
+}
+
+/* =========================
+   QUICK
+========================= */
+
+.quick{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.quickBtn{
+  min-height:84px;
+  border:1px solid rgba(255,255,255,.065);
+  border-radius:18px;
+  background:rgba(9,14,23,.8);
+  color:#dfe8f5;
+  font-size:9px;
+  font-weight:900;
+}
+
+.quickIcon{
+  display:block;
+  margin-bottom:7px;
+  font-size:20px;
+}
+
+.quickBtn:nth-child(1) .quickIcon{
+  color:#00eaff;
+}
+
+.quickBtn:nth-child(2) .quickIcon{
+  color:#9872ff;
+}
+
+.quickBtn:nth-child(3) .quickIcon{
+  color:#ff6cb9;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controlRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:15px 0;
+  border-bottom:1px solid rgba(255,255,255,.055);
+}
+
+.controlRow:last-child{
+  border-bottom:0;
+}
+
+.controlName{
+  font-size:12px;
+  font-weight:900;
+}
+
+.controlDesc{
+  margin-top:4px;
+  color:#5f6f84;
+  font-size:9px;
+}
+
+.switch{
+  width:48px;
+  height:27px;
+  padding:3px;
+  flex:none;
+  border:0;
+  border-radius:30px;
+  background:#202938;
+}
+
+.switch i{
+  display:block;
+  width:21px;
+  height:21px;
+  border-radius:50%;
+  background:#657286;
+  transition:.2s;
+}
+
+.switch.on{
+  background:#008fa3;
+}
+
+.switch.on i{
+  transform:translateX(21px);
+  background:#fff;
+}
+
+/* =========================
+   FILE CHECK
+========================= */
+
+.filePick{
+  display:block;
+  margin-top:13px;
+  padding:24px 12px;
+  border:1px dashed rgba(0,225,255,.32);
+  border-radius:18px;
+  background:rgba(0,225,255,.025);
+  color:#00e5ff;
+  text-align:center;
+  font-size:11px;
+  font-weight:950;
+}
+
+.filePick input{
+  display:none;
+}
+
+.fileResult{
+  margin-top:11px;
+}
+
+.scoreCard{
+  padding:16px;
+  border-radius:18px;
+  background:#050911;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.score{
+  font-size:29px;
+  font-weight:1000;
+}
+
+.safe{
+  color:#45e9a5;
+}
+
+.warning{
+  color:#ffd45d;
+}
+
+.danger{
+  color:#ff657c;
+}
+
+.scoreLabel{
+  margin-top:3px;
+  font-size:10px;
+  font-weight:900;
+}
+
+.scoreBar{
+  height:6px;
+  margin-top:10px;
+  overflow:hidden;
+  border-radius:10px;
+  background:#1a2330;
+}
+
+.scoreBar i{
+  display:block;
+  height:100%;
+  border-radius:10px;
+}
+
+.scoreBar i.safe{
+  background:#45e9a5;
+}
+
+.scoreBar i.warning{
+  background:#ffd45d;
+}
+
+.scoreBar i.danger{
+  background:#ff657c;
+}
+
+.fileInfo{
+  margin-top:11px;
+  color:#73839a;
+  font-size:9px;
+  line-height:1.8;
+  word-break:break-word;
+}
+
+.fileNotice{
+  margin-top:10px;
+  color:#596a80;
+  font-size:9px;
+  line-height:1.55;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profileTop{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.avatar{
+  width:56px;
+  height:56px;
+  object-fit:cover;
+  border-radius:17px;
+  background:#111827;
+  border:1px solid rgba(0,225,255,.25);
+}
+
+.profileName{
+  font-size:17px;
+  font-weight:950;
+}
+
+.profileKey{
+  margin-top:4px;
+  color:#64758a;
+  font-size:9px;
+}
+
+.infoRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:13px 0;
+  border-bottom:1px solid rgba(255,255,255,.055);
+  font-size:10px;
+}
+
+.infoRow:last-child{
+  border-bottom:0;
+}
+
+.infoRow span:first-child{
+  color:#65758a;
+}
+
+.infoRow span:last-child{
+  max-width:65%;
+  overflow:hidden;
+  text-align:right;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* =========================
+   NAV
+========================= */
+
+.nav{
+  position:fixed;
+  z-index:100;
+  left:50%;
+  bottom:
+    calc(76px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  width:min(410px,calc(100% - 30px));
+  height:56px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:3px;
+  padding:4px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;
+  background:rgba(7,11,18,.94);
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.45);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+.nav button{
+  border:0;
+  border-radius:15px;
+  background:transparent;
+  color:#637187;
+  font-size:8px;
+  font-weight:900;
+}
+
+.nav button span{
+  display:block;
+  margin-bottom:2px;
+  font-size:16px;
+}
+
+.nav button.active{
+  color:#00e5ff;
+  background:rgba(0,225,255,.055);
+}
+
+/* =========================
+   MUSIC
+========================= */
+
+.music{
+  position:fixed;
+  z-index:110;
+  left:12px;
+  right:12px;
+  bottom:
+    calc(10px + env(safe-area-inset-bottom));
+  height:55px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 7px;
+  border:1px solid rgba(0,225,255,.22);
+  border-radius:19px;
+  background:rgba(6,10,17,.96);
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.5);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+
+.musicIcon{
+  width:40px;
+  height:40px;
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:13px;
+  background:
+    linear-gradient(
+      140deg,
+      #08c6da,
+      #7258ff
+    );
+  font-size:17px;
+}
+
+.musicInfo{
+  min-width:0;
+  flex:1;
+}
+
+.musicName{
+  overflow:hidden;
+  color:#eaf3ff;
+  font-size:9px;
+  font-weight:950;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.musicState{
+  margin-top:3px;
+  overflow:hidden;
+  color:#627188;
+  font-size:8px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.musicBtn{
+  width:37px;
+  height:37px;
+  flex:none;
+  border:0;
+  border-radius:12px;
+  background:#121b29;
+  color:#fff;
+  font-size:13px;
+}
+
+.musicBtn.play{
+  background:
+    linear-gradient(
+      135deg,
+      #08bfd5,
+      #5965ff
+    );
+}
+
+.musicBtn.muted{
+  color:#ff7187;
+}
+
+.musicProgress{
+  position:absolute;
+  left:9px;
+  right:9px;
+  bottom:2px;
+  height:2px;
+  overflow:hidden;
+  border-radius:10px;
+  background:#1a2533;
+}
+
+.musicProgress i{
+  display:block;
+  width:0;
+  height:100%;
+  background:#00e5ff;
+  transition:width .15s linear;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toast{
+  position:fixed;
+  z-index:99999;
+  top:
+    calc(16px + env(safe-area-inset-top));
+  left:50%;
+  max-width:calc(100% - 30px);
+  padding:10px 14px;
+  border:1px solid rgba(0,225,255,.2);
+  border-radius:13px;
+  background:#111a28;
+  color:#edf5ff;
+  font-size:10px;
+  opacity:0;
+  pointer-events:none;
+  transform:translate(-50%,-12px);
+  transition:.25s;
+}
+
+#toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:380px){
+
+  #app{
+    padding-left:11px;
+    padding-right:11px;
+  }
+
+  .brandTitle{
+    font-size:18px;
+  }
+
+  .stats{
+    gap:7px;
+  }
+
+  .stat{
+    padding:12px;
+  }
+
+  .quickBtn{
+    min-height:78px;
+    font-size:8px;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="bg">
+  <div class="grid"></div>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+</div>
+
+
+<!-- =========================
+     LOADING
+========================= -->
+
+<div id="loading">
+
+  <div class="loadingBox">
+
+    <div class="loadingLogo">
+      MQ
+    </div>
+
+    <div class="loadingTitle">
+      MQUAN <span>KN</span>
+    </div>
+
+    <div class="loadingText">
+      INITIALIZING MOBILE PANEL
+    </div>
+
+    <div class="loadingBar">
+      <i></i>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<section id="loginScreen">
+
+  <div class="loginCard">
+
+    <div class="loginLogo">
+      MQ
+    </div>
+
+    <div class="loginTitle">
+      MQUAN <span>KN</span>
+    </div>
+
+    <div class="loginSub">
+      PRIVATE MOBILE PANEL
+    </div>
+
+    <input
+      id="username"
+      class="input"
+      type="text"
+      placeholder="Tên người dùng"
+      autocomplete="off"
+      autocapitalize="none"
+      spellcheck="false"
+    >
+
+    <input
+      id="key"
+      class="input"
+      type="text"
+      placeholder="Nhập Key"
+      autocomplete="off"
+      autocapitalize="none"
+      spellcheck="false"
+    >
+
+    <button
+      id="loginBtn"
+      class="loginBtn"
+      type="button"
+    >
+      ⚡ ĐĂNG NHẬP
+    </button>
+
+    <div
+      id="loginStatus"
+      class="loginStatus"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     APP
+========================= -->
+
+<main id="app">
+
+  <header class="header">
+
+    <div class="brand">
+
+      <div class="logo">
+        MQ
+      </div>
+
+      <div>
+
+        <div class="brandTitle">
+          MQUAN <span>KN</span>
+        </div>
+
+        <div class="brandSub">
+          MOBILE CONTROL PANEL
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="online">
+
+      <small>STATUS</small>
+
+      <b>
+        ● ONLINE
+      </b>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================
+       HOME
+  ====================== -->
+
+  <section
+    id="homePage"
+    class="page active"
+  >
+
+    <div class="card">
+
+      <div class="cardTitle">
+        <i></i>
+        THÔNG TIN HỆ THỐNG
+      </div>
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <div class="statLabel">
+            THIẾT BỊ
+          </div>
+
+          <div
+            id="deviceName"
+            class="statValue"
+          >
+            --
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="statLabel">
+            NETWORK
+          </div>
+
+          <div
+            id="ping"
+            class="statValue"
+          >
+            -- ms
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="statLabel">
+            DEVICE ID
+          </div>
+
+          <div
+            id="deviceId"
+            class="statValue"
+          >
+            --
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="statLabel">
+            LICENSE
+          </div>
+
+          <div
+            id="licenseStatus"
+            class="statValue"
+            style="color:#45e9a5"
+          >
+            ACTIVE
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="cardTitle">
+        <i></i>
+        ACCESS KEY
+      </div>
+
+      <input
+        id="keyView"
+        class="keyInput"
+        type="text"
+        readonly
+      >
+
+      <button
+        id="initializeBtn"
+        class="primaryBtn"
+        type="button"
+      >
+        ⚡ INITIALIZE
+      </button>
+
+      <div class="info">
+        Phiên hoạt động được xác thực bởi hệ thống
+        Key. Không có chức năng can thiệp trực tiếp
+        vào trò chơi.
+      </div>
+
+    </div>
+
+
+    <div class="quick">
+
+      <button
+        class="quickBtn"
+        type="button"
+        id="getKeyBtn"
+      >
+        <span class="quickIcon">✦</span>
+        NHẬN KEY
+      </button>
+
+
+      <button
+        class="quickBtn"
+        type="button"
+        id="controlQuickBtn"
+      >
+        <span class="quickIcon">◈</span>
+        ĐIỀU KHIỂN
+      </button>
+
+
+      <button
+        class="quickBtn"
+        type="button"
+        id="syncBtn"
+      >
+        <span class="quickIcon">⟳</span>
+        ĐỒNG BỘ
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================
+       CONTROL
+  ====================== -->
+
+  <section
+    id="controlPage"
+    class="page"
+  >
+
+    <div class="card">
+
+      <div class="cardTitle">
+        <i></i>
+        ĐIỀU KHIỂN
+      </div>
+
+
+      <div class="controlRow">
+
+        <div>
+
+          <div class="controlName">
+            🎯 AIMLOCK
+          </div>
+
+          <div class="controlDesc">
+            Công tắc giao diện
+          </div>
+
+        </div>
+
+        <button
+          class="switch"
+          type="button"
+          data-name="AIMLOCK"
+        >
+          <i></i>
+        </button>
+
+      </div>
+
+
+      <div class="controlRow">
+
+        <div>
+
+          <div class="controlName">
+            🎯 HEADLOCK
+          </div>
+
+          <div class="controlDesc">
+            Công tắc giao diện
+          </div>
+
+        </div>
+
+        <button
+          class="switch"
+          type="button"
+          data-name="HEADLOCK"
+        >
+          <i></i>
+        </button>
+
+      </div>
+
+
+      <div class="controlRow">
+
+        <div>
+
+          <div class="controlName">
+            ⚡ NHẸ TÂM
+          </div>
+
+          <div class="controlDesc">
+            Công tắc giao diện
+          </div>
+
+        </div>
+
+        <button
+          class="switch"
+          type="button"
+          data-name="NHẸ TÂM"
+        >
+          <i></i>
+        </button>
+
+      </div>
+
+
+      <div class="controlRow">
+
+        <div>
+
+          <div class="controlName">
+            🛡 BẢO VỆ
+          </div>
+
+          <div class="controlDesc">
+            Trạng thái giao diện
+          </div>
+
+        </div>
+
+        <button
+          class="switch on"
+          type="button"
+          data-name="BẢO VỆ"
+        >
+          <i></i>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================
+         CHECK FILE
+    ==================== -->
+
+    <div class="card">
+
+      <div class="cardTitle">
+        <i></i>
+        CHECK FILE
+      </div>
+
+      <div class="info">
+        Kiểm tra tên file, loại file, kích thước,
+        SHA-256 và một số dấu hiệu rủi ro cơ bản.
+      </div>
+
+      <label class="filePick">
+
+        📁 CHỌN FILE ĐỂ KIỂM TRA
+
+        <input
+          id="fileInput"
+          type="file"
+        >
+
+      </label>
+
+      <div
+        id="fileResult"
+        class="fileResult"
+      ></div>
+
+      <div class="fileNotice">
+        ⚠️ Điểm an toàn là đánh giá heuristic của
+        trình duyệt, không phải kết quả quét antivirus.
+        Không thể đảm bảo một file 100% không có virus.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================
+       PROFILE
+  ====================== -->
+
+  <section
+    id="profilePage"
+    class="page"
+  >
+
+    <div class="card">
+
+      <div class="profileTop">
+
+        <img
+          id="avatar"
+          class="avatar"
+          src="./avatar.png"
+          alt="Avatar"
+        >
+
+        <div>
+
+          <div
+            id="profileName"
+            class="profileName"
+          >
+            User
+          </div>
+
+          <div
+            id="profileKey"
+            class="profileKey"
+          >
+            KEY: ********
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="infoRow">
+        <span>Trạng thái</span>
+        <span style="color:#45e9a5">
+          ● ACTIVE
+        </span>
+      </div>
+
+      <div class="infoRow">
+        <span>Thiết bị</span>
+        <span id="profileDevice">
+          --
+        </span>
+      </div>
+
+      <div class="infoRow">
+        <span>Device ID</span>
+        <span id="profileDeviceId">
+          --
+        </span>
+      </div>
+
+      <div class="infoRow">
+        <span>Hỗ trợ</span>
+        <span>
+          0983774970
+        </span>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <button
+        id="logoutBtn"
+        class="primaryBtn"
+        type="button"
+        style="
+          background:#24131a;
+          color:#ff7185;
+        "
+      >
+        ĐĂNG XUẤT
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav class="nav">
+
+  <button
+    id="navHome"
+    class="active"
+    type="button"
+  >
+    <span>⌂</span>
+    TRANG CHỦ
+  </button>
+
+  <button
+    id="navControl"
+    type="button"
+  >
+    <span>◈</span>
+    ĐIỀU KHIỂN
+  </button>
+
+  <button
+    id="navProfile"
+    type="button"
+  >
+    <span>◎</span>
+    HỒ SƠ
+  </button>
+
+</nav>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<div class="music">
+
+  <div class="musicIcon">
+    ♫
+  </div>
+
+  <div class="musicInfo">
+
+    <div class="musicName">
+      MQUAN KN MUSIC
+    </div>
+
+    <div
+      id="musicState"
+      class="musicState"
+    >
+      Đang kiểm tra file nhạc...
+    </div>
+
+  </div>
+
+  <button
+    id="musicPlay"
+    class="musicBtn play"
+    type="button"
+    aria-label="Phát nhạc"
+  >
+    ▶
+  </button>
+
+  <button
+    id="musicMute"
+    class="musicBtn"
+    type="button"
+    aria-label="Tắt tiếng"
+  >
+    🔊
+  </button>
+
+  <div class="musicProgress">
+    <i id="musicProgressBar"></i>
+  </div>
+
+</div>
+
+
+<audio
+  id="audio"
+  preload="metadata"
+  playsinline
+  webkit-playsinline
+  src="./music.mp3"
+></audio>
+
+
+<div id="toast"></div>
+
+
+<script>
+"use strict";
+
+/* =========================================
+   CONFIG
+========================================= */
+
+const API =
+  "https://quan-key-admin.baoquyen2737.workers.dev";
+
+const MUSIC_FILE =
+  "./music.mp3";
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loading =
+  document.getElementById("loading");
+
+const loginScreen =
+  document.getElementById("loginScreen");
+
+const app =
+  document.getElementById("app");
+
+const usernameInput =
+  document.getElementById("username");
+
+const keyInput =
+  document.getElementById("key");
+
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const loginStatus =
+  document.getElementById("loginStatus");
+
+const audio =
+  document.getElementById("audio");
+
+const musicPlay =
+  document.getElementById("musicPlay");
+
+const musicMute =
+  document.getElementById("musicMute");
+
+const musicState =
+  document.getElementById("musicState");
+
+const progressBar =
+  document.getElementById("musicProgressBar");
+
+const fileInput =
+  document.getElementById("fileInput");
+
+const fileResult =
+  document.getElementById("fileResult");
+
+const toastElement =
+  document.getElementById("toast");
+
+
+/* =========================================
+   DEVICE ID
+========================================= */
+
+function createDeviceId(){
+
+  try{
+
+    if(
+      window.crypto &&
+      typeof window.crypto.randomUUID ===
+      "function"
+    ){
+
+      return "MQ-" +
+        window.crypto.randomUUID();
+
+    }
+
+  }catch(error){
+
+    console.warn(
+      "randomUUID unavailable",
+      error
+    );
+
+  }
+
+  return "MQ-" +
+    Date.now().toString(36) +
+    "-" +
+    Math.random()
+      .toString(36)
+      .slice(2,10);
+
+}
+
+
+let deviceId =
+  localStorage.getItem("MQ_DEVICE_ID");
+
+
+if(!deviceId){
+
+  deviceId =
+    createDeviceId();
+
+  localStorage.setItem(
+    "MQ_DEVICE_ID",
+    deviceId
+  );
+
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+window.addEventListener(
+  "load",
+  initializeApp
+);
+
+
+function initializeApp(){
+
+  setTimeout(
+    function(){
+
+      loading.style.opacity="0";
+
+      setTimeout(
+        function(){
+
+          loading.style.display="none";
+
+          restoreSession();
+
+        },
+        350
+      );
+
+    },
+    650
+  );
+
+}
+
+
+/* =========================================
+   SESSION
+========================================= */
+
+function restoreSession(){
+
+  const username =
+    localStorage.getItem(
+      "MQ_USERNAME"
+    );
+
+  const key =
+    localStorage.getItem(
+      "MQ_KEY"
+    );
+
+  const expires =
+    Number(
+      localStorage.getItem(
+        "MQ_EXPIRES"
+      ) || "0"
+    );
+
+
+  if(
+    username &&
+    key &&
+    expires > Date.now()
+  ){
+
+    openApp(
+      username,
+      key,
+      expires
+    );
+
+    return;
+
+  }
+
+
+  clearSession();
+
+  showLogin();
+
+}
+
+
+function clearSession(){
+
+  localStorage.removeItem(
+    "MQ_USERNAME"
+  );
+
+  localStorage.removeItem(
+    "MQ_KEY"
+  );
+
+  localStorage.removeItem(
+    "MQ_EXPIRES"
+  );
+
+}
+
+
+function showLogin(){
+
+  app.style.display="none";
+
+  loginScreen.style.display="flex";
+
+}
+
+
+function showApp(){
+
+  loginScreen.style.display="none";
+
+  app.style.display="block";
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+loginBtn.addEventListener(
+  "click",
+  login
+);
+
+
+keyInput.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key==="Enter"){
+      login();
+    }
+
+  }
+);
+
+
+usernameInput.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key==="Enter"){
+      keyInput.focus();
+    }
+
+  }
+);
+
+
+async function login(){
+
+  const username =
+    usernameInput.value.trim();
+
+  const key =
+    keyInput.value.trim();
+
+
+  if(!username){
+
+    setLoginStatus(
+      "⚠️ Vui lòng nhập tên người dùng."
+    );
+
+    usernameInput.focus();
+
+    return;
+
+  }
+
+
+  if(!key){
+
+    setLoginStatus(
+      "⚠️ Vui lòng nhập Key."
+    );
+
+    keyInput.focus();
+
+    return;
+
+  }
+
+
+  setLoginLoading(true);
+
+  setLoginStatus(
+    "⏳ Đang xác thực Key..."
+  );
+
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/api/login",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+            key:key,
+            deviceId:deviceId
+          })
+        }
+      );
+
+
+    const raw =
+      await response.text();
+
+    let data=null;
+
+
+    try{
+
+      data =
+        raw
+        ? JSON.parse(raw)
+        : null;
+
+    }catch(parseError){
+
+      console.error(
+        "Invalid server JSON:",
+        raw
+      );
+
+      throw new Error(
+        "Máy chủ trả về dữ liệu không hợp lệ."
+      );
+
+    }
+
+
+    if(
+      !response.ok ||
+      !data ||
+      data.success !== true
+    ){
+
+      const message =
+        data &&
+        data.message
+        ? data.message
+        : "Đăng nhập thất bại.";
+
+      setLoginStatus(
+        "❌ " + message
+      );
+
+      return;
+
+    }
+
+
+    const expires =
+      Number(data.expires_at) * 1000;
+
+
+    if(
+      !Number.isFinite(expires) ||
+      expires <= Date.now()
+    ){
+
+      setLoginStatus(
+        "❌ Máy chủ trả về thời hạn Key không hợp lệ."
+      );
+
+      return;
+
+    }
+
+
+    localStorage.setItem(
+      "MQ_USERNAME",
+      username
+    );
+
+    localStorage.setItem(
+      "MQ_KEY",
+      key
+    );
+
+    localStorage.setItem(
+      "MQ_EXPIRES",
+      String(expires)
+    );
+
+
+    openApp(
+      username,
+      key,
+      expires
+    );
+
+
+    toast(
+      "✓ Đăng nhập thành công"
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Login error:",
+      error
+    );
+
+
+    setLoginStatus(
+      "❌ Không kết nối được máy chủ."
+    );
+
+  }finally{
+
+    setLoginLoading(false);
+
+  }
+
+}
+
+
+function setLoginLoading(loadingState){
+
+  loginBtn.disabled =
+    loadingState;
+
+  loginBtn.style.opacity =
+    loadingState ? ".65" : "1";
+
+  loginBtn.textContent =
+    loadingState
+    ? "⏳ ĐANG XÁC THỰC..."
+    : "⚡ ĐĂNG NHẬP";
+
+}
+
+
+function setLoginStatus(message){
+
+  loginStatus.textContent =
+    message;
+
+}
+
+
+/* =========================================
+   OPEN APP
+========================================= */
+
+let expiryTimer=null;
+
+
+function openApp(
+  username,
+  key,
+  expires
+){
+
+  showApp();
+
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    username;
+
+
+  document.getElementById(
+    "profileKey"
+  ).textContent =
+    "KEY: " +
+    maskKey(key);
+
+
+  document.getElementById(
+    "profileDevice"
+  ).textContent =
+    getDeviceName();
+
+
+  document.getElementById(
+    "profileDeviceId"
+  ).textContent =
+    deviceId;
+
+
+  document.getElementById(
+    "deviceName"
+  ).textContent =
+    getDeviceName();
+
+
+  document.getElementById(
+    "deviceId"
+  ).textContent =
+    shortenDeviceId(deviceId);
+
+
+  document.getElementById(
+    "keyView"
+  ).value =
+    key;
+
+
+  updateExpiry(expires);
+
+
+  if(expiryTimer){
+    clearInterval(expiryTimer);
+  }
+
+
+  expiryTimer =
+    setInterval(
+      function(){
+
+        updateExpiry(expires);
+
+      },
+      1000
+    );
+
+
+  updatePing();
+
+}
+
+
+function updateExpiry(expires){
+
+  const remaining =
+    expires - Date.now();
+
+
+  if(remaining <= 0){
+
+    if(expiryTimer){
+      clearInterval(expiryTimer);
+    }
+
+    clearSession();
+
+    toast(
+      "Key đã hết hạn."
+    );
+
+    setTimeout(
+      function(){
+
+        location.reload();
+
+      },
+      900
+    );
+
+    return;
+
+  }
+
+
+  const totalSeconds =
+    Math.floor(
+      remaining / 1000
+    );
+
+
+  const days =
+    Math.floor(
+      totalSeconds / 86400
+    );
+
+  const hours =
+    Math.floor(
+      (totalSeconds % 86400) /
+      3600
+    );
+
+  const minutes =
+    Math.floor(
+      (totalSeconds % 3600) /
+      60
+    );
+
+  const seconds =
+    totalSeconds % 60;
+
+
+  const text =
+    days > 0
+    ? days + "d " +
+      hours + "h"
+    : hours > 0
+    ? hours + "h " +
+      minutes + "m"
+    : minutes + "m " +
+      String(seconds).padStart(2,"0") +
+      "s";
+
+
+  document.getElementById(
+    "licenseStatus"
+  ).textContent =
+    text;
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+document.getElementById(
+  "logoutBtn"
+).addEventListener(
+  "click",
+  function(){
+
+    if(expiryTimer){
+      clearInterval(expiryTimer);
+      expiryTimer=null;
+    }
+
+    clearSession();
+
+    try{
+      audio.pause();
+    }catch(error){}
+
+    location.reload();
+
+  }
+);
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+const pages = {
+  home:
+    document.getElementById("homePage"),
+
+  control:
+    document.getElementById("controlPage"),
+
+  profile:
+    document.getElementById("profilePage")
+};
+
+
+const navButtons = {
+  home:
+    document.getElementById("navHome"),
+
+  control:
+    document.getElementById("navControl"),
+
+  profile:
+    document.getElementById("navProfile")
+};
+
+
+function showPage(name){
+
+  Object.values(pages)
+    .forEach(
+      page =>
+        page.classList.remove("active")
+    );
+
+
+  Object.values(navButtons)
+    .forEach(
+      button =>
+        button.classList.remove("active")
+    );
+
+
+  if(!pages[name]){
+    name="home";
+  }
+
+
+  pages[name]
+    .classList.add("active");
+
+  navButtons[name]
+    .classList.add("active");
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+navButtons.home.addEventListener(
+  "click",
+  function(){
+    showPage("home");
+  }
+);
+
+
+navButtons.control.addEventListener(
+  "click",
+  function(){
+    showPage("control");
+  }
+);
+
+
+navButtons.profile.addEventListener(
+  "click",
+  function(){
+    showPage("profile");
+  }
+);
+
+
+document.getElementById(
+  "controlQuickBtn"
+).addEventListener(
+  "click",
+  function(){
+    showPage("control");
+  }
+);
+
+
+/* =========================================
+   QUICK BUTTONS
+========================================= */
+
+document.getElementById(
+  "getKeyBtn"
+).addEventListener(
+  "click",
+  function(){
+
+    window.location.href =
+      "https://zalo.me/0983774970";
+
+  }
+);
+
+
+document.getElementById(
+  "syncBtn"
+).addEventListener(
+  "click",
+  function(){
+
+    updatePing();
+
+    toast(
+      "✓ Đã cập nhật trạng thái"
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "initializeBtn"
+).addEventListener(
+  "click",
+  function(){
+
+    toast(
+      "✓ Phiên hoạt động đã sẵn sàng"
+    );
+
+  }
+);
+
+
+/* =========================================
+   SWITCH UI
+========================================= */
+
+document
+  .querySelectorAll(".switch")
+  .forEach(
+    function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          button.classList.toggle("on");
+
+          const name =
+            button.dataset.name ||
+            "Tính năng";
+
+
+          toast(
+            name +
+            (
+              button.classList.contains("on")
+              ? " • BẬT"
+              : " • TẮT"
+            )
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================================
+   PING UI
+========================================= */
+
+function updatePing(){
+
+  const ping =
+    18 +
+    Math.floor(
+      Math.random() * 18
+    );
+
+
+  document.getElementById(
+    "ping"
+  ).textContent =
+    ping + " ms";
+
+}
+
+
+/* =========================================
+   MUSIC
+========================================= */
+
+let muted=false;
+
+let musicReady=false;
+
+
+/*
+  Quan trọng:
+  Không gọi audio.play() khi load trang.
+  iPhone Safari yêu cầu thao tác người dùng.
+*/
+
+
+audio.addEventListener(
+  "loadedmetadata",
+  function(){
+
+    musicReady=true;
+
+    musicState.textContent =
+      "Sẵn sàng • " +
+      formatTime(audio.duration);
+
+  }
+);
+
+
+audio.addEventListener(
+  "canplay",
+  function(){
+
+    musicReady=true;
+
+    if(audio.paused){
+
+      musicState.textContent =
+        "Sẵn sàng";
+
+    }
+
+  }
+);
+
+
+audio.addEventListener(
+  "waiting",
+  function(){
+
+    musicState.textContent =
+      "⏳ Đang tải nhạc...";
+
+  }
+);
+
+
+audio.addEventListener(
+  "playing",
+  function(){
+
+    musicState.textContent =
+      "● Đang phát";
+
+    musicPlay.textContent =
+      "❚❚";
+
+  }
+);
+
+
+audio.addEventListener(
+  "pause",
+  function(){
+
+    if(
+      !audio.ended &&
+      !audio.error
+    ){
+
+      musicState.textContent =
+        "Đã tạm dừng";
+
+    }
+
+    musicPlay.textContent =
+      "▶";
+
+  }
+);
+
+
+audio.addEventListener(
+  "ended",
+  function(){
+
+    musicState.textContent =
+      "Đã phát xong";
+
+    musicPlay.textContent =
+      "▶";
+
+    progressBar.style.width =
+      "0%";
+
+  }
+);
+
+
+audio.addEventListener(
+  "error",
+  function(){
+
+    musicReady=false;
+
+    musicPlay.textContent =
+      "▶";
+
+    musicState.textContent =
+      "❌ Không tìm thấy hoặc không đọc được MP3";
+
+    console.error(
+      "Audio error:",
+      audio.error
+    );
+
+  }
+);
+
+
+audio.addEventListener(
+  "timeupdate",
+  function(){
+
+    if(
+      Number.isFinite(audio.duration) &&
+      audio.duration > 0
+    ){
+
+      const percent =
+        (
+          audio.currentTime /
+          audio.duration
+        ) * 100;
+
+
+      progressBar.style.width =
+        Math.max(
+          0,
+          Math.min(
+            100,
+            percent
+          )
+        ) + "%";
+
+    }
+
+  }
+);
+
+
+musicPlay.addEventListener(
+  "click",
+  async function(){
+
+    /*
+      Đây là click thật của người dùng,
+      nên Safari/iPhone cho phép play().
+    */
+
+    if(audio.paused){
+
+      try{
+
+        /*
+          Đảm bảo không bị mute
+          bởi code trước đó.
+        */
+
+        audio.muted =
+          muted;
+
+        if(
+          audio.readyState < 2
+        ){
+
+          musicState.textContent =
+            "⏳ Đang tải music.mp3...";
+
+        }
+
+
+        const playPromise =
+          audio.play();
+
+
+        if(
+          playPromise &&
+          typeof playPromise.then ===
+          "function"
+        ){
+
+          await playPromise;
+
+        }
+
+
+        musicPlay.textContent =
+          "❚❚";
+
+      }catch(error){
+
+        console.error(
+          "audio.play() failed:",
+          error
+        );
+
+
+        musicPlay.textContent =
+          "▶";
+
+
+        musicState.textContent =
+          "❌ Safari không phát được file";
+
+
+        toast(
+          "Kiểm tra music.mp3"
+        );
+
+      }
+
+    }else{
+
+      audio.pause();
+
+    }
+
+  }
+);
+
+
+musicMute.addEventListener(
+  "click",
+  function(){
+
+    muted=!muted;
+
+    audio.muted =
+      muted;
+
+
+    musicMute.textContent =
+      muted
+      ? "🔇"
+      : "🔊";
+
+
+    if(muted){
+
+      musicMute.classList.add(
+        "muted"
+      );
+
+      musicState.textContent =
+        "Đã tắt tiếng";
+
+    }else{
+
+      musicMute.classList.remove(
+        "muted"
+      );
+
+      musicState.textContent =
+        audio.paused
+        ? "Sẵn sàng"
+        : "● Đang phát";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   FILE CHECK
+========================================= */
+
+fileInput.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      this.files &&
+      this.files[0];
+
+
+    if(file){
+
+      analyzeFile(file);
+
+    }
+
+  }
+);
+
+
+async function analyzeFile(file){
+
+  fileResult.innerHTML =
+    `
+      <div class="scoreCard">
+        <div class="score warning">
+          ⏳
+        </div>
+        <div class="scoreLabel">
+          ĐANG PHÂN TÍCH FILE...
+        </div>
+      </div>
+    `;
+
+
+  try{
+
+    const buffer =
+      await file.arrayBuffer();
+
+
+    const hashBuffer =
+      await crypto.subtle.digest(
+        "SHA-256",
+        buffer
+      );
+
+
+    const hash =
+      Array
+      .from(
+        new Uint8Array(
+          hashBuffer
+        )
+      )
+      .map(
+        byte =>
+          byte
+          .toString(16)
+          .padStart(2,"0")
+      )
+      .join("");
+
+
+    const extension =
+      getExtension(file.name);
+
+
+    const lowerName =
+      file.name.toLowerCase();
+
+
+    let score=100;
+
+    const warnings=[];
+
+
+    const executableExtensions=[
+      "exe",
+      "dll",
+      "scr",
+      "bat",
+      "cmd",
+      "com",
+      "msi",
+      "ps1",
+      "vbs",
+      "js",
+      "jar"
+    ];
+
+
+    if(
+      executableExtensions.includes(
+        extension
+      )
+    ){
+
+      score-=35;
+
+      warnings.push(
+        "Đây là loại file có khả năng thực thi."
+      );
+
+    }
+
+
+    const archiveExtensions=[
+      "zip",
+      "rar",
+      "7z",
+      "iso"
+    ];
+
+
+    if(
+      archiveExtensions.includes(
+        extension
+      )
+    ){
+
+      score-=5;
+
+      warnings.push(
+        "File là gói nén; cần kiểm tra nội dung bên trong."
+      );
+
+    }
+
+
+    const suspiciousWords=[
+      "stealer",
+      "trojan",
+      "keylogger",
+      "keygen",
+      "injector",
+      "inject",
+      "loader",
+      "bypass",
+      "payload",
+      "crack"
+    ];
+
+
+    const foundWords =
+      suspiciousWords.filter(
+        word =>
+          lowerName.includes(word)
+      );
+
+
+    if(foundWords.length){
+
+      score -= Math.min(
+        40,
+        foundWords.length * 10
+      );
+
+
+      warnings.push(
+        "Tên file chứa từ khóa đáng ngờ: " +
+        foundWords.join(", ")
+      );
+
+    }
+
+
+    if(file.size === 0){
+
+      score=0;
+
+      warnings.push(
+        "File có kích thước 0 byte."
+      );
+
+    }
+
+
+    score =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          score
+        )
+      );
+
+
+    let level="safe";
+    let label="RỦI RO THẤP";
+
+
+    if(score < 80){
+
+      level="warning";
+      label="CẦN CẨN THẬN";
+
+    }
+
+
+    if(score < 50){
+
+      level="danger";
+      label="RỦI RO CAO";
+
+    }
+
+
+    const warningsHTML =
+      warnings.length
+      ? `
+          <div
+            style="
+              margin-top:10px;
+              color:#ff8497;
+              font-size:9px;
+              line-height:1.7;
+            "
+          >
+            ${warnings
+              .map(
+                escapeHTML
+              )
+              .join("<br>")}
+          </div>
+        `
+      : `
+          <div
+            style="
+              margin-top:10px;
+              color:#45e9a5;
+              font-size:9px;
+            "
+          >
+            ✓ Chưa phát hiện dấu hiệu
+            đáng ngờ cơ bản.
+          </div>
+        `;
+
+
+    fileResult.innerHTML =
+      `
+        <div class="scoreCard">
+
+          <div class="score ${level}">
+            ${score}/100
+          </div>
+
+          <div
+            class="scoreLabel ${level}"
+          >
+            ${label}
+          </div>
+
+          <div class="scoreBar">
+            <i
+              class="${level}"
+              style="
+                width:${score}%;
+              "
+            ></i>
+          </div>
+
+          <div class="fileInfo">
+
+            <b>Tên:</b>
+            ${escapeHTML(file.name)}
+
+            <br>
+
+            <b>Loại:</b>
+            ${escapeHTML(
+              file.type ||
+              "Không xác định"
+            )}
+
+            <br>
+
+            <b>Đuôi:</b>
+            ${escapeHTML(
+              extension ||
+              "Không có"
+            )}
+
+            <br>
+
+            <b>Kích thước:</b>
+            ${formatBytes(
+              file.size
+            )}
+
+            <br>
+
+            <b>SHA-256:</b>
+            ${hash}
+
+          </div>
+
+          ${warningsHTML}
+
+        </div>
+      `;
+
+
+  }catch(error){
+
+    console.error(
+      "File analysis error:",
+      error
+    );
+
+
+    fileResult.innerHTML =
+      `
+        <div class="scoreCard">
+
+          <div class="score danger">
+            ERROR
+          </div>
+
+          <div class="fileInfo">
+            Không thể đọc file này
+            bằng trình duyệt.
+          </div>
+
+        </div>
+      `;
+
+  }
+
+}
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function getExtension(name){
+
+  const clean =
+    String(name)
+      .split("?")[0]
+      .split("#")[0];
+
+
+  const parts =
+    clean.split(".");
+
+
+  if(parts.length < 2){
+    return "";
+  }
+
+
+  return parts
+    .pop()
+    .toLowerCase();
+
+}
+
+
+function formatBytes(bytes){
+
+  if(
+    !Number.isFinite(bytes) ||
+    bytes < 0
+  ){
+
+    return "Không xác định";
+
+  }
+
+
+  if(bytes === 0){
+
+    return "0 Bytes";
+
+  }
+
+
+  const units=[
+    "Bytes",
+    "KB",
+    "MB",
+    "GB",
+    "TB"
+  ];
+
+
+  const index =
+    Math.floor(
+      Math.log(bytes) /
+      Math.log(1024)
+    );
+
+
+  const safeIndex =
+    Math.min(
+      index,
+      units.length-1
+    );
+
+
+  return(
+    (
+      bytes /
+      Math.pow(
+        1024,
+        safeIndex
+      )
+    ).toFixed(
+      safeIndex === 0
+      ? 0
+      : 2
+    ) +
+    " " +
+    units[safeIndex]
+  );
+
+}
+
+
+function maskKey(key){
+
+  if(
+    !key ||
+    key.length < 9
+  ){
+
+    return "********";
+
+  }
+
+
+  return(
+    key.slice(0,4) +
+    "••••••" +
+    key.slice(-4)
+  );
+
+}
+
+
+function shortenDeviceId(id){
+
+  if(!id){
+    return "--";
+  }
+
+
+  if(id.length <= 18){
+    return id;
+  }
+
+
+  return(
+    id.slice(0,8) +
+    "..." +
+    id.slice(-5)
+  );
+
+}
+
+
+function getDeviceName(){
+
+  const ua =
+    navigator.userAgent;
+
+
+  if(
+    /iPhone/i.test(ua)
+  ){
+
+    return "iPhone";
+
+  }
+
+
+  if(
+    /iPad/i.test(ua)
+  ){
+
+    return "iPad";
+
+  }
+
+
+  if(
+    /Android/i.test(ua)
+  ){
+
+    return "Android";
+
+  }
+
+
+  return "Mobile";
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+function formatTime(seconds){
+
+  if(
+    !Number.isFinite(seconds)
+  ){
+
+    return "--:--";
+
+  }
+
+
+  const minutes =
+    Math.floor(
+      seconds / 60
+    );
+
+
+  const secs =
+    Math.floor(
+      seconds % 60
+    )
+    .toString()
+    .padStart(2,"0");
+
+
+  return(
+    minutes +
+    ":" +
+    secs
+  );
+
+}
+
+
+let toastTimer=null;
+
+
+function toast(message){
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastElement.textContent =
+    message;
+
+
+  toastElement.classList.add(
+    "show"
+  );
+
+
+  toastTimer =
+    setTimeout(
+      function(){
+
+        toastElement.classList.remove(
+          "show"
+        );
+
+      },
+      2300
+    );
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>MINHQUAN LOCK — KEY ADMIN</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at top,#15104a 0,#080814 42%,#050509 100%);
+  color:#fff;
+  min-height:100vh;
+}
+
+.container{
+  width:min(760px,94%);
+  margin:auto;
+  padding:20px 0 50px;
+}
+
+.header{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.logo{
+  width:72px;
+  height:72px;
+  margin:auto;
+  border-radius:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  background:linear-gradient(135deg,#00eaff,#8b5cff,#ff2bd6);
+  box-shadow:0 0 30px #743cff88;
+}
+
+h1{
+  margin:12px 0 4px;
+  font-size:25px;
+}
+
+.sub{
+  color:#aaa;
+  font-size:13px;
+}
+
+.card{
+  background:rgba(15,15,30,.88);
+  border:1px solid rgba(0,238,255,.22);
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 8px 30px #0007;
+}
+
+.card h2{
+  margin:0 0 15px;
+  font-size:17px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+label{
+  display:block;
+  color:#aaa;
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+input{
+  width:100%;
+  border:1px solid #30304b;
+  background:#090914;
+  color:#fff;
+  padding:13px;
+  border-radius:11px;
+  outline:none;
+  font-size:14px;
+}
+
+input:focus{
+  border-color:#00eaff;
+  box-shadow:0 0 12px #00eaff33;
+}
+
+button{
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:13px;
+  margin-top:12px;
+  color:white;
+  font-weight:bold;
+  font-size:14px;
+  cursor:pointer;
+  background:linear-gradient(90deg,#00bfff,#7255ff,#d82bff);
+  box-shadow:0 5px 20px #6c35ff44;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+button.danger{
+  background:linear-gradient(90deg,#ff1744,#ff006a);
+}
+
+button.secondary{
+  background:#19192b;
+  border:1px solid #33334d;
+}
+
+.status{
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:15px;
+  display:none;
+  font-size:13px;
+}
+
+.status.success{
+  display:block;
+  background:#08351f;
+  border:1px solid #18d879;
+  color:#72ffc0;
+}
+
+.status.error{
+  display:block;
+  background:#3a0b16;
+  border:1px solid #ff315d;
+  color:#ff91a8;
+}
+
+.newkey{
+  margin-top:12px;
+  padding:14px;
+  border-radius:12px;
+  background:#090916;
+  border:1px solid #00eaff55;
+  word-break:break-all;
+}
+
+.keytext{
+  color:#00f0ff;
+  font-size:17px;
+  font-weight:bold;
+  letter-spacing:.5px;
+}
+
+.small{
+  color:#888;
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.key-item{
+  background:#0b0b17;
+  border:1px solid #292941;
+  border-radius:14px;
+  padding:14px;
+  margin-top:10px;
+}
+
+.key-value{
+  font-weight:bold;
+  color:#00eaff;
+  word-break:break-all;
+  margin-bottom:8px;
+}
+
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  font-size:12px;
+  color:#aaa;
+}
+
+.info b{
+  color:#eee;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  margin-top:8px;
+}
+
+.active{
+  background:#063b27;
+  color:#61ffc0;
+}
+
+.revoked{
+  background:#400b18;
+  color:#ff8099;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+
+.actions button{
+  margin:0;
+}
+
+.footer{
+  text-align:center;
+  color:#666;
+  font-size:11px;
+  margin-top:20px;
+}
+
+@media(max-width:500px){
+  .row{
+    grid-template-columns:1fr;
+  }
+
+  .info{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">🔐</div>
+    <h1>MINHQUAN LOCK</h1>
+    <div class="sub">KEY ADMIN PANEL</div>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <!-- ADMIN SECRET -->
+  <div class="card">
+    <h2>🔑 Xác thực Admin</h2>
+
+    <label>ADMIN_SECRET</label>
+    <input
+      id="adminSecret"
+      type="password"
+      placeholder="Nhập ADMIN_SECRET"
+      autocomplete="off"
+    >
+
+    <button class="secondary" onclick="saveSecret()">
+      💾 LƯU ADMIN SECRET
+    </button>
+  </div>
+
+  <!-- DAY KEY -->
+  <div class="card">
+    <h2>📅 Tạo Key theo ngày</h2>
+
+    <div class="row">
+      <div>
+        <label>Số ngày</label>
+        <input id="days" type="number" min="1" value="30">
+      </div>
+
+      <div>
+        <label>Số thiết bị tối đa</label>
+        <input id="dayDevices" type="number" min="1" value="1">
+      </div>
+    </div>
+
+    <button onclick="createDayKey()">
+      🔑 TẠO KEY NGÀY
+    </button>
+
+    <div id="newDayKey"></div>
+  </div>
+
+  <!-- HOUR KEY -->
+  <div class="card">
+    <h2>⏱️ Tạo Key theo giờ</h2>
+
+    <div class="row">
+      <div>
+        <label>Số giờ</label>
+        <input id="hours" type="number" min="1" value="1">
+      </div>
+
+      <div>
+        <label>Số thiết bị tối đa</label>
+        <input id="hourDevices" type="number" min="1" value="1">
+      </div>
+    </div>
+
+    <button onclick="createHourKey()">
+      ⚡ TẠO KEY GIỜ
+    </button>
+
+    <div id="newHourKey"></div>
+  </div>
+
+  <!-- LIST -->
+  <div class="card">
+    <h2>📋 Danh sách Key</h2>
+
+    <button class="secondary" onclick="loadKeys()">
+      🔄 LÀM MỚI DANH SÁCH
+    </button>
+
+    <div id="keyList">
+      <div class="small" style="margin-top:15px">
+        Bấm "Làm mới danh sách" để tải Key.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    MINHQUAN LOCK • KEY ADMIN
+  </div>
+
+</div>
+
+<script>
+
+const API =
+  "https://quan-key-admin.baoquyen2737.workers.dev";
+
+let ADMIN_SECRET =
+  localStorage.getItem("MQ_ADMIN_SECRET") || "";
+
+const secretInput =
+  document.getElementById("adminSecret");
+
+secretInput.value = ADMIN_SECRET;
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(message,type="success"){
+  const box = document.getElementById("status");
+
+  box.textContent = message;
+  box.className = "status " + type;
+
+  clearTimeout(window.statusTimer);
+
+  window.statusTimer = setTimeout(()=>{
+    box.className = "status";
+  },5000);
+}
+
+
+/* =========================
+   SECRET
+========================= */
+
+function saveSecret(){
+
+  const value =
+    secretInput.value.trim();
+
+  if(!value){
+    showStatus(
+      "Bạn chưa nhập ADMIN_SECRET.",
+      "error"
+    );
+    return;
+  }
+
+  ADMIN_SECRET = value;
+
+  localStorage.setItem(
+    "MQ_ADMIN_SECRET",
+    value
+  );
+
+  showStatus(
+    "Đã lưu ADMIN_SECRET trên thiết bị này."
+  );
+}
+
+
+/* =========================
+   HEADERS
+========================= */
+
+function headers(){
+
+  return {
+    "Content-Type":"application/json",
+    "Authorization":
+      "Bearer " + ADMIN_SECRET
+  };
+
+}
+
+
+/* =========================
+   CHECK SECRET
+========================= */
+
+function checkSecret(){
+
+  if(!ADMIN_SECRET){
+
+    showStatus(
+      "Hãy nhập ADMIN_SECRET trước.",
+      "error"
+    );
+
+    secretInput.focus();
+
+    return false;
+  }
+
+  return true;
+}
+
+
+/* =========================
+   CREATE DAY KEY
+========================= */
+
+async function createDayKey(){
+
+  if(!checkSecret()) return;
+
+  const days =
+    Number(document.getElementById("days").value);
+
+  const maxDevices =
+    Number(document.getElementById("dayDevices").value);
+
+  if(days < 1 || maxDevices < 1){
+
+    showStatus(
+      "Số ngày và thiết bị phải lớn hơn 0.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/api/admin/create-key",
+        {
+          method:"POST",
+          headers:headers(),
+          body:JSON.stringify({
+            days:days,
+            maxDevices:maxDevices
+          })
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if(!response.ok || !data.success){
+
+      showStatus(
+        data.message ||
+        "Không thể tạo Key.",
+        "error"
+      );
+
+      return;
+    }
+
+    showNewKey(
+      "newDayKey",
+      data.key,
+      "KEY NGÀY",
+      `${days} ngày`,
+      maxDevices
+    );
+
+    showStatus(
+      "Tạo Key ngày thành công."
+    );
+
+    loadKeys();
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Không kết nối được Worker.",
+      "error"
+    );
+
+  }
+}
+
+
+/* =========================
+   CREATE HOUR KEY
+========================= */
+
+async function createHourKey(){
+
+  if(!checkSecret()) return;
+
+  const hours =
+    Number(document.getElementById("hours").value);
+
+  const maxDevices =
+    Number(document.getElementById("hourDevices").value);
+
+  if(hours < 1 || maxDevices < 1){
+
+    showStatus(
+      "Số giờ và thiết bị phải lớn hơn 0.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const days = hours / 24;
+
+    const response =
+      await fetch(
+        API + "/api/admin/create-key",
+        {
+          method:"POST",
+          headers:headers(),
+          body:JSON.stringify({
+            days:days,
+            maxDevices:maxDevices
+          })
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if(!response.ok || !data.success){
+
+      showStatus(
+        data.message ||
+        "Không thể tạo Key giờ.",
+        "error"
+      );
+
+      return;
+    }
+
+    showNewKey(
+      "newHourKey",
+      data.key,
+      "KEY GIỜ",
+      `${hours} giờ`,
+      maxDevices
+    );
+
+    showStatus(
+      "Tạo Key giờ thành công."
+    );
+
+    loadKeys();
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Không kết nối được Worker.",
+      "error"
+    );
+
+  }
+}
+
+
+/* =========================
+   SHOW NEW KEY
+========================= */
+
+function showNewKey(
+  elementId,
+  key,
+  type,
+  duration,
+  devices
+){
+
+  const box =
+    document.getElementById(elementId);
+
+  box.innerHTML = `
+    <div class="newkey">
+
+      <div class="small">
+        ${escapeHtml(type)}
+      </div>
+
+      <div class="keytext">
+        ${escapeHtml(key)}
+      </div>
+
+      <div class="small" style="margin-top:8px">
+        Thời hạn:
+        <b>${escapeHtml(duration)}</b>
+        <br>
+        Thiết bị:
+        <b>${devices}</b>
+      </div>
+
+      <button
+        onclick="copyKey('${escapeAttr(key)}')"
+      >
+        📋 SAO CHÉP KEY
+      </button>
+
+    </div>
+  `;
+
+}
+
+
+/* =========================
+   LOAD KEYS
+========================= */
+
+async function loadKeys(){
+
+  if(!checkSecret()) return;
+
+  const list =
+    document.getElementById("keyList");
+
+  list.innerHTML =
+    `<div class="small">⏳ Đang tải...</div>`;
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/api/admin/keys",
+        {
+          method:"GET",
+          headers:{
+            "Authorization":
+              "Bearer " + ADMIN_SECRET
+          }
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if(!response.ok || !data.success){
+
+      showStatus(
+        data.message ||
+        "Không thể tải danh sách Key.",
+        "error"
+      );
+
+      list.innerHTML =
+        `<div class="small">Không tải được danh sách.</div>`;
+
+      return;
+    }
+
+    if(!data.keys || data.keys.length === 0){
+
+      list.innerHTML =
+        `<div class="small" style="margin-top:15px">
+          Chưa có Key nào.
+        </div>`;
+
+      return;
+    }
+
+    list.innerHTML =
+      data.keys.map(renderKey).join("");
+
+  }catch(error){
+
+    console.error(error);
+
+    list.innerHTML =
+      `<div class="small">
+        Không kết nối được Worker.
+      </div>`;
+
+    showStatus(
+      "Không kết nối được Worker.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   RENDER KEY
+========================= */
+
+function renderKey(item){
+
+  const expires =
+    new Date(
+      Number(item.expires_at) * 1000
+    );
+
+  const expired =
+    Number(item.expires_at) <=
+    Math.floor(Date.now()/1000);
+
+  const revoked =
+    Number(item.revoked) === 1;
+
+  const disabled =
+    revoked || expired;
+
+  let statusText = "ĐANG HOẠT ĐỘNG";
+  let statusClass = "active";
+
+  if(revoked){
+
+    statusText = "ĐÃ THU HỒI";
+    statusClass = "revoked";
+
+  }else if(expired){
+
+    statusText = "ĐÃ HẾT HẠN";
+    statusClass = "revoked";
+
+  }
+
+  return `
+    <div class="key-item">
+
+      <div class="key-value">
+        ${escapeHtml(item.key)}
+      </div>
+
+      <div class="info">
+
+        <div>
+          ID:
+          <b>${escapeHtml(item.id)}</b>
+        </div>
+
+        <div>
+          Thiết bị:
+          <b>${escapeHtml(item.max_devices)}</b>
+        </div>
+
+        <div>
+          Hết hạn:
+          <b>${formatDate(expires)}</b>
+        </div>
+
+        <div>
+          Trạng thái:
+          <b>${statusText}</b>
+        </div>
+
+      </div>
+
+      <span class="badge ${statusClass}">
+        ${statusText}
+      </span>
+
+      <div class="actions">
+
+        <button
+          class="secondary"
+          onclick="copyKey('${escapeAttr(item.key)}')"
+        >
+          📋 SAO CHÉP
+        </button>
+
+        ${
+          disabled
+          ? `
+            <button
+              class="secondary"
+              disabled
+              style="opacity:.5"
+            >
+              🚫 ĐÃ KHÓA
+            </button>
+          `
+          :
+          `
+            <button
+              class="danger"
+              onclick="revokeKey('${escapeAttr(item.key)}')"
+            >
+              🚫 THU HỒI
+            </button>
+          `
+        }
+
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+/* =========================
+   COPY KEY
+========================= */
+
+async function copyKey(key){
+
+  try{
+
+    if(
+      navigator.clipboard &&
+      window.isSecureContext
+    ){
+
+      await navigator.clipboard.writeText(key);
+
+    }else{
+
+      const textarea =
+        document.createElement("textarea");
+
+      textarea.value = key;
+
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+
+      document.body.appendChild(textarea);
+
+      textarea.focus();
+      textarea.select();
+
+      document.execCommand("copy");
+
+      textarea.remove();
+
+    }
+
+    showStatus(
+      "📋 Đã sao chép Key."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Không thể sao chép tự động. Hãy nhấn giữ Key để sao chép.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   REVOKE KEY
+========================= */
+
+async function revokeKey(key){
+
+  if(!checkSecret()) return;
+
+  const ok =
+    confirm(
+      "Bạn chắc chắn muốn thu hồi Key này?\n\n" +
+      key
+    );
+
+  if(!ok) return;
+
+  try{
+
+    const response =
+      await fetch(
+        API + "/api/admin/revoke-key",
+        {
+          method:"POST",
+          headers:headers(),
+          body:JSON.stringify({
+            key:key
+          })
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if(!response.ok || !data.success){
+
+      showStatus(
+        data.message ||
+        "Không thể thu hồi Key.",
+        "error"
+      );
+
+      return;
+    }
+
+    showStatus(
+      "🚫 Đã thu hồi Key."
+    );
+
+    loadKeys();
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Không kết nối được Worker.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(date){
+
+  return date.toLocaleString(
+    "vi-VN",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/*
+  Dùng cho dữ liệu đưa vào
+  thuộc tính onclick.
+*/
+function escapeAttr(value){
+
+  return String(value)
+    .replaceAll("\\","\\\\")
+    .replaceAll("'","\\'");
+}
+
+
+/* =========================
+   START
+========================= */
+
+if(ADMIN_SECRET){
+
+  // Không tự tải danh sách để tránh
+  // gọi API ngoài ý muốn khi mở trang.
+
+  showStatus(
+    "ADMIN_SECRET đã được lưu. Bấm Làm mới danh sách để tải Key."
+  );
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2832 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<meta name="theme-color" content="#050711">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MQUAN KN">
+
+<title>MINHQUAN LOCK</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    min-height:100%;
+    background:#03050c;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.bg{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-10;
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(0,255,255,.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(177,0,255,.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 70% 80%,
+            rgba(0,117,255,.15),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #03050c,
+            #080512,
+            #040712
+        );
+}
+
+.bg::before{
+    content:"";
+    position:absolute;
+    inset:-50%;
+    background:
+        linear-gradient(
+            115deg,
+            transparent 40%,
+            rgba(0,255,255,.035) 50%,
+            transparent 60%
+        );
+    animation:scan 10s linear infinite;
+}
+
+@keyframes scan{
+    from{
+        transform:translateX(-20%);
+    }
+    to{
+        transform:translateX(20%);
+    }
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.18;
+    background-image:
+        linear-gradient(
+            rgba(0,255,255,.09) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(150,0,255,.07) 1px,
+            transparent 1px
+        );
+    background-size:42px 42px;
+    mask-image:linear-gradient(
+        to bottom,
+        #000,
+        transparent 90%
+    );
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(5px);
+    opacity:.45;
+}
+
+.orb1{
+    width:160px;
+    height:160px;
+    left:-80px;
+    top:160px;
+    background:#00ffff;
+    animation:float1 7s ease-in-out infinite;
+}
+
+.orb2{
+    width:190px;
+    height:190px;
+    right:-100px;
+    top:420px;
+    background:#9b00ff;
+    animation:float2 9s ease-in-out infinite;
+}
+
+.orb3{
+    width:120px;
+    height:120px;
+    left:35%;
+    bottom:80px;
+    background:#0066ff;
+    animation:float3 8s ease-in-out infinite;
+}
+
+@keyframes float1{
+    50%{
+        transform:translate(30px,40px);
+    }
+}
+
+@keyframes float2{
+    50%{
+        transform:translate(-30px,-35px);
+    }
+}
+
+@keyframes float3{
+    50%{
+        transform:translate(20px,-30px);
+    }
+}
+
+/* particles */
+
+.particles{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+.particles i{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:#7fffff;
+    box-shadow:0 0 8px #00ffff;
+    opacity:.5;
+    animation:blink 3s infinite alternate;
+}
+
+.particles i:nth-child(1){left:8%;top:18%}
+.particles i:nth-child(2){left:21%;top:35%;animation-delay:1s}
+.particles i:nth-child(3){left:48%;top:15%;animation-delay:2s}
+.particles i:nth-child(4){left:73%;top:25%;animation-delay:.5s}
+.particles i:nth-child(5){left:91%;top:48%;animation-delay:1.5s}
+.particles i:nth-child(6){left:12%;top:70%;animation-delay:2.2s}
+.particles i:nth-child(7){left:57%;top:65%;animation-delay:.8s}
+.particles i:nth-child(8){left:83%;top:82%;animation-delay:1.2s}
+.particles i:nth-child(9){left:35%;top:90%;animation-delay:2.5s}
+.particles i:nth-child(10){left:66%;top:42%;animation-delay:.3s}
+
+@keyframes blink{
+    from{
+        opacity:.15;
+        transform:scale(.7);
+    }
+    to{
+        opacity:.8;
+        transform:scale(1.5);
+    }
+}
+
+/* =========================
+   GENERAL
+========================= */
+
+.hidden{
+    display:none!important;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    border:0;
+}
+
+.glass{
+    background:rgba(10,13,27,.72);
+    border:1px solid rgba(255,255,255,.075);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+}
+
+/* =========================
+   LOADING
+========================= */
+
+#loading{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:#03050c;
+}
+
+.loading-logo{
+    width:94px;
+    height:94px;
+    border-radius:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    font-weight:1000;
+    color:#00ffff;
+    border:1px solid rgba(0,255,255,.55);
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,255,255,.13),
+            rgba(100,0,255,.08)
+        );
+    box-shadow:
+        0 0 25px rgba(0,255,255,.22),
+        inset 0 0 30px rgba(0,255,255,.08);
+}
+
+.loading-title{
+    margin-top:18px;
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.loading-sub{
+    margin-top:7px;
+    color:#6e7485;
+    font-size:11px;
+}
+
+.loading-line{
+    width:180px;
+    height:4px;
+    border-radius:20px;
+    margin-top:18px;
+    overflow:hidden;
+    background:#171a27;
+}
+
+.loading-line span{
+    display:block;
+    width:0;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        #00ffff,
+        #8c5cff,
+        #ff38d1
+    );
+    animation:load 1.7s forwards;
+}
+
+@keyframes load{
+    to{
+        width:100%;
+    }
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+}
+
+.login-card{
+    width:min(430px,100%);
+    padding:26px;
+    border-radius:28px;
+    position:relative;
+    overflow:hidden;
+}
+
+.login-card::before{
+    content:"";
+    position:absolute;
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    background:#00ffff;
+    filter:blur(90px);
+    opacity:.08;
+    top:-100px;
+    left:-80px;
+}
+
+.avatar{
+    width:82px;
+    height:82px;
+    object-fit:cover;
+    border-radius:50%;
+    display:block;
+    margin:0 auto 15px;
+    border:2px solid #00ffff;
+    box-shadow:
+        0 0 22px rgba(0,255,255,.25);
+}
+
+.login-title{
+    text-align:center;
+    font-size:24px;
+    font-weight:950;
+}
+
+.login-title span{
+    color:#00ffff;
+}
+
+.login-sub{
+    text-align:center;
+    color:#73798b;
+    font-size:12px;
+    margin-top:7px;
+    margin-bottom:20px;
+}
+
+.input{
+    width:100%;
+    padding:14px 15px;
+    margin-top:10px;
+    border-radius:14px;
+    outline:none;
+    color:#fff;
+    background:#090c17;
+    border:1px solid #202638;
+}
+
+.input:focus{
+    border-color:#00ffff;
+    box-shadow:0 0 18px rgba(0,255,255,.08);
+}
+
+.main-btn{
+    width:100%;
+    padding:14px;
+    margin-top:14px;
+    border-radius:14px;
+    color:#02030a;
+    font-weight:950;
+    background:linear-gradient(
+        90deg,
+        #00ffff,
+        #8c66ff,
+        #ff45d2
+    );
+    box-shadow:0 0 20px rgba(0,255,255,.08);
+}
+
+.status{
+    min-height:18px;
+    margin-top:12px;
+    text-align:center;
+    font-size:12px;
+    color:#9298a8;
+}
+
+/* =========================
+   APP
+========================= */
+
+#app{
+    min-height:100vh;
+    padding-bottom:96px;
+}
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    padding:
+        calc(13px + env(safe-area-inset-top))
+        17px
+        13px;
+    background:rgba(3,5,12,.72);
+    border-bottom:1px solid rgba(255,255,255,.055);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+}
+
+.topbar-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.brand{
+    font-size:18px;
+    font-weight:950;
+    letter-spacing:.7px;
+}
+
+.brand span{
+    color:#00ffff;
+}
+
+.online{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:10px;
+    color:#6dffae;
+    font-weight:800;
+}
+
+.online i{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#39ff8a;
+    box-shadow:0 0 10px #39ff8a;
+}
+
+.page{
+    padding:17px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:21px;
+    border-radius:25px;
+    margin-bottom:14px;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-80px;
+    top:-80px;
+    border-radius:50%;
+    background:#00ffff;
+    filter:blur(65px);
+    opacity:.12;
+}
+
+.hero-label{
+    color:#00ffff;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.hero h2{
+    margin:7px 0 5px;
+    font-size:23px;
+}
+
+.hero p{
+    margin:0;
+    color:#7e8495;
+    font-size:12px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+    position:relative;
+    overflow:hidden;
+    margin-top:13px;
+    padding:16px;
+    border-radius:21px;
+    background:rgba(10,13,27,.70);
+    border:1px solid rgba(255,255,255,.065);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.12);
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    right:-50px;
+    top:-50px;
+    border-radius:50%;
+    background:#00ffff;
+    filter:blur(40px);
+    opacity:.035;
+}
+
+.card-title{
+    margin-bottom:11px;
+    font-size:14px;
+    font-weight:950;
+}
+
+.feature{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 0;
+    border-bottom:1px solid rgba(255,255,255,.045);
+}
+
+.feature:last-child{
+    border-bottom:0;
+}
+
+.feature-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.icon{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,255,255,.10),
+            rgba(140,0,255,.10)
+        );
+    border:1px solid rgba(0,255,255,.08);
+    font-size:18px;
+}
+
+.feature-name{
+    font-size:13px;
+    font-weight:900;
+}
+
+.feature-desc{
+    margin-top:2px;
+    color:#646b7d;
+    font-size:10px;
+}
+
+/* =========================
+   SWITCH
+========================= */
+
+.switch{
+    width:47px;
+    height:27px;
+    padding:3px;
+    border-radius:30px;
+    background:#202433;
+    transition:.2s;
+}
+
+.switch span{
+    display:block;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:#6d7281;
+    transition:.2s;
+}
+
+.switch.active{
+    background:#00aeb5;
+    box-shadow:0 0 15px rgba(0,255,255,.25);
+}
+
+.switch.active span{
+    transform:translateX(20px);
+    background:#fff;
+}
+
+/* =========================
+   MUSIC SMALL
+========================= */
+
+.music-card{
+    padding:12px;
+}
+
+.music-row{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.music-cover{
+    width:42px;
+    height:42px;
+    flex:none;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,255,255,.17),
+            rgba(166,0,255,.18)
+        );
+    border:1px solid rgba(0,255,255,.12);
+}
+
+.music-info{
+    flex:1;
+    min-width:0;
+}
+
+.music-name{
+    font-size:12px;
+    font-weight:900;
+}
+
+.music-state{
+    margin-top:3px;
+    color:#626a7b;
+    font-size:10px;
+}
+
+.music-actions{
+    display:flex;
+    gap:6px;
+}
+
+.music-btn{
+    width:37px;
+    height:37px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#161a28;
+    color:#fff;
+    border:1px solid #252a3b;
+    font-size:15px;
+}
+
+.music-btn.primary{
+    background:linear-gradient(
+        135deg,
+        #00cfd2,
+        #765cff
+    );
+    border:0;
+}
+
+.music-bar{
+    height:3px;
+    margin-top:10px;
+    border-radius:10px;
+    overflow:hidden;
+    background:#181c2a;
+}
+
+.music-bar span{
+    display:block;
+    width:0;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        #00ffff,
+        #b25cff,
+        #ff38d1
+    );
+    transition:.3s;
+}
+
+/* =========================
+   CHECK FILE
+========================= */
+
+.file-select{
+    display:block;
+    padding:15px;
+    text-align:center;
+    border-radius:15px;
+    color:#71ffff;
+    font-size:12px;
+    font-weight:900;
+    border:1px dashed rgba(0,255,255,.28);
+    background:rgba(0,255,255,.035);
+}
+
+.file-input{
+    display:none;
+}
+
+.security{
+    margin-top:12px;
+    padding:15px;
+    border-radius:16px;
+    background:#070a13;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.security-score{
+    font-size:29px;
+    font-weight:1000;
+}
+
+.security-bar{
+    width:100%;
+    height:7px;
+    margin:10px 0;
+    border-radius:10px;
+    background:#1b1f2c;
+    overflow:hidden;
+}
+
+.security-bar span{
+    display:block;
+    height:100%;
+    transition:.5s;
+}
+
+.safe{
+    color:#45ff9b;
+}
+
+.warn{
+    color:#ffd34e;
+}
+
+.danger{
+    color:#ff6363;
+}
+
+.detail{
+    color:#8b92a2;
+    font-size:11px;
+    line-height:1.7;
+    word-break:break-word;
+}
+
+.check-note{
+    margin-top:10px;
+    color:#555c6c;
+    font-size:9px;
+    line-height:1.5;
+}
+
+/* =========================
+   INFO
+========================= */
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,.045);
+    font-size:11px;
+}
+
+.info-row:last-child{
+    border-bottom:0;
+}
+
+.info-label{
+    color:#656c7d;
+}
+
+.info-value{
+    max-width:65%;
+    text-align:right;
+    word-break:break-word;
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+.history-item{
+    padding:11px;
+    margin-top:7px;
+    border-radius:12px;
+    background:#080b14;
+    font-size:11px;
+}
+
+.history-item small{
+    display:block;
+    color:#555d6d;
+    margin-top:3px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-head{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.profile-avatar{
+    width:62px;
+    height:62px;
+    object-fit:cover;
+    border-radius:50%;
+    border:2px solid #00ffff;
+}
+
+.profile-name{
+    font-size:17px;
+    font-weight:950;
+}
+
+.profile-key{
+    margin-top:4px;
+    color:#666d7e;
+    font-size:10px;
+}
+
+.logout{
+    width:100%;
+    padding:14px;
+    margin-top:12px;
+    border-radius:14px;
+    background:#211219;
+    color:#ff7188;
+    font-weight:900;
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+    position:fixed;
+    left:10px;
+    right:10px;
+    bottom:
+        calc(9px + env(safe-area-inset-bottom));
+    height:65px;
+    z-index:200;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-radius:21px;
+    background:rgba(8,10,20,.88);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.nav-btn{
+    background:transparent;
+    color:#5d6475;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    font-size:9px;
+    font-weight:900;
+}
+
+.nav-btn span{
+    font-size:20px;
+}
+
+.nav-btn.active{
+    color:#00ffff;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toast{
+    position:fixed;
+    left:50%;
+    bottom:88px;
+    z-index:500;
+    max-width:88%;
+    padding:10px 14px;
+    border-radius:13px;
+    background:#151a28;
+    border:1px solid rgba(0,255,255,.13);
+    color:#fff;
+    font-size:11px;
+    opacity:0;
+    transform:translate(-50%,15px);
+    pointer-events:none;
+    transition:.25s;
+}
+
+#toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg">
+    <div class="grid"></div>
+
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <div class="particles">
+        <i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i>
+    </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+
+    <div class="loading-logo">
+        MQ
+    </div>
+
+    <div class="loading-title">
+        MQUAN KN
+    </div>
+
+    <div class="loading-sub">
+        MINHQUAN LOCK
+    </div>
+
+    <div class="loading-line">
+        <span></span>
+    </div>
+
+</div>
+
+<!-- LOGIN -->
+<section id="loginScreen" class="hidden">
+
+    <div class="login-card glass">
+
+        <img
+            src="./avatar.png"
+            class="avatar"
+            alt="Avatar"
+            onerror="this.style.display='none'"
+        >
+
+        <div class="login-title">
+            MINHQUAN <span>LOCK</span>
+        </div>
+
+        <div class="login-sub">
+            Đăng nhập bằng Key để tiếp tục
+        </div>
+
+        <input
+            id="username"
+            class="input"
+            placeholder="Tên người dùng"
+            autocomplete="off"
+        >
+
+        <input
+            id="keyInput"
+            class="input"
+            placeholder="Nhập Key"
+            autocomplete="off"
+        >
+
+        <button
+            class="main-btn"
+            onclick="login()"
+        >
+            🔐 ĐĂNG NHẬP
+        </button>
+
+        <div id="loginStatus" class="status"></div>
+
+    </div>
+
+</section>
+
+<!-- APP -->
+<section id="app" class="hidden">
+
+    <!-- TOP -->
+    <header class="topbar">
+
+        <div class="topbar-inner">
+
+            <div class="brand">
+                MINHQUAN <span>LOCK</span>
+            </div>
+
+            <div class="online">
+                <i></i>
+                ONLINE
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- HOME -->
+    <main id="homePage" class="page">
+
+        <div class="hero glass">
+
+            <div class="hero-label">
+                MQUAN KN • PREMIUM PANEL
+            </div>
+
+            <h2>
+                Xin chào,
+                <span id="welcomeName">
+                    User
+                </span> 👋
+            </h2>
+
+            <p>
+                Chào mừng bạn đến với MINHQUAN LOCK.
+            </p>
+
+        </div>
+
+
+        <!-- FEATURES -->
+        <div class="card">
+
+            <div class="card-title">
+                🎛️ TÍNH NĂNG
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-left">
+
+                    <div class="icon">
+                        🎯
+                    </div>
+
+                    <div>
+                        <div class="feature-name">
+                            AIMLOCK
+                        </div>
+
+                        <div class="feature-desc">
+                            Giao diện tính năng
+                        </div>
+                    </div>
+
+                </div>
+
+                <button
+                    class="switch"
+                    onclick="toggleUI(this)"
+                >
+                    <span></span>
+                </button>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-left">
+
+                    <div class="icon">
+                        🎯
+                    </div>
+
+                    <div>
+                        <div class="feature-name">
+                            HEADLOCK
+                        </div>
+
+                        <div class="feature-desc">
+                            Giao diện tính năng
+                        </div>
+                    </div>
+
+                </div>
+
+                <button
+                    class="switch"
+                    onclick="toggleUI(this)"
+                >
+                    <span></span>
+                </button>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-left">
+
+                    <div class="icon">
+                        ⚡
+                    </div>
+
+                    <div>
+                        <div class="feature-name">
+                            NHẸ TÂM
+                        </div>
+
+                        <div class="feature-desc">
+                            Giao diện tính năng
+                        </div>
+                    </div>
+
+                </div>
+
+                <button
+                    class="switch"
+                    onclick="toggleUI(this)"
+                >
+                    <span></span>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MUSIC SMALL -->
+        <div class="card music-card">
+
+            <div class="music-row">
+
+                <div class="music-cover">
+                    🎵
+                </div>
+
+                <div class="music-info">
+
+                    <div class="music-name">
+                        MQUAN MUSIC
+                    </div>
+
+                    <div
+                        id="musicStatus"
+                        class="music-state"
+                    >
+                        Nhạc đang tắt
+                    </div>
+
+                </div>
+
+                <div class="music-actions">
+
+                    <button
+                        id="playMusicBtn"
+                        class="music-btn primary"
+                        onclick="playMusic()"
+                    >
+                        ▶
+                    </button>
+
+                    <button
+                        class="music-btn"
+                        onclick="pauseMusic()"
+                    >
+                        ⏸
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="music-bar">
+                <span id="musicProgress"></span>
+            </div>
+
+            <audio
+                id="bgMusic"
+                preload="metadata"
+                playsinline
+                webkit-playsinline
+            >
+                <source
+                    src="https://baoquyen2737-del.github.io/minhquan-lock/music.mp3"
+                    type="audio/mpeg"
+                >
+            </audio>
+
+        </div>
+
+
+        <!-- DEVICE -->
+        <div class="card">
+
+            <div class="card-title">
+                📱 THÔNG TIN MÁY
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Thiết bị
+                </span>
+
+                <span
+                    id="deviceName"
+                    class="info-value"
+                >
+                    Đang kiểm tra...
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Device ID
+                </span>
+
+                <span
+                    id="deviceIdView"
+                    class="info-value"
+                >
+                    ---
+                </span>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- CONTROL -->
+    <main
+        id="controlPage"
+        class="page hidden"
+    >
+
+        <div class="hero glass">
+
+            <div class="hero-label">
+                FILE SECURITY
+            </div>
+
+            <h2>
+                📁 Check File
+            </h2>
+
+            <p>
+                Phân tích file ngay trên trình duyệt.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                📁 CHECK FILE
+            </div>
+
+            <label class="file-select">
+
+                📂 CHỌN FILE ĐỂ KIỂM TRA
+
+                <input
+                    id="fileInput"
+                    class="file-input"
+                    type="file"
+                    onchange="checkFile(this.files[0])"
+                >
+
+            </label>
+
+            <div id="fileResult"></div>
+
+            <div class="check-note">
+
+                ⚠️ Đây là đánh giá dựa trên dấu hiệu
+                của file bằng trình duyệt, không phải
+                antivirus chuyên dụng và không thể
+                đảm bảo 100% file sạch virus.
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                🛡️ BẢO VỆ
+            </div>
+
+            <div class="feature">
+
+                <div class="feature-left">
+
+                    <div class="icon">
+                        🛡️
+                    </div>
+
+                    <div>
+                        <div class="feature-name">
+                            BẢO VỆ
+                        </div>
+
+                        <div class="feature-desc">
+                            Trạng thái giao diện
+                        </div>
+                    </div>
+
+                </div>
+
+                <button
+                    class="switch active"
+                    onclick="toggleUI(this)"
+                >
+                    <span></span>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                📜 LỊCH SỬ
+            </div>
+
+            <div id="historyList">
+                <div class="history-item">
+                    Chưa có lịch sử kiểm tra.
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- PROFILE -->
+    <main
+        id="profilePage"
+        class="page hidden"
+    >
+
+        <div class="card">
+
+            <div class="profile-head">
+
+                <img
+                    src="./avatar.png"
+                    class="profile-avatar"
+                    alt="Avatar"
+                    onerror="this.style.display='none'"
+                >
+
+                <div>
+
+                    <div
+                        id="profileName"
+                        class="profile-name"
+                    >
+                        User
+                    </div>
+
+                    <div
+                        id="profileKey"
+                        class="profile-key"
+                    >
+                        KEY: ********
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                👤 TÀI KHOẢN
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Trạng thái
+                </span>
+
+                <span class="info-value safe">
+                    ĐANG HOẠT ĐỘNG
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Device ID
+                </span>
+
+                <span
+                    id="profileDevice"
+                    class="info-value"
+                >
+                    ---
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Hỗ trợ
+                </span>
+
+                <span class="info-value">
+                    0983774970
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                💬 LIÊN HỆ
+            </div>
+
+            <button
+                class="main-btn"
+                onclick="openZalo()"
+            >
+                💬 HỖ TRỢ ZALO
+            </button>
+
+        </div>
+
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            🚪 ĐĂNG XUẤT
+        </button>
+
+    </main>
+
+
+    <!-- NAV -->
+    <nav class="bottom-nav">
+
+        <button
+            id="navHome"
+            class="nav-btn active"
+            onclick="showPage('home')"
+        >
+            <span>🏠</span>
+            TRANG CHỦ
+        </button>
+
+        <button
+            id="navControl"
+            class="nav-btn"
+            onclick="showPage('control')"
+        >
+            <span>🎛️</span>
+            ĐIỀU KHIỂN
+        </button>
+
+        <button
+            id="navProfile"
+            class="nav-btn"
+            onclick="showPage('profile')"
+        >
+            <span>👤</span>
+            HỒ SƠ
+        </button>
+
+    </nav>
+
+</section>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =========================
+   CONFIG
+========================= */
+
+const API =
+    "https://quan-key-admin.baoquyen2737.workers.dev";
+
+const HISTORY_KEY =
+    "MQ_HISTORY";
+
+const MUSIC_URL =
+    "https://baoquyen2737-del.github.io/minhquan-lock/music.mp3";
+
+
+/* =========================
+   STATE
+========================= */
+
+let currentUser =
+    localStorage.getItem("MQ_USERNAME") || "";
+
+let currentKey =
+    localStorage.getItem("MQ_KEY") || "";
+
+let expiresAt =
+    Number(
+        localStorage.getItem("MQ_EXPIRES_AT") || 0
+    );
+
+let deviceId =
+    localStorage.getItem("MQ_DEVICE_ID");
+
+
+/* =========================
+   DEVICE ID
+========================= */
+
+if(!deviceId){
+
+    if(
+        window.crypto &&
+        crypto.randomUUID
+    ){
+
+        deviceId =
+            crypto.randomUUID();
+
+    }else{
+
+        deviceId =
+            "MQ-" +
+            Date.now() +
+            "-" +
+            Math.random()
+                .toString(36)
+                .slice(2);
+
+    }
+
+    localStorage.setItem(
+        "MQ_DEVICE_ID",
+        deviceId
+    );
+
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        setTimeout(
+            ()=>{
+
+                document
+                    .getElementById("loading")
+                    .classList.add("hidden");
+
+                if(
+                    currentUser &&
+                    currentKey &&
+                    expiresAt > Date.now()
+                ){
+
+                    openApp();
+
+                }else{
+
+                    document
+                        .getElementById("loginScreen")
+                        .classList.remove("hidden");
+
+                }
+
+            },
+            1800
+        );
+
+    }
+);
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login(){
+
+    const username =
+        document
+            .getElementById("username")
+            .value
+            .trim();
+
+    const key =
+        document
+            .getElementById("keyInput")
+            .value
+            .trim();
+
+    const status =
+        document
+            .getElementById("loginStatus");
+
+
+    if(!username){
+
+        status.textContent =
+            "⚠️ Hãy nhập tên người dùng.";
+
+        return;
+
+    }
+
+
+    if(!key){
+
+        status.textContent =
+            "⚠️ Hãy nhập Key.";
+
+        return;
+
+    }
+
+
+    status.textContent =
+        "⏳ Đang kiểm tra Key...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                API + "/api/login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        key:key,
+                        deviceId:deviceId
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            status.textContent =
+                "❌ " +
+                (
+                    data.message ||
+                    "Đăng nhập thất bại."
+                );
+
+            return;
+
+        }
+
+
+        currentUser =
+            username;
+
+        currentKey =
+            key;
+
+        expiresAt =
+            Number(data.expires_at) *
+            1000;
+
+
+        localStorage.setItem(
+            "MQ_USERNAME",
+            currentUser
+        );
+
+        localStorage.setItem(
+            "MQ_KEY",
+            currentKey
+        );
+
+        localStorage.setItem(
+            "MQ_EXPIRES_AT",
+            expiresAt
+        );
+
+
+        openApp();
+
+        toast(
+            "✅ Đăng nhập thành công"
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        status.textContent =
+            "❌ Không kết nối được máy chủ.";
+
+    }
+
+}
+
+
+/* =========================
+   OPEN APP
+========================= */
+
+function openApp(){
+
+    document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("app")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("welcomeName")
+        .textContent =
+        currentUser || "User";
+
+
+    document
+        .getElementById("profileName")
+        .textContent =
+        currentUser || "User";
+
+
+    document
+        .getElementById("profileKey")
+        .textContent =
+        "KEY: " +
+        maskKey(currentKey);
+
+
+    document
+        .getElementById("deviceIdView")
+        .textContent =
+        deviceId;
+
+
+    document
+        .getElementById("profileDevice")
+        .textContent =
+        deviceId;
+
+
+    document
+        .getElementById("deviceName")
+        .textContent =
+        getDeviceName();
+
+
+    loadHistory();
+
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+function showPage(page){
+
+    const pages = {
+
+        home:
+            document.getElementById(
+                "homePage"
+            ),
+
+        control:
+            document.getElementById(
+                "controlPage"
+            ),
+
+        profile:
+            document.getElementById(
+                "profilePage"
+            )
+
+    };
+
+
+    Object.values(pages)
+        .forEach(
+            el =>
+            el.classList.add("hidden")
+        );
+
+
+    pages[page]
+        .classList.remove("hidden");
+
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(
+            btn =>
+            btn.classList.remove("active")
+        );
+
+
+    if(page === "home"){
+
+        document
+            .getElementById("navHome")
+            .classList.add("active");
+
+    }
+
+
+    if(page === "control"){
+
+        document
+            .getElementById("navControl")
+            .classList.add("active");
+
+    }
+
+
+    if(page === "profile"){
+
+        document
+            .getElementById("navProfile")
+            .classList.add("active");
+
+    }
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================
+   SWITCH
+========================= */
+
+function toggleUI(button){
+
+    button.classList.toggle(
+        "active"
+    );
+
+}
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const bgMusic =
+    document.getElementById(
+        "bgMusic"
+    );
+
+const musicStatus =
+    document.getElementById(
+        "musicStatus"
+    );
+
+const playMusicBtn =
+    document.getElementById(
+        "playMusicBtn"
+    );
+
+const musicProgress =
+    document.getElementById(
+        "musicProgress"
+    );
+
+
+async function playMusic(){
+
+    try{
+
+        /*
+          Gán trực tiếp để iPhone
+          tải đúng file từ GitHub.
+        */
+
+        bgMusic.src =
+            MUSIC_URL;
+
+        bgMusic.loop =
+            true;
+
+        bgMusic.volume =
+            0.8;
+
+
+        await bgMusic.play();
+
+
+        musicStatus.textContent =
+            "🎵 Đang phát";
+
+        playMusicBtn.textContent =
+            "🔊";
+
+
+    }catch(error){
+
+        console.error(
+            "Music error:",
+            error
+        );
+
+        musicStatus.textContent =
+            "❌ Không phát được";
+
+        toast(
+            "Không tải được music.mp3"
+        );
+
+    }
+
+}
+
+
+function pauseMusic(){
+
+    bgMusic.pause();
+
+    musicStatus.textContent =
+        "⏸ Đã tạm dừng";
+
+    playMusicBtn.textContent =
+        "▶";
+
+}
+
+
+bgMusic.addEventListener(
+    "timeupdate",
+    ()=>{
+
+        if(
+            !bgMusic.duration ||
+            !isFinite(bgMusic.duration)
+        ){
+            return;
+        }
+
+        const percent =
+            (
+                bgMusic.currentTime /
+                bgMusic.duration
+            ) * 100;
+
+        musicProgress.style.width =
+            percent + "%";
+
+    }
+);
+
+
+bgMusic.addEventListener(
+    "play",
+    ()=>{
+
+        musicStatus.textContent =
+            "🎵 Đang phát";
+
+        playMusicBtn.textContent =
+            "🔊";
+
+    }
+);
+
+
+bgMusic.addEventListener(
+    "pause",
+    ()=>{
+
+        if(!bgMusic.ended){
+
+            musicStatus.textContent =
+                "⏸ Đã tạm dừng";
+
+            playMusicBtn.textContent =
+                "▶";
+
+        }
+
+    }
+);
+
+
+bgMusic.addEventListener(
+    "error",
+    ()=>{
+
+        musicStatus.textContent =
+            "❌ Không tìm thấy nhạc";
+
+        playMusicBtn.textContent =
+            "▶";
+
+    }
+);
+
+
+/* =========================
+   CHECK FILE
+========================= */
+
+async function checkFile(file){
+
+    const result =
+        document.getElementById(
+            "fileResult"
+        );
+
+
+    if(!file){
+
+        result.innerHTML =
+            "";
+
+        return;
+
+    }
+
+
+    result.innerHTML = `
+        <div class="security">
+
+            <div class="security-score">
+                ⏳
+            </div>
+
+            <div class="detail">
+                Đang phân tích file...
+            </div>
+
+        </div>
+    `;
+
+
+    try{
+
+        const buffer =
+            await file.arrayBuffer();
+
+
+        const hashBuffer =
+            await crypto.subtle.digest(
+                "SHA-256",
+                buffer
+            );
+
+
+        const hashArray =
+            Array.from(
+                new Uint8Array(
+                    hashBuffer
+                )
+            );
+
+
+        const hash =
+            hashArray
+                .map(
+                    b =>
+                    b.toString(16)
+                     .padStart(2,"0")
+                )
+                .join("");
+
+
+        const name =
+            file.name.toLowerCase();
+
+        const extension =
+            getExtension(name);
+
+        const sizeMB =
+            file.size /
+            1024 /
+            1024;
+
+
+        let score = 100;
+
+        let warnings = [];
+
+
+        const dangerousExtensions = [
+            "exe",
+            "dll",
+            "scr",
+            "bat",
+            "cmd",
+            "com",
+            "msi",
+            "vbs",
+            "vbe",
+            "js",
+            "jse",
+            "wsf",
+            "wsh",
+            "ps1",
+            "apk",
+            "ipa",
+            "jar"
+        ];
+
+
+        if(
+            dangerousExtensions
+                .includes(extension)
+        ){
+
+            score -= 45;
+
+            warnings.push(
+                "File có đuôi có khả năng thực thi."
+            );
+
+        }
+
+
+        const suspiciousWords = [
+            "crack",
+            "keygen",
+            "loader",
+            "inject",
+            "injector",
+            "bypass",
+            "patch",
+            "payload",
+            "stealer",
+            "rat",
+            "trojan",
+            "virus",
+            "malware",
+            "hack"
+        ];
+
+
+        const found =
+            suspiciousWords.filter(
+                word =>
+                name.includes(word)
+            );
+
+
+        if(found.length){
+
+            score -= Math.min(
+                30,
+                found.length * 10
+            );
+
+            warnings.push(
+                "Tên file có từ khóa đáng ngờ: " +
+                found.join(", ")
+            );
+
+        }
+
+
+        if(sizeMB > 500){
+
+            score -= 5;
+
+            warnings.push(
+                "File có kích thước rất lớn."
+            );
+
+        }
+
+
+        const riskyMime = [
+
+            "application/x-msdownload",
+
+            "application/x-dosexec",
+
+            "application/x-executable"
+
+        ];
+
+
+        if(
+            riskyMime.includes(
+                file.type
+            )
+        ){
+
+            score -= 30;
+
+            warnings.push(
+                "MIME type có khả năng thực thi."
+            );
+
+        }
+
+
+        score =
+            Math.max(
+                0,
+                Math.min(100,score)
+            );
+
+
+        let cls =
+            "safe";
+
+        let label =
+            "🟢 KHÁ AN TOÀN";
+
+
+        if(score < 80){
+
+            cls =
+                "warn";
+
+            label =
+                "🟡 CẦN CẨN THẬN";
+
+        }
+
+
+        if(score < 50){
+
+            cls =
+                "danger";
+
+            label =
+                "🔴 RỦI RO CAO";
+
+        }
+
+
+        let warningHTML = "";
+
+
+        if(warnings.length){
+
+            warningHTML = `
+                <div
+                    style="
+                    margin-top:10px;
+                    color:#ffb0b0;
+                    line-height:1.6;
+                    font-size:11px;
+                    "
+                >
+
+                    <b>⚠️ Dấu hiệu:</b>
+
+                    <br>
+
+                    ${warnings
+                        .map(
+                            x =>
+                            "• " +
+                            escapeHTML(x)
+                        )
+                        .join("<br>")}
+
+                </div>
+            `;
+
+        }else{
+
+            warningHTML = `
+                <div
+                    style="
+                    margin-top:10px;
+                    color:#54ff9d;
+                    font-size:11px;
+                    "
+                >
+                    ✓ Chưa phát hiện dấu hiệu
+                    đáng ngờ.
+                </div>
+            `;
+
+        }
+
+
+        result.innerHTML = `
+
+            <div class="security">
+
+                <div
+                    class="
+                    security-score
+                    ${cls}
+                    "
+                >
+                    ${score}/100
+                </div>
+
+                <div class="${cls}">
+                    <b>${label}</b>
+                </div>
+
+                <div class="security-bar">
+
+                    <span
+                        style="
+                        width:${score}%;
+                        background:currentColor;
+                        "
+                        class="${cls}"
+                    ></span>
+
+                </div>
+
+                <div class="detail">
+
+                    <b>Tên:</b>
+                    ${escapeHTML(file.name)}
+                    <br>
+
+                    <b>Đuôi:</b>
+                    .${escapeHTML(
+                        extension ||
+                        "không xác định"
+                    )}
+                    <br>
+
+                    <b>MIME:</b>
+                    ${escapeHTML(
+                        file.type ||
+                        "không xác định"
+                    )}
+                    <br>
+
+                    <b>Kích thước:</b>
+                    ${formatBytes(file.size)}
+                    <br>
+
+                    <b>SHA-256:</b>
+                    ${hash}
+
+                </div>
+
+                ${warningHTML}
+
+            </div>
+
+        `;
+
+
+        addHistory(
+            file.name,
+            score
+        );
+
+
+        toast(
+            "Đã kiểm tra file"
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        result.innerHTML = `
+            <div class="security">
+
+                <div
+                    class="security-score danger"
+                >
+                    ❌
+                </div>
+
+                <div class="detail">
+                    Không thể đọc file.
+                </div>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function getExtension(name){
+
+    const parts =
+        name.split(".");
+
+    if(parts.length < 2){
+        return "";
+    }
+
+    return parts
+        .pop()
+        .toLowerCase();
+
+}
+
+
+function formatBytes(bytes){
+
+    if(bytes === 0){
+        return "0 Bytes";
+    }
+
+    const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(
+        i === 0 ? 0 : 2
+    ) +
+    " " +
+    units[i];
+
+}
+
+
+function escapeHTML(text){
+
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function addHistory(
+    fileName,
+    score
+){
+
+    let history =
+        JSON.parse(
+            localStorage.getItem(
+                HISTORY_KEY
+            ) || "[]"
+        );
+
+
+    history.unshift({
+
+        name:fileName,
+
+        score:score,
+
+        time:
+            new Date()
+                .toLocaleString(
+                    "vi-VN"
+                )
+
+    });
+
+
+    history =
+        history.slice(0,20);
+
+
+    localStorage.setItem(
+        HISTORY_KEY,
+        JSON.stringify(history)
+    );
+
+
+    loadHistory();
+
+}
+
+
+function loadHistory(){
+
+    const box =
+        document.getElementById(
+            "historyList"
+        );
+
+
+    if(!box){
+        return;
+    }
+
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                HISTORY_KEY
+            ) || "[]"
+        );
+
+
+    if(!history.length){
+
+        box.innerHTML = `
+            <div class="history-item">
+                Chưa có lịch sử kiểm tra.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        history
+            .map(
+                item => {
+
+                    const cls =
+                        item.score >= 80
+                        ? "safe"
+                        : item.score >= 50
+                        ? "warn"
+                        : "danger";
+
+
+                    return `
+
+                        <div class="history-item">
+
+                            📁
+                            ${escapeHTML(
+                                item.name
+                            )}
+
+                            <span
+                                class="${cls}"
+                            >
+                                — ${item.score}/100
+                            </span>
+
+                            <small>
+                                ${escapeHTML(
+                                    item.time
+                                )}
+                            </small>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================
+   DEVICE
+========================= */
+
+function getDeviceName(){
+
+    const ua =
+        navigator.userAgent;
+
+
+    if(/iPhone/i.test(ua)){
+        return "iPhone";
+    }
+
+
+    if(/iPad/i.test(ua)){
+        return "iPad";
+    }
+
+
+    if(/Android/i.test(ua)){
+        return "Android";
+    }
+
+
+    return "Thiết bị không xác định";
+
+}
+
+
+/* =========================
+   MASK KEY
+========================= */
+
+function maskKey(key){
+
+    if(!key){
+        return "********";
+    }
+
+
+    if(key.length <= 8){
+        return "********";
+    }
+
+
+    return (
+        key.slice(0,4) +
+        "••••••" +
+        key.slice(-4)
+    );
+
+}
+
+
+/* =========================
+   ZALO
+========================= */
+
+function openZalo(){
+
+    window.open(
+        "https://zalo.me/0983774970",
+        "_blank"
+    );
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    try{
+        bgMusic.pause();
+    }catch(e){}
+
+
+    localStorage.removeItem(
+        "MQ_USERNAME"
+    );
+
+    localStorage.removeItem(
+        "MQ_KEY"
+    );
+
+    localStorage.removeItem(
+        "MQ_EXPIRES_AT"
+    );
+
+
+    currentUser = "";
+    currentKey = "";
+    expiresAt = 0;
+
+
+    document
+        .getElementById("app")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("loginScreen")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("keyInput")
+        .value = "";
+
+
+    toast(
+        "Đã đăng xuất"
+    );
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer;
+
+function toast(message){
+
+    const el =
+        document.getElementById(
+            "toast"
+        );
+
+
+    el.textContent =
+        message;
+
+
+    el.classList.add("show");
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            ()=>{
+                el.classList.remove(
+                    "show"
+                );
+            },
+            2500
+        );
+
+}
+
+</script>
+
+</body>
+</html>

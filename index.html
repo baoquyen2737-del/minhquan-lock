@@ -1,0 +1,3261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<meta name="theme-color" content="#05070d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MQUAN KN">
+
+<title>MQUAN KN</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    min-height:100%;
+    background:#03050a;
+    color:#eaf3ff;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-5;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0,229,255,.14),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 18%,
+            rgba(143,73,255,.16),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 80%,
+            rgba(255,42,190,.07),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #02050a,
+            #070b13 45%,
+            #08030d
+        );
+}
+
+.grid{
+    position:fixed;
+    inset:0;
+    z-index:-4;
+    opacity:.22;
+
+    background-image:
+        linear-gradient(
+            rgba(0,225,255,.07) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(130,70,255,.06) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        43px 43px;
+
+    transform:
+        perspective(500px)
+        rotateX(8deg)
+        scale(1.15);
+
+    transform-origin:center bottom;
+}
+
+.network{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.network span{
+    position:absolute;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#00eaff;
+    box-shadow:
+        0 0 12px #00eaff,
+        0 0 25px rgba(0,234,255,.4);
+    animation:node 4s ease-in-out infinite;
+}
+
+.network span:nth-child(1){
+    left:12%;
+    top:18%;
+}
+
+.network span:nth-child(2){
+    left:31%;
+    top:9%;
+    animation-delay:1s;
+}
+
+.network span:nth-child(3){
+    left:56%;
+    top:20%;
+    animation-delay:2s;
+}
+
+.network span:nth-child(4){
+    left:77%;
+    top:12%;
+    animation-delay:.5s;
+}
+
+.network span:nth-child(5){
+    left:87%;
+    top:43%;
+    animation-delay:1.4s;
+}
+
+.network span:nth-child(6){
+    left:17%;
+    top:53%;
+    animation-delay:2.3s;
+}
+
+.network span:nth-child(7){
+    left:48%;
+    top:63%;
+    animation-delay:.7s;
+}
+
+.network span:nth-child(8){
+    left:73%;
+    top:73%;
+    animation-delay:1.7s;
+}
+
+@keyframes node{
+    0%,100%{
+        opacity:.25;
+        transform:scale(.7);
+    }
+    50%{
+        opacity:1;
+        transform:scale(1.35);
+    }
+}
+
+/* =========================
+   APP
+========================= */
+
+#app{
+    width:100%;
+    max-width:850px;
+    margin:auto;
+    padding:
+        calc(18px + env(safe-area-inset-top))
+        16px
+        calc(105px + env(safe-area-inset-bottom));
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.brand-wrap{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    min-width:0;
+}
+
+.logo{
+    width:65px;
+    height:65px;
+    flex:none;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,229,255,.16),
+            rgba(113,64,255,.22)
+        );
+
+    border:
+        1px solid rgba(0,225,255,.48);
+
+    box-shadow:
+        0 0 25px rgba(0,225,255,.12),
+        inset 0 0 25px rgba(0,225,255,.06);
+
+    font-size:24px;
+    font-weight:1000;
+    color:#8fffff;
+}
+
+.logo-dot{
+    position:absolute;
+    width:14px;
+    height:14px;
+    margin-left:52px;
+    margin-top:-48px;
+    border-radius:50%;
+    background:#00dfff;
+    border:3px solid #03050a;
+    box-shadow:0 0 15px #00dfff;
+}
+
+.brand{
+    min-width:0;
+}
+
+.brand-title{
+    font-size:23px;
+    font-weight:1000;
+    letter-spacing:2px;
+    white-space:nowrap;
+}
+
+.brand-title span{
+    color:#00eaff;
+}
+
+.brand-sub{
+    margin-top:5px;
+    color:#7f91aa;
+    font-size:12px;
+    white-space:nowrap;
+}
+
+.pro{
+    display:inline-block;
+    margin-left:6px;
+    padding:5px 9px;
+    border-radius:7px;
+    border:1px solid rgba(137,74,255,.65);
+    color:#b998ff;
+    background:rgba(119,63,255,.10);
+    font-size:10px;
+    vertical-align:middle;
+    letter-spacing:.5px;
+}
+
+.ping{
+    min-width:128px;
+    padding:15px 16px;
+    border-radius:20px;
+
+    background:
+        rgba(11,15,24,.82);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.2);
+}
+
+.ping-label{
+    color:#69788f;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.ping-value{
+    margin-top:7px;
+    color:#00eaff;
+    font-size:20px;
+    font-weight:950;
+    text-align:right;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+    position:relative;
+    overflow:hidden;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(11,16,25,.90),
+            rgba(7,10,18,.80)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.085);
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.24);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+}
+
+.card:after{
+    content:"";
+    position:absolute;
+    width:160px;
+    height:160px;
+    right:-100px;
+    top:-100px;
+    border-radius:50%;
+    background:#00eaff;
+    filter:blur(70px);
+    opacity:.055;
+    pointer-events:none;
+}
+
+/* =========================
+   INFO GRID
+========================= */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:14px;
+}
+
+.info-card{
+    padding:19px;
+    min-height:135px;
+}
+
+.info-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+}
+
+.info-name{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#9caabd;
+    font-size:13px;
+    font-weight:850;
+}
+
+.info-icon{
+    color:#00eaff;
+    font-size:18px;
+}
+
+.sync{
+    padding:5px 8px;
+    border-radius:6px;
+    color:#51e8ae;
+    border:1px solid rgba(47,229,164,.35);
+    background:rgba(47,229,164,.06);
+    font-size:9px;
+}
+
+.info-number{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:950;
+    letter-spacing:1px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.info-small{
+    margin-top:19px;
+    font-size:15px;
+    font-weight:850;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* =========================
+   COMMAND
+========================= */
+
+.command{
+    padding:25px;
+    border:
+        1px solid rgba(0,225,255,.40);
+
+    box-shadow:
+        0 0 35px rgba(0,225,255,.05),
+        inset 0 0 35px rgba(0,225,255,.025);
+}
+
+.command-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.command-title{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    font-size:18px;
+    font-weight:1000;
+    letter-spacing:3px;
+}
+
+.command-bar{
+    width:10px;
+    height:36px;
+    border-radius:8px;
+    background:
+        linear-gradient(
+            #00eaff,
+            #8e5cff
+        );
+    box-shadow:
+        0 0 15px rgba(0,225,255,.35);
+}
+
+.command-status{
+    color:#6f7d94;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.section-label{
+    margin-top:28px;
+    margin-bottom:9px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    color:#94a5bc;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.normalize{
+    color:#00eaff;
+    font-size:12px;
+}
+
+/* =========================
+   KEY INPUT
+========================= */
+
+.key-input{
+    width:100%;
+    height:76px;
+
+    padding:0 20px;
+
+    border-radius:25px;
+
+    outline:none;
+
+    color:#eef7ff;
+    background:#070a11;
+
+    border:
+        1px solid rgba(255,255,255,.11);
+
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.key-input::placeholder{
+    color:#465268;
+}
+
+.key-input:focus{
+    border-color:#00eaff;
+    box-shadow:
+        0 0 25px rgba(0,225,255,.08);
+}
+
+/* =========================
+   MAIN BUTTON
+========================= */
+
+.initialize{
+    width:100%;
+    height:82px;
+    margin-top:18px;
+
+    border-radius:25px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            110deg,
+            #08b9d7,
+            #2f8df0,
+            #705bff
+        );
+
+    border:
+        1px solid rgba(255,255,255,.20);
+
+    box-shadow:
+        0 18px 35px rgba(0,137,255,.25),
+        inset 0 1px 0 rgba(255,255,255,.2);
+
+    font-size:19px;
+    font-weight:1000;
+    letter-spacing:3px;
+}
+
+.initialize:active{
+    transform:scale(.985);
+}
+
+.help-box{
+    margin-top:17px;
+    padding:19px;
+
+    display:flex;
+    gap:14px;
+
+    border-radius:20px;
+
+    background:
+        rgba(3,7,13,.65);
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    color:#8798b0;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.help-icon{
+    color:#00eaff;
+    font-size:25px;
+}
+
+/* =========================
+   THREE BUTTONS
+========================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:14px;
+}
+
+.quick{
+    min-height:116px;
+    padding:17px 10px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    border-radius:23px;
+
+    color:#d9e4f3;
+    background:
+        rgba(10,14,23,.82);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    font-size:13px;
+    font-weight:900;
+}
+
+.quick-icon{
+    font-size:25px;
+}
+
+.quick.cyan .quick-icon{
+    color:#00eaff;
+}
+
+.quick.purple .quick-icon{
+    color:#a17bff;
+}
+
+.quick.pink .quick-icon{
+    color:#ff68bf;
+}
+
+.quick:active{
+    transform:scale(.97);
+}
+
+/* =========================
+   GUIDE
+========================= */
+
+.guide{
+    margin-top:14px;
+    padding:23px;
+}
+
+.guide-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:16px;
+    font-weight:1000;
+}
+
+.guide-title span{
+    color:#a17bff;
+    font-size:23px;
+}
+
+.guide p{
+    margin:17px 0 0;
+    color:#91a1b7;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.guide b{
+    color:#e9f2ff;
+}
+
+.guide .pink{
+    color:#ff658a;
+}
+
+/* =========================
+   CONTROL PAGE
+========================= */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.feature-list{
+    margin-top:14px;
+    padding:21px;
+}
+
+.feature{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+
+    padding:17px 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.06);
+}
+
+.feature:last-child{
+    border-bottom:0;
+}
+
+.feature-name{
+    font-weight:900;
+    font-size:14px;
+}
+
+.feature-desc{
+    margin-top:4px;
+    color:#65758b;
+    font-size:10px;
+}
+
+.switch{
+    width:49px;
+    height:28px;
+    padding:3px;
+
+    border-radius:30px;
+
+    background:#1c2330;
+}
+
+.switch i{
+    display:block;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#697587;
+    transition:.2s;
+}
+
+.switch.on{
+    background:#008e9f;
+    box-shadow:0 0 18px rgba(0,225,255,.2);
+}
+
+.switch.on i{
+    transform:translateX(21px);
+    background:#fff;
+}
+
+/* =========================
+   CHECK FILE
+========================= */
+
+.file-box{
+    margin-top:14px;
+    padding:21px;
+}
+
+.file-label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    min-height:90px;
+
+    border-radius:20px;
+
+    border:
+        1px dashed rgba(0,225,255,.35);
+
+    background:
+        rgba(0,225,255,.025);
+
+    color:#00eaff;
+
+    font-size:13px;
+    font-weight:900;
+}
+
+.file-input{
+    display:none;
+}
+
+.file-result{
+    margin-top:14px;
+}
+
+.security{
+    padding:17px;
+    border-radius:18px;
+    background:#070b12;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.score{
+    font-size:34px;
+    font-weight:1000;
+}
+
+.score.safe{
+    color:#4dffad;
+}
+
+.score.warn{
+    color:#ffd452;
+}
+
+.score.danger{
+    color:#ff667d;
+}
+
+.score-bar{
+    height:7px;
+    margin-top:10px;
+    border-radius:10px;
+    background:#1c2330;
+    overflow:hidden;
+}
+
+.score-bar i{
+    display:block;
+    height:100%;
+}
+
+.detail{
+    margin-top:12px;
+    color:#8290a5;
+    font-size:11px;
+    line-height:1.7;
+    word-break:break-word;
+}
+
+.warning{
+    margin-top:10px;
+    color:#ff9aa8;
+    font-size:11px;
+    line-height:1.6;
+}
+
+.safe-text{
+    color:#4dffad;
+    font-size:11px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile{
+    margin-top:14px;
+    padding:22px;
+}
+
+.profile-head{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.avatar{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:20px;
+    border:1px solid rgba(0,225,255,.5);
+}
+
+.profile-name{
+    font-size:18px;
+    font-weight:950;
+}
+
+.profile-key{
+    margin-top:5px;
+    color:#65758a;
+    font-size:10px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:13px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    font-size:12px;
+}
+
+.row:last-child{
+    border-bottom:0;
+}
+
+.row span:first-child{
+    color:#64738a;
+}
+
+.row span:last-child{
+    text-align:right;
+    word-break:break-word;
+}
+
+.logout{
+    width:100%;
+    margin-top:14px;
+    height:55px;
+    border-radius:18px;
+    background:#211018;
+    color:#ff7187;
+    font-weight:900;
+}
+
+/* =========================
+   MUSIC BAR
+========================= */
+
+.music-player{
+    position:fixed;
+    left:12px;
+    right:12px;
+
+    bottom:
+        calc(12px + env(safe-area-inset-bottom));
+
+    z-index:100;
+
+    height:58px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:8px 10px;
+
+    border-radius:22px;
+
+    background:
+        rgba(7,11,18,.92);
+
+    border:
+        1px solid rgba(0,225,255,.42);
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.45),
+        0 0 25px rgba(0,225,255,.05);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+}
+
+.music-icon{
+    width:40px;
+    height:40px;
+    flex:none;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,225,255,.18),
+            rgba(132,76,255,.20)
+        );
+
+    color:#00eaff;
+    font-size:18px;
+}
+
+.music-info{
+    flex:1;
+    min-width:0;
+}
+
+.music-title{
+    font-size:11px;
+    font-weight:900;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.music-status{
+    margin-top:3px;
+    color:#66778e;
+    font-size:9px;
+}
+
+.music-button{
+    width:39px;
+    height:39px;
+    flex:none;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #08c6dc,
+            #536bff
+        );
+
+    color:#fff;
+    font-size:15px;
+    font-weight:900;
+}
+
+.music-button.stop{
+    background:#171e2b;
+    color:#00eaff;
+}
+
+.music-progress{
+    position:absolute;
+    left:10px;
+    right:10px;
+    bottom:3px;
+    height:2px;
+    overflow:hidden;
+    border-radius:5px;
+    background:#17202d;
+}
+
+.music-progress i{
+    display:block;
+    width:0%;
+    height:100%;
+    background:#00eaff;
+}
+
+/* =========================
+   NAV
+========================= */
+
+.nav{
+    position:fixed;
+
+    left:50%;
+    transform:translateX(-50%);
+
+    bottom:
+        calc(82px + env(safe-area-inset-bottom));
+
+    z-index:90;
+
+    width:min(500px,calc(100% - 24px));
+
+    height:58px;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    padding:5px;
+
+    border-radius:20px;
+
+    background:
+        rgba(8,12,20,.91);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+}
+
+.nav button{
+    border:0;
+    border-radius:15px;
+    background:transparent;
+    color:#66768d;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    gap:2px;
+
+    font-size:8px;
+    font-weight:900;
+}
+
+.nav button span{
+    font-size:18px;
+}
+
+.nav button.active{
+    color:#00eaff;
+    background:
+        rgba(0,225,255,.06);
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toast{
+    position:fixed;
+    left:50%;
+    top:18px;
+
+    z-index:999;
+
+    transform:
+        translate(-50%,-30px);
+
+    opacity:0;
+
+    padding:11px 16px;
+
+    border-radius:14px;
+
+    background:#111925;
+    border:1px solid rgba(0,225,255,.25);
+
+    color:#fff;
+
+    font-size:11px;
+
+    transition:.25s;
+
+    pointer-events:none;
+}
+
+#toast.show{
+    opacity:1;
+    transform:
+        translate(-50%,0);
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#login{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:25px;
+}
+
+.login-card{
+    width:min(430px,100%);
+    padding:25px;
+    border-radius:28px;
+
+    background:
+        rgba(8,12,20,.88);
+
+    border:
+        1px solid rgba(0,225,255,.20);
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.4);
+}
+
+.login-logo{
+    width:80px;
+    height:80px;
+    margin:0 auto 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:23px;
+
+    color:#00eaff;
+    font-size:25px;
+    font-weight:1000;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,225,255,.15),
+            rgba(126,72,255,.2)
+        );
+
+    border:
+        1px solid rgba(0,225,255,.45);
+}
+
+.login-title{
+    text-align:center;
+    font-size:23px;
+    font-weight:1000;
+    letter-spacing:2px;
+}
+
+.login-title span{
+    color:#00eaff;
+}
+
+.login-sub{
+    margin:8px 0 20px;
+    text-align:center;
+    color:#6d7c91;
+    font-size:11px;
+}
+
+.login-input{
+    width:100%;
+    height:53px;
+    margin-top:10px;
+
+    padding:0 15px;
+
+    border-radius:16px;
+
+    outline:none;
+
+    background:#060a11;
+    border:1px solid rgba(255,255,255,.09);
+
+    color:#fff;
+}
+
+.login-input:focus{
+    border-color:#00eaff;
+}
+
+.login-button{
+    width:100%;
+    height:56px;
+    margin-top:14px;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #05bfd6,
+            #4e74ff
+        );
+
+    color:#fff;
+
+    font-weight:1000;
+    letter-spacing:2px;
+}
+
+.login-status{
+    min-height:18px;
+    margin-top:11px;
+    text-align:center;
+    color:#7d8da2;
+    font-size:11px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:600px){
+
+    .header{
+        align-items:flex-start;
+    }
+
+    .ping{
+        min-width:106px;
+        padding:12px;
+    }
+
+    .ping-value{
+        font-size:18px;
+    }
+
+    .brand-title{
+        font-size:19px;
+    }
+
+    .brand-sub{
+        font-size:10px;
+    }
+
+    .logo{
+        width:58px;
+        height:58px;
+    }
+
+    .command{
+        padding:20px;
+    }
+
+    .command-title{
+        font-size:15px;
+        letter-spacing:2px;
+    }
+
+    .command-status{
+        display:none;
+    }
+
+    .initialize{
+        height:72px;
+        font-size:16px;
+    }
+
+}
+
+@media(max-width:390px){
+
+    #app{
+        padding-left:12px;
+        padding-right:12px;
+    }
+
+    .info-grid{
+        gap:8px;
+    }
+
+    .info-card{
+        padding:14px;
+    }
+
+    .info-number{
+        font-size:17px;
+    }
+
+    .quick-grid{
+        gap:8px;
+    }
+
+    .quick{
+        min-height:105px;
+        font-size:11px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<div class="network">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<section id="login">
+
+    <div class="login-card">
+
+        <div class="login-logo">
+            MQ
+        </div>
+
+        <div class="login-title">
+            MQUAN <span>KN</span>
+        </div>
+
+        <div class="login-sub">
+            SECURE WEB PANEL
+        </div>
+
+        <input
+            id="username"
+            class="login-input"
+            type="text"
+            placeholder="Tên người dùng"
+            autocomplete="off"
+        >
+
+        <input
+            id="key"
+            class="login-input"
+            type="text"
+            placeholder="Nhập mã Key"
+            autocomplete="off"
+        >
+
+        <button
+            class="login-button"
+            onclick="login()"
+        >
+            ⚡ INITIALIZE LINK
+        </button>
+
+        <div
+            id="loginStatus"
+            class="login-status"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     APP
+========================= -->
+
+<main id="app" style="display:none;">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="brand-wrap">
+
+            <div style="position:relative;">
+
+                <div class="logo">
+                    MQ
+                </div>
+
+                <div class="logo-dot"></div>
+
+            </div>
+
+            <div class="brand">
+
+                <div class="brand-title">
+                    MQUAN <span>KN</span>
+
+                    <span class="pro">
+                        PRO
+                    </span>
+                </div>
+
+                <div class="brand-sub">
+                    MQUAN KN · SECURE WEB PANEL
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="ping">
+
+            <div class="ping-label">
+                NETWORK PING
+            </div>
+
+            <div
+                id="ping"
+                class="ping-value"
+            >
+                --ms
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         HOME
+    ========================= -->
+
+    <section
+        id="homePage"
+        class="page active"
+    >
+
+        <div class="info-grid">
+
+            <div class="card info-card">
+
+                <div class="info-head">
+
+                    <div class="info-name">
+
+                        <span class="info-icon">
+                            ◉
+                        </span>
+
+                        DEVICE
+                    </div>
+
+                    <div class="sync">
+                        SYNCED
+                    </div>
+
+                </div>
+
+                <div
+                    id="deviceName"
+                    class="info-number"
+                >
+                    iPhone
+                </div>
+
+            </div>
+
+
+            <div class="card info-card">
+
+                <div class="info-head">
+
+                    <div class="info-name">
+
+                        <span
+                            class="info-icon"
+                            style="color:#9a76ff;"
+                        >
+                            ▣
+                        </span>
+
+                        DEVICE ID
+                    </div>
+
+                </div>
+
+                <div
+                    id="deviceId"
+                    class="info-small"
+                >
+                    MQ-••••••
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMMAND -->
+
+        <div class="card command">
+
+            <div class="command-top">
+
+                <div class="command-title">
+
+                    <div class="command-bar"></div>
+
+                    COMMAND TERMINAL
+
+                </div>
+
+                <div class="command-status">
+                    SECURE MODE
+                </div>
+
+            </div>
+
+
+            <div class="section-label">
+
+                <span>
+                    LICENSE ACCESS TOKEN
+                </span>
+
+                <span class="normalize">
+                    ✣ Chuẩn hóa Key
+                </span>
+
+            </div>
+
+
+            <input
+                id="keyView"
+                class="key-input"
+                readonly
+                placeholder="🔑  NHẬP MÃ KEY CỦA BẠN..."
+            >
+
+
+            <button
+                class="initialize"
+                onclick="initializeLink()"
+            >
+                ⚡ &nbsp; INITIALIZE LINK
+            </button>
+
+
+            <div class="help-box">
+
+                <div class="help-icon">
+                    &gt;_
+                </div>
+
+                <div>
+                    Nhập mã key và nhấn
+                    <b style="color:#00eaff;">
+                        INITIALIZE LINK
+                    </b>
+                    để kích hoạt hoặc khôi phục
+                    phiên hoạt động.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK -->
+
+        <div class="quick-grid">
+
+            <button
+                class="quick cyan"
+                onclick="toast('Liên hệ hỗ trợ để nhận Key.')"
+            >
+                <div class="quick-icon">
+                    🛒
+                </div>
+
+                GET KEY
+            </button>
+
+
+            <button
+                class="quick purple"
+                onclick="showPage('control')"
+            >
+                <div class="quick-icon">
+                    🛡
+                </div>
+
+                TẢI CONFIG
+            </button>
+
+
+            <button
+                class="quick pink"
+                onclick="toast('Đã đồng bộ thông tin thiết bị.')"
+            >
+                <div class="quick-icon">
+                    ⟳
+                </div>
+
+                ĐỒNG BỘ
+            </button>
+
+        </div>
+
+
+        <!-- GUIDE -->
+
+        <div class="card guide">
+
+            <div class="guide-title">
+
+                <span>
+                    ◈
+                </span>
+
+                HƯỚNG DẪN VẬN HÀNH NHANH
+
+            </div>
+
+
+            <p>
+                • <b>Đổi mạng 4G/Wi-Fi:</b>
+                hệ thống có thể nhận diện lại
+                phiên kết nối khi bạn quay lại ứng dụng.
+            </p>
+
+
+            <p>
+                • <b>Đăng nhập:</b>
+                nhập Key hợp lệ rồi nhấn
+                <b>INITIALIZE LINK</b>.
+            </p>
+
+
+            <p>
+                • <b class="pink">
+                    Lưu ý:
+                </b>
+                các công tắc trong phần điều khiển
+                chỉ là giao diện trạng thái.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTROL
+    ========================= -->
+
+    <section
+        id="controlPage"
+        class="page"
+    >
+
+        <div class="card feature-list">
+
+            <div class="command-title">
+                <div class="command-bar"></div>
+                CONTROL PANEL
+            </div>
+
+
+            <div class="feature">
+
+                <div>
+                    <div class="feature-name">
+                        🎯 AIMLOCK
+                    </div>
+
+                    <div class="feature-desc">
+                        Giao diện trạng thái
+                    </div>
+                </div>
+
+                <button
+                    class="switch"
+                    onclick="toggleSwitch(this)"
+                >
+                    <i></i>
+                </button>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div>
+                    <div class="feature-name">
+                        🎯 HEADLOCK
+                    </div>
+
+                    <div class="feature-desc">
+                        Giao diện trạng thái
+                    </div>
+                </div>
+
+                <button
+                    class="switch"
+                    onclick="toggleSwitch(this)"
+                >
+                    <i></i>
+                </button>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div>
+                    <div class="feature-name">
+                        ⚡ NHẸ TÂM
+                    </div>
+
+                    <div class="feature-desc">
+                        Giao diện trạng thái
+                    </div>
+                </div>
+
+                <button
+                    class="switch"
+                    onclick="toggleSwitch(this)"
+                >
+                    <i></i>
+                </button>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div>
+                    <div class="feature-name">
+                        🛡 BẢO VỆ
+                    </div>
+
+                    <div class="feature-desc">
+                        Trạng thái giao diện
+                    </div>
+                </div>
+
+                <button
+                    class="switch on"
+                    onclick="toggleSwitch(this)"
+                >
+                    <i></i>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHECK FILE -->
+
+        <div class="card file-box">
+
+            <div class="command-title">
+                <div class="command-bar"></div>
+                CHECK FILE
+            </div>
+
+
+            <div style="
+                margin-top:8px;
+                color:#73849a;
+                font-size:11px;
+                line-height:1.6;
+            ">
+                Kiểm tra tên file, loại file,
+                SHA-256 và một số dấu hiệu rủi ro
+                ngay trên thiết bị.
+            </div>
+
+
+            <label class="file-label">
+
+                📂 &nbsp;
+                CHỌN FILE ĐỂ KIỂM TRA
+
+                <input
+                    id="fileInput"
+                    class="file-input"
+                    type="file"
+                    onchange="checkFile(this.files[0])"
+                >
+
+            </label>
+
+
+            <div
+                id="fileResult"
+                class="file-result"
+            ></div>
+
+
+            <div style="
+                margin-top:12px;
+                color:#59687c;
+                font-size:9px;
+                line-height:1.6;
+            ">
+                Không có trình quét antivirus nào trong
+                trình duyệt này. Điểm số chỉ là đánh giá
+                rủi ro dựa trên dấu hiệu và không thể
+                đảm bảo file 100% không có virus.
+            </div>
+
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <div class="card file-box">
+
+            <div class="command-title">
+                <div class="command-bar"></div>
+                HISTORY
+            </div>
+
+            <div id="history"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PROFILE
+    ========================= -->
+
+    <section
+        id="profilePage"
+        class="page"
+    >
+
+        <div class="card profile">
+
+            <div class="profile-head">
+
+                <img
+                    src="./avatar.png"
+                    class="avatar"
+                    onerror="this.style.display='none'"
+                >
+
+                <div>
+
+                    <div
+                        id="profileName"
+                        class="profile-name"
+                    >
+                        User
+                    </div>
+
+                    <div
+                        id="profileKey"
+                        class="profile-key"
+                    >
+                        KEY: ********
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card profile">
+
+            <div class="row">
+
+                <span>
+                    Trạng thái
+                </span>
+
+                <span style="color:#4dffad;">
+                    ● ACTIVE
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span>
+                    Thiết bị
+                </span>
+
+                <span id="profileDevice">
+                    ---
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span>
+                    Hỗ trợ Zalo
+                </span>
+
+                <span>
+                    0983774970
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            🚪 ĐĂNG XUẤT
+        </button>
+
+    </section>
+
+</main>
+
+
+<!-- =========================
+     NAV
+========================= -->
+
+<nav class="nav">
+
+    <button
+        id="navHome"
+        class="active"
+        onclick="showPage('home')"
+    >
+        <span>⌂</span>
+        TRANG CHỦ
+    </button>
+
+
+    <button
+        id="navControl"
+        onclick="showPage('control')"
+    >
+        <span>◈</span>
+        ĐIỀU KHIỂN
+    </button>
+
+
+    <button
+        id="navProfile"
+        onclick="showPage('profile')"
+    >
+        <span>◎</span>
+        HỒ SƠ
+    </button>
+
+</nav>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<div class="music-player">
+
+    <div class="music-icon">
+        ♪
+    </div>
+
+    <div class="music-info">
+
+        <div class="music-title">
+            MQUAN KN MUSIC
+        </div>
+
+        <div
+            id="musicStatus"
+            class="music-status"
+        >
+            Nhạc đang tắt
+        </div>
+
+    </div>
+
+
+    <button
+        id="musicPlay"
+        class="music-button"
+        onclick="playMusic()"
+    >
+        ▶
+    </button>
+
+
+    <button
+        class="music-button stop"
+        onclick="pauseMusic()"
+    >
+        ❚❚
+    </button>
+
+
+    <div class="music-progress">
+        <i id="musicProgress"></i>
+    </div>
+
+</div>
+
+
+<audio
+    id="music"
+    preload="metadata"
+    playsinline
+    webkit-playsinline
+>
+    <source
+        src="./music.mp3"
+        type="audio/mpeg"
+    >
+</audio>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =========================
+   CONFIG
+========================= */
+
+const API =
+    "https://quan-key-admin.baoquyen2737.workers.dev";
+
+const DEVICE_KEY =
+    "MQ_DEVICE_ID";
+
+const USER_KEY =
+    "MQ_USERNAME";
+
+const LOGIN_KEY =
+    "MQ_KEY";
+
+const EXPIRE_KEY =
+    "MQ_EXPIRES_AT";
+
+
+/* =========================
+   DEVICE ID
+========================= */
+
+let deviceId =
+    localStorage.getItem(
+        DEVICE_KEY
+    );
+
+if(!deviceId){
+
+    deviceId =
+        crypto.randomUUID
+        ? crypto.randomUUID()
+        : "MQ-" +
+          Date.now() +
+          Math.random()
+              .toString(36)
+              .slice(2);
+
+    localStorage.setItem(
+        DEVICE_KEY,
+        deviceId
+    );
+
+}
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const loginScreen =
+    document.getElementById("login");
+
+const app =
+    document.getElementById("app");
+
+const usernameInput =
+    document.getElementById("username");
+
+const keyInput =
+    document.getElementById("key");
+
+const loginStatus =
+    document.getElementById(
+        "loginStatus"
+    );
+
+
+/* =========================
+   START
+========================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        const savedUser =
+            localStorage.getItem(
+                USER_KEY
+            );
+
+        const savedKey =
+            localStorage.getItem(
+                LOGIN_KEY
+            );
+
+        const savedExpire =
+            Number(
+                localStorage.getItem(
+                    EXPIRE_KEY
+                ) || 0
+            );
+
+
+        if(
+            savedUser &&
+            savedKey &&
+            savedExpire > Date.now()
+        ){
+
+            openApp(
+                savedUser,
+                savedKey
+            );
+
+        }else{
+
+            loginScreen.style.display =
+                "flex";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login(){
+
+    const username =
+        usernameInput.value.trim();
+
+    const key =
+        keyInput.value.trim();
+
+
+    if(!username){
+
+        loginStatus.textContent =
+            "⚠️ Vui lòng nhập tên.";
+
+        return;
+
+    }
+
+
+    if(!key){
+
+        loginStatus.textContent =
+            "⚠️ Vui lòng nhập Key.";
+
+        return;
+
+    }
+
+
+    loginStatus.textContent =
+        "⏳ Đang xác thực...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                API + "/api/login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        key:key,
+                        deviceId:deviceId
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            loginStatus.textContent =
+                "❌ " +
+                (
+                    data.message ||
+                    "Key không hợp lệ."
+                );
+
+            return;
+
+        }
+
+
+        localStorage.setItem(
+            USER_KEY,
+            username
+        );
+
+        localStorage.setItem(
+            LOGIN_KEY,
+            key
+        );
+
+        localStorage.setItem(
+            EXPIRE_KEY,
+            String(
+                Number(data.expires_at) *
+                1000
+            )
+        );
+
+
+        openApp(
+            username,
+            key
+        );
+
+
+        toast(
+            "✓ INITIALIZE LINK thành công"
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        loginStatus.textContent =
+            "❌ Không kết nối được Worker.";
+
+    }
+
+}
+
+
+/* =========================
+   OPEN APP
+========================= */
+
+function openApp(
+    username,
+    key
+){
+
+    loginScreen.style.display =
+        "none";
+
+    app.style.display =
+        "block";
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        username;
+
+
+    document.getElementById(
+        "profileKey"
+    ).textContent =
+        "KEY: " +
+        maskKey(key);
+
+
+    document.getElementById(
+        "deviceId"
+    ).textContent =
+        deviceId.slice(0,18) + "...";
+
+
+    document.getElementById(
+        "profileDevice"
+    ).textContent =
+        deviceId;
+
+
+    document.getElementById(
+        "keyView"
+    ).value =
+        key;
+
+
+    document.getElementById(
+        "deviceName"
+    ).textContent =
+        getDevice();
+
+
+    fakePing();
+
+    loadHistory();
+
+}
+
+
+/* =========================
+   NAV
+========================= */
+
+function showPage(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(
+            el =>
+            el.classList.remove(
+                "active"
+            )
+        );
+
+
+    if(page === "home"){
+
+        document.getElementById(
+            "homePage"
+        ).classList.add("active");
+
+    }
+
+
+    if(page === "control"){
+
+        document.getElementById(
+            "controlPage"
+        ).classList.add("active");
+
+    }
+
+
+    if(page === "profile"){
+
+        document.getElementById(
+            "profilePage"
+        ).classList.add("active");
+
+    }
+
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(
+            btn =>
+            btn.classList.remove(
+                "active"
+            )
+        );
+
+
+    if(page === "home"){
+
+        document.getElementById(
+            "navHome"
+        ).classList.add("active");
+
+    }
+
+    if(page === "control"){
+
+        document.getElementById(
+            "navControl"
+        ).classList.add("active");
+
+    }
+
+    if(page === "profile"){
+
+        document.getElementById(
+            "navProfile"
+        ).classList.add("active");
+
+    }
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+function initializeLink(){
+
+    const key =
+        localStorage.getItem(
+            LOGIN_KEY
+        );
+
+    if(!key){
+
+        toast(
+            "⚠️ Chưa đăng nhập"
+        );
+
+        return;
+
+    }
+
+    toast(
+        "✓ Phiên hoạt động đã được khởi tạo"
+    );
+
+}
+
+
+/* =========================
+   SWITCH
+========================= */
+
+function toggleSwitch(el){
+
+    el.classList.toggle("on");
+
+}
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const music =
+    document.getElementById(
+        "music"
+    );
+
+const musicStatus =
+    document.getElementById(
+        "musicStatus"
+    );
+
+const musicPlay =
+    document.getElementById(
+        "musicPlay"
+    );
+
+const musicProgress =
+    document.getElementById(
+        "musicProgress"
+    );
+
+
+async function playMusic(){
+
+    try{
+
+        /*
+         * Người dùng phải bấm nút.
+         * iPhone thường chặn autoplay.
+         */
+
+        await music.play();
+
+        musicStatus.textContent =
+            "● Đang phát nhạc";
+
+        musicPlay.textContent =
+            "❚❚";
+
+    }catch(error){
+
+        console.error(
+            "Music error:",
+            error
+        );
+
+        musicStatus.textContent =
+            "❌ Không tải được music.mp3";
+
+        toast(
+            "Kiểm tra file music.mp3"
+        );
+
+    }
+
+}
+
+
+function pauseMusic(){
+
+    music.pause();
+
+    musicStatus.textContent =
+        "Nhạc đang tắt";
+
+    musicPlay.textContent =
+        "▶";
+
+}
+
+
+music.addEventListener(
+    "timeupdate",
+    () => {
+
+        if(
+            music.duration &&
+            isFinite(music.duration)
+        ){
+
+            musicProgress.style.width =
+                (
+                    music.currentTime /
+                    music.duration *
+                    100
+                ) + "%";
+
+        }
+
+    }
+);
+
+
+music.addEventListener(
+    "play",
+    () => {
+
+        musicStatus.textContent =
+            "● Đang phát nhạc";
+
+        musicPlay.textContent =
+            "❚❚";
+
+    }
+);
+
+
+music.addEventListener(
+    "pause",
+    () => {
+
+        if(!music.ended){
+
+            musicStatus.textContent =
+                "Nhạc đang tắt";
+
+            musicPlay.textContent =
+                "▶";
+
+        }
+
+    }
+);
+
+
+music.addEventListener(
+    "error",
+    () => {
+
+        musicStatus.textContent =
+            "❌ Không tìm thấy music.mp3";
+
+    }
+);
+
+
+/* =========================
+   CHECK FILE
+========================= */
+
+async function checkFile(file){
+
+    const result =
+        document.getElementById(
+            "fileResult"
+        );
+
+
+    if(!file){
+
+        result.innerHTML =
+            "";
+
+        return;
+
+    }
+
+
+    result.innerHTML = `
+        <div class="security">
+            <div class="score">
+                ⏳
+            </div>
+
+            <div class="detail">
+                Đang phân tích...
+            </div>
+        </div>
+    `;
+
+
+    try{
+
+        const buffer =
+            await file.arrayBuffer();
+
+
+        const digest =
+            await crypto.subtle.digest(
+                "SHA-256",
+                buffer
+            );
+
+
+        const hash =
+            Array.from(
+                new Uint8Array(
+                    digest
+                )
+            )
+            .map(
+                x =>
+                x.toString(16)
+                 .padStart(2,"0")
+            )
+            .join("");
+
+
+        const extension =
+            file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+
+        let score = 100;
+
+        const warnings = [];
+
+
+        const riskyExtensions = [
+            "exe",
+            "dll",
+            "scr",
+            "bat",
+            "cmd",
+            "msi",
+            "vbs",
+            "vbe",
+            "ps1",
+            "apk",
+            "jar",
+            "ipa"
+        ];
+
+
+        if(
+            riskyExtensions.includes(
+                extension
+            )
+        ){
+
+            score -= 45;
+
+            warnings.push(
+                "Đuôi file có khả năng thực thi."
+            );
+
+        }
+
+
+        const suspiciousWords = [
+            "crack",
+            "keygen",
+            "loader",
+            "inject",
+            "injector",
+            "bypass",
+            "payload",
+            "stealer",
+            "trojan",
+            "virus",
+            "malware"
+        ];
+
+
+        const lowerName =
+            file.name.toLowerCase();
+
+
+        const found =
+            suspiciousWords.filter(
+                word =>
+                lowerName.includes(word)
+            );
+
+
+        if(found.length){
+
+            score -=
+                Math.min(
+                    35,
+                    found.length * 10
+                );
+
+            warnings.push(
+                "Tên file có từ khóa đáng ngờ: " +
+                found.join(", ")
+            );
+
+        }
+
+
+        score =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    score
+                )
+            );
+
+
+        let cls =
+            "safe";
+
+        let label =
+            "KHÁ AN TOÀN";
+
+
+        if(score < 80){
+
+            cls =
+                "warn";
+
+            label =
+                "CẦN CẨN THẬN";
+
+        }
+
+
+        if(score < 50){
+
+            cls =
+                "danger";
+
+            label =
+                "RỦI RO CAO";
+
+        }
+
+
+        let warningHTML = "";
+
+
+        if(warnings.length){
+
+            warningHTML = `
+                <div class="warning">
+                    ⚠️
+                    ${warnings
+                        .map(
+                            x =>
+                            escapeHTML(x)
+                        )
+                        .join("<br>")}
+                </div>
+            `;
+
+        }else{
+
+            warningHTML = `
+                <div class="safe-text">
+                    ✓ Chưa phát hiện
+                    dấu hiệu đáng ngờ.
+                </div>
+            `;
+
+        }
+
+
+        result.innerHTML = `
+
+            <div class="security">
+
+                <div class="score ${cls}">
+                    ${score}/100
+                </div>
+
+                <div class="${cls}">
+                    <b>${label}</b>
+                </div>
+
+                <div class="score-bar">
+
+                    <i
+                        class="${cls}"
+                        style="
+                            width:${score}%;
+                            background:currentColor;
+                        "
+                    ></i>
+
+                </div>
+
+                <div class="detail">
+
+                    <b>Tên:</b>
+                    ${escapeHTML(file.name)}
+
+                    <br>
+
+                    <b>Loại:</b>
+                    ${escapeHTML(
+                        file.type ||
+                        "Không xác định"
+                    )}
+
+                    <br>
+
+                    <b>Kích thước:</b>
+                    ${formatBytes(
+                        file.size
+                    )}
+
+                    <br>
+
+                    <b>SHA-256:</b>
+                    ${hash}
+
+                </div>
+
+                ${warningHTML}
+
+            </div>
+        `;
+
+
+        addHistory(
+            file.name,
+            score
+        );
+
+
+        toast(
+            "✓ Đã kiểm tra file"
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        result.innerHTML = `
+            <div class="security">
+                <div class="score danger">
+                    ERROR
+                </div>
+                <div class="detail">
+                    Không thể đọc file.
+                </div>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function addHistory(
+    name,
+    score
+){
+
+    let history =
+        JSON.parse(
+            localStorage.getItem(
+                "MQ_HISTORY"
+            ) || "[]"
+        );
+
+
+    history.unshift({
+
+        name:name,
+
+        score:score,
+
+        time:
+            new Date()
+                .toLocaleString(
+                    "vi-VN"
+                )
+
+    });
+
+
+    history =
+        history.slice(0,20);
+
+
+    localStorage.setItem(
+        "MQ_HISTORY",
+        JSON.stringify(history)
+    );
+
+
+    loadHistory();
+
+}
+
+
+function loadHistory(){
+
+    const box =
+        document.getElementById(
+            "history"
+        );
+
+
+    if(!box){
+        return;
+    }
+
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "MQ_HISTORY"
+            ) || "[]"
+        );
+
+
+    if(!history.length){
+
+        box.innerHTML = `
+            <div style="
+                margin-top:15px;
+                color:#64758b;
+                font-size:11px;
+            ">
+                Chưa có lịch sử.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        history.map(
+            item => `
+
+                <div style="
+                    padding:12px 0;
+                    border-bottom:
+                    1px solid
+                    rgba(255,255,255,.06);
+                    font-size:11px;
+                ">
+
+                    📁
+                    ${escapeHTML(
+                        item.name
+                    )}
+
+                    <span style="
+                        color:${
+                            item.score >= 80
+                            ? "#4dffad"
+                            : item.score >= 50
+                            ? "#ffd452"
+                            : "#ff667d"
+                        };
+                        float:right;
+                    ">
+                        ${item.score}/100
+                    </span>
+
+                    <div style="
+                        margin-top:4px;
+                        color:#56667b;
+                        font-size:9px;
+                    ">
+                        ${escapeHTML(
+                            item.time
+                        )}
+                    </div>
+
+                </div>
+
+            `
+        )
+        .join("");
+
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function getDevice(){
+
+    const ua =
+        navigator.userAgent;
+
+    if(
+        /iPhone/i.test(ua)
+    ){
+        return "iPhone";
+    }
+
+    if(
+        /iPad/i.test(ua)
+    ){
+        return "iPad";
+    }
+
+    if(
+        /Android/i.test(ua)
+    ){
+        return "Android";
+    }
+
+    return "Unknown Device";
+
+}
+
+
+function maskKey(key){
+
+    if(
+        !key ||
+        key.length < 9
+    ){
+
+        return "********";
+
+    }
+
+    return (
+        key.slice(0,4) +
+        "••••••" +
+        key.slice(-4)
+    );
+
+}
+
+
+function formatBytes(bytes){
+
+    if(bytes === 0){
+        return "0 Bytes";
+    }
+
+    const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(
+        i === 0 ? 0 : 2
+    ) +
+    " " +
+    units[i];
+
+}
+
+
+function escapeHTML(text){
+
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function fakePing(){
+
+    const value =
+        Math.floor(
+            Math.random() * 14
+        ) + 12;
+
+    document.getElementById(
+        "ping"
+    ).textContent =
+        value + "ms";
+
+}
+
+
+function toast(message){
+
+    const el =
+        document.getElementById(
+            "toast"
+        );
+
+    el.textContent =
+        message;
+
+    el.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            el.classList.remove(
+                "show"
+            );
+
+        },
+        2400
+    );
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    music.pause();
+
+    localStorage.removeItem(
+        USER_KEY
+    );
+
+    localStorage.removeItem(
+        LOGIN_KEY
+    );
+
+    localStorage.removeItem(
+        EXPIRE_KEY
+    );
+
+
+    app.style.display =
+        "none";
+
+    loginScreen.style.display =
+        "flex";
+
+
+    usernameInput.value =
+        "";
+
+    keyInput.value =
+        "";
+
+    loginStatus.textContent =
+        "";
+
+    toast(
+        "Đã đăng xuất"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
